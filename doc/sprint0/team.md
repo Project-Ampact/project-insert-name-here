@@ -2,7 +2,7 @@
 |--------------|----------|------------|-------------------------------|---------------------|------------------|
 | Luoliang Cai | cailuoli | 1006156703 | luoliang.cai@mail.utoronto.ca | 2263781688          | dehaznboi49#4747 |
 | David Tan    | tandavi5 | 1005396652 | dave.tan@mail.utoronto.ca     | 5195002208          | DT#3663          |
-|              |          |            |                               |                     |                  |
+| Lara Kristine Gomez | gomezlar | 1006427788 | lara.gomez@mail.utoronto.ca | 647-975-4061     | spangles#2479    |
 |              |          |            |                               |                     |                  |
 |              |          |            |                               |                     |                  |
  
