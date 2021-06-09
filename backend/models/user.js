@@ -1,14 +1,9 @@
 /*jshint esversion: 6 */
 
 const mongoose = require('mongoose');
-const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
     _id: {
-        type: String,
-        required: true
-    },
-    name: {
         type: String,
         required: true
     },
@@ -20,13 +15,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    type: {
+    role: {
         type: String,
         required: true
-    }
+    },
 },
 {
-    collection: 'Users'
+    collection: 'LoginInfo'
 });
 
 class User{

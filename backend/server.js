@@ -3,6 +3,10 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const user = require('./models/user');
+const crypto = require('crypto');
+const cors = require('cors');
+const User = require('./models/user');
 require('dotenv/config');
 
 app.use(express.json());
@@ -16,31 +20,36 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors({ 
-    origin: 'http://localhost:3000',
-    credentials: true
-}));
+const getSalt = () => {
+    return crypto.randomBytes(16).toString('base64');
+};
+
+const hashPassword = (password, salt) => {
+    var hash = crypto.createHmac('sha512', salt);
+    hash.update(password);
+    return hash.digest('base64');
+};
 
 app.post('/signup', async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
-    User.findById(username, (err, user) => {
-        if (err) return res.status(500).send('Error ', 500);
-        if (user) return res.status(409).send(username + " is not an available username");
-    });
+    if (!username || !password){
+        return res.status(400).send({message: "Request body must contain username, password and role attributes"});
+    }
     let salt = getSalt();
-    let hashword = hashPassword(req.body.password, salt);
+    let hashword = hashPassword(password, salt);
     let newUser = new User({
         _id: username,
         password: hashword,
-        salt: salt
+        salt: salt,
+        role: req.body.role,
     });
     try{
         let savedUser = await newUser.save();
-        return res.json(savedUser);
+        return res.json({username: savedUser._id, role: savedUser._id});
     }
     catch(err){
-        return res.status(500).send('Error ' + err);
+        return res.status(500).send({message: err.toString()});
     }
 });
 
