@@ -15,7 +15,7 @@ h1 {
 
 form {
     display: block;
-    margin: 10% auto;
+    margin: 120px auto;
     width: 348px;
     height: 630px;
 
@@ -47,7 +47,7 @@ form label {
 
 form input {
     height: 30px;
-    width: 270px;
+    width: 270px;       
     padding: 0 15px;
 }
 
