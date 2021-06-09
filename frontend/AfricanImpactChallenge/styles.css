@@ -1,0 +1,74 @@
+* {
+    font-family: "Verdana", arial;
+    font-size: 15px;
+    
+}
+
+body {
+    background-color:  #ECECEC;
+}
+h1 {
+    font-size: 30px;
+    font-family: "Verdana";
+    color: #fa9200 ;
+}
+
+form {
+    display: block;
+    margin: 120px auto;
+    width: 348px;
+    height: 630px;
+
+}
+
+fieldset {
+    background-color: white;
+    width: 368px;
+    padding: 0;
+    border-radius: 5px;
+    border: 1.5px solid rgb(199, 199, 199);
+
+}
+
+
+form header, form main {
+    margin: 50px 30px 0 30px;
+}
+
+form header {
+    margin-top: 30px;
+}
+form label {
+    line-height: 25px;
+    padding-bottom: 6px;
+    font-size: 14px;
+   
+}
+
+form input {
+    height: 30px;
+    width: 270px;       
+    padding: 0 15px;
+}
+
+form fieldset header *{
+    text-align: center;
+}
+
+.submit-button {
+    display: block;
+    margin: 30px auto;
+    padding: 15px 90px;
+    border-radius: 3%;
+    background-color: #77DD77;
+    border: none;
+  
+}
+
+#username, #password {
+    margin: 5px 0 30px 0;
+}
+
+.submit-button:active {
+    background-color: #03c03c;
+}
