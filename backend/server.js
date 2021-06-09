@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const user = require('./models/user');
 const crypto = require('crypto');
 const cors = require('cors');
+const validator = require('validator');
 const User = require('./models/user');
 require('dotenv/config');
 
@@ -30,12 +31,24 @@ const hashPassword = (password, salt) => {
     return hash.digest('base64');
 };
 
-app.post('/signup', async(req, res, next) => {
+const checkRegistrationInfo = (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     if (!username || !password){
         return res.status(400).send({message: "Request body must contain username, password and role attributes"});
     }
+    User.findOne({_id: username}, (err, user) => {
+        if (err) return res.status(500).send("500");
+        if (user) return res.status(409).send(username + " is already taken");
+    });
+    if (validator.isEmpty(req.body.username)) return res.status(422).send("bad input: email must be non-empty");
+    if (validator.isEmpty(req.body.password)) return res.status(422).send("bad input: password must be non-empty");
+    next();
+};
+
+app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
+    let username = req.body.username;
+    let password = req.body.password;
     let salt = getSalt();
     let hashword = hashPassword(password, salt);
     let newUser = new User({
