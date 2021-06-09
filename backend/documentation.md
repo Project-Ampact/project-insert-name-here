@@ -22,6 +22,21 @@
         - content-type: application/json
         - body: json object
             - message: (String) "Request body must contain username, password and role attributes"
+    - Status: 422
+        - indication: request made with empty username field
+        - content-type: application/json
+        - body: json object
+            - message: (String) "bad input: username must be non-empty"
+    - Status: 422
+        - indication: request made with role that is not instructor, partner or entrepeneur
+        - content-type: application/json
+        - body: json object
+            - message: (String) "bad input: role must be either instructor, partner or entrepeneur"
+    - Status: 422 
+        - indication: request made with empty password field
+        - content-type: application/json
+        - body: json object
+            - message: (String) "bad input: password must be non-empty "
     - Status: 500
         - indication: Server side error occured when saving user
         - content-type: application/json

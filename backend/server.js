@@ -31,26 +31,30 @@ const hashPassword = (password, salt) => {
     return hash.digest('base64');
 };
 
+//check if registration info is valid
 const checkRegistrationInfo = (req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
-    if (!username || !password){
+    let role = req.body.role;
+    if (username == undefined || password == undefined || role == undefined){
         return res.status(400).send({message: "Request body must contain username, password and role attributes"});
     }
     User.findOne({_id: username}, (err, user) => {
-        if (err) return res.status(500).send("500");
-        if (user) return res.status(409).send(username + " is already taken");
+        if (err) return res.status(500).send({message: err.toString()});
+        if (user) return res.status(409).send({message: username + " is already taken"});
     });
-    if (validator.isEmpty(req.body.username)) return res.status(422).send("bad input: email must be non-empty");
-    if (validator.isEmpty(req.body.password)) return res.status(422).send("bad input: password must be non-empty");
+    if (validator.isEmpty(username)) return res.status(422).send({message: "bad input: username must be non-empty"});
+    if (validator.isEmpty(password)) return res.status(422).send({message: "bad input: password must be non-empty"});
+    if (role != "instructor" && role != "partner" && role != " entrepeneur") return res.status(422).send({message: "bad input: role must be either instructor, partner or entrepeneur"});
     next();
 };
 
+//register user into database
 app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let salt = getSalt();
-    let hashword = hashPassword(password, salt);
+    let hashword = hashPassword(password, salt); 
     let newUser = new User({
         _id: username,
         password: hashword,
