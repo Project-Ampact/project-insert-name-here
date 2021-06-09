@@ -1,0 +1,144 @@
+* {
+    font-family: "Calibri", arial;
+    font-size: 20px;
+    
+}
+
+body {
+    background-color:  #ECECEC;
+}
+h1 {
+    font-size: 40px;
+    color: #fa9200 ;
+}
+
+h2 {
+    font-size: 25px;
+    color: #007706 ;
+}
+
+#african-impact-logo {
+    margin: 100 auto;
+    width: 200px; 
+    height: auto;
+}
+
+form {
+    display: block;
+    margin: 120px auto;
+    width: 348px;
+    height: 630px;
+
+}
+
+#register-form {
+    margin-top: 70px;
+}
+
+#register-form fieldset, #register-form  {
+    width: 500px;
+    
+}
+
+
+fieldset {
+    background-color: white;
+    width: 368px;
+    padding: 0;
+    border-radius: 5px;
+    border: 1.5px solid rgb(199, 199, 199);
+
+}
+
+#register-form fieldset {
+    border: 1.5px solid #bd6f00;
+}
+
+form header, form main {
+    margin: 20px 30px 0 30px;
+}
+
+form header {
+    margin-top: 30px;
+}
+
+.wrapper-register {
+    overflow: hidden;
+}
+
+form label {
+    line-height: 25px;
+    padding-bottom: 6px;
+    font-size: 17px;
+    float: left;
+    font-weight: bold;
+}
+
+form input {
+    height: 30px;
+    width: 285px;       
+    padding: 0 15px;
+    margin: 5px 0 35px 0;
+    float: left;
+}
+#password {
+    margin-bottom: 60px;
+}
+
+#register-form input {
+    margin-bottom: 20px;
+    width: 250px;
+}
+
+.wrapper-register label {
+    margin-top: 5px;
+    width: 120px
+    
+}
+
+.wrapper-register input {
+    margin-left: 20px;
+    
+}
+
+
+
+form fieldset header *{
+    text-align: center;
+}
+
+.submit-button {
+    display: block;
+    margin: 40px auto;
+    padding: 15px 90px;
+    border-radius: 3%;
+    background-color: #77DD77;
+    border: none;
+  
+}
+
+.submit-button:hover {
+    background-color: rgb(90, 190, 90);
+}
+
+
+
+.submit-button:active {
+    background-color: #03c03c;
+}
+
+#account-creation-text {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#create-account  {
+  display: block;
+  text-align: center;
+  margin-bottom: 50px;
+    color:  #249cff;
+    text-decoration: none;
+}
+#create-account:hover {
+    color:  #061efa;
+}
