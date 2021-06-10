@@ -10,6 +10,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Registration from './components/pages/Registration';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/" component={Landing}/>
         <Route path="/login" component={Login}/>
         <Route path="/test" component={NavigationBar}/>
+        <Route path="/register" component={Registration}/>
       </Switch>
     </Router>
   );

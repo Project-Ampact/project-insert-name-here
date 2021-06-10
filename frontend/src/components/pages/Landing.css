@@ -23,3 +23,12 @@
   .navbarange a {
     margin-left: 2%;
   }
+
+  .route-link {
+    color: black;
+  }
+
+  .route-link:hover {
+    color: gray;
+    text-decoration: none;
+  }

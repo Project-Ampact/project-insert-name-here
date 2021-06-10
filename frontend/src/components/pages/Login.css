@@ -32,7 +32,7 @@ body {
     
 }
 
-fieldset {
+.login fieldset {
     background-color: white;
     width: 368px;
     padding: 0;
@@ -45,11 +45,11 @@ fieldset {
     border: 1.5px solid #bd6f00;
 }
 
-form header, form main {
+.login form header, .login form main {
     margin: 20px 30px 0 30px;
 }
 
-form header {
+.login form header {
     margin-top: 30px;
 }
 
@@ -57,7 +57,7 @@ form header {
     overflow: hidden;
 }
 
-form label {
+.login form label {
     line-height: 25px;
     padding-bottom: 6px;
     font-size: 17px;
@@ -65,18 +65,19 @@ form label {
     font-weight: bold;
 }
 
-form input {
+.login form input {
     height: 30px;
     width: 285px;       
     padding: 0 15px;
     margin: 5px 0 35px 0;
     float: left;
 }
+
 #password {
     margin-bottom: 60px;
 }
 
-form fieldset header *{
+.login form fieldset header *{
     text-align: center;
 }
 
