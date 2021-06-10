@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "cookie": "^0.4.1",
-    "cors": "^2.8.5",
-    "express-session": "^1.17.2"
-  }
-}
