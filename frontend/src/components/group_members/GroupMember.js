@@ -1,11 +1,13 @@
+import Card from 'react-bootstrap/Card';
+
 function GroupMember(props) {
     return(
-        <li key={props.key}>
-            <div>
-                <h3>{props.name}</h3>
-                <p>{props.role}</p>
-            </div>
-        </li>
+        <Card key={props.key}>
+            <Card.Body>
+                <Card.Title>{props.name}</Card.Title>
+                <Card.Text>{props.role}</Card.Text>
+            </Card.Body>
+        </Card>
     )
 }; 
 
