@@ -1,11 +1,12 @@
 import GroupMember from './GroupMember'; 
 import CardColumns from 'react-bootstrap/CardColumns'; 
+import "../groupProfile/Group.css";
 
 function GroupMemberList(props) {
     return (<div>
-        <h1>Group Members</h1>
+        <h1 className="group-members">Group Members</h1>
         <CardColumns>
-            {props.map((member) => {
+            {props.members.map((member) => {
                 return <GroupMember key={member._id} name={member.name} role={member.role}/>
             })}
         </CardColumns>

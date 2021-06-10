@@ -18,7 +18,8 @@ function Group(props) {
             <Card.Img className="group-img" src={props.image} />
             <Card.Body>
               <Card.Title className="group-title">{props.name}</Card.Title>
-              <Button variant="primary">Message</Button>
+              <Button className="gbutton" variant="primary">Add member</Button>
+              <Button className="gbutton" variant="primary">Remove Member</Button>
             </Card.Body>
           </Card>
         </Col>
