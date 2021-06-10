@@ -67,7 +67,28 @@ router.post("/group/:groupID", async (req, res) => {
     }
 }); 
 
+// Remove member from group 
+router.delete("/:groupID/:userID", async (req, res) => {
+    // TODO: check userID is valid 
+    let userID = req.params.userID;
+    let groupID = req.params.groupID; 
+
+    try {
+        for (let i = 0; i < res.group.members; i++) {
+            if (res.group.members[i].toString() == userID) {
+                res.group.members.splice(i, 1); 
+                res.group.save(); 
+                console.log("Group member " + userID + "removed from " + groupID); 
+                res.status(200).send(); 
+            }
+        }
+    } catch(error) {
+        res.status(500).send({error: error.message}); 
+    }
+    // could not find group member; returns error 
+    res.status(404).json({message: 'Member does not exist or is not in group'}); 
+}); 
+
 module.exports = router; 
 
-// TODO: remove group member 
 // TODO: fix error handling / responses 
