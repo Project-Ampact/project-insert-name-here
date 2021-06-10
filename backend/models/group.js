@@ -2,22 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const groupSchema = Schema({
-    name: {
-        type: String,
-        required: true
-    },
+    name: String,
     members: [{ type: Schema.Types.ObjectId, ref: 'User'}], 
-    owner: Schema.Types.ObjectId,
-    about: {
-        type: String,
-        required: false,
-        default: "About me"
-    },
-    picture: {
-        type: String,
-        required: false,
-        default: "Default"
-    } 
+    owner: Schema.Types.ObjectId
 });
 
 const Group = mongoose.model('Group', groupSchema);
