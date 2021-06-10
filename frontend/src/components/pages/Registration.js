@@ -1,8 +1,24 @@
+/*jshint esversion: 10*/
 import React from 'react';
 import './Registration.css';
 import Logo from '../../assets/logo.png';
+import APIAccess from '../../controller.js';
 
 function Registration() {
+  const register = (e) => {
+    e.preventDefault();
+    try{
+      let username = document.getElementById("username").value;
+      let password = document.getElementById("password").value;
+      let role = document.getElementById("role").value;
+      console.log(username, password, role);
+      APIAccess.registerUser(username, password, role);
+      console.log("Made it here");
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="register">
       <form  id="register-form">
@@ -30,7 +46,7 @@ function Registration() {
                     <input type="register" name="role" id="role" placeholder=""/>
                 </div>
             </div>
-            <button type="submit" class="submit-button">Register</button>
+            <button type="submit" onClick={register} class="submit-button">Register</button>
           </main>
         </fieldset>
       </form>
