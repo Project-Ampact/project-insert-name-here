@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10%;
+    text-align: center;
+  }
+  
+  .content ul {
+    margin-top: 3%;
+    text-align: left;
+    font-size: 14pt;
+  }
+  
+  /* Navbar */
+  .navbar {
+    background-color: #f9b74d;
+    font-family: Roboto;
+  }
+  
+  .navbarange a {
+    margin-left: 2%;
+  }
