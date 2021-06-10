@@ -1,11 +1,12 @@
 import React from 'react'
 import './Login.css'
 import Logo from '../../assets/logo.png'
+import Link from "react-router-dom/Link"
 
 function Login() {
 	return (
     <div className="login">
-      <form>
+      <form className="login-form">
         <fieldset>
           <header>
             <h1 className="login-title">Ampact Login</h1>
@@ -22,7 +23,7 @@ function Login() {
           </main>
           <footer>
             <p id="account-creation-text">Don't Have an Account?</p>
-            <div class="wrapper"><a id="create-account" href="registration.html">Create Your Account</a></div>
+            <div class="wrapper"><Link id="create-account" to="/register">Create Your Account</Link></div>
           </footer>
         </fieldset>
       </form>			
