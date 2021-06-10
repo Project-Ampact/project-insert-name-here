@@ -7,11 +7,16 @@ import APIAccess from '../../controller.js';
 import Link from "react-router-dom/Link";
 
 function Login() {
-
-  const signIn = () => {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    APIAccess.signInUser(username, password, role);
+  const signIn = async(e) => {
+    try{
+      e.preventDefault();
+      let username = document.getElementById("username").value;
+      let password = document.getElementById("password").value;
+      let a = await APIAccess.signInUser(username, password);
+      console.log(APIAccess.currentUser);
+    } catch(err) {
+      console.log("Error");
+    }
   };
 
 	return (
@@ -29,7 +34,7 @@ function Login() {
             <div>
               <input type="password" name="password" id="password" placeholder="Type Password"/>
             </div>
-              <button type="submit" class="submit-button">Login</button>
+              <button type="submit" class="submit-button" onClick={signIn}>Login</button>
           </main>
           <footer>
             <p id="account-creation-text">Don't Have an Account?</p>
