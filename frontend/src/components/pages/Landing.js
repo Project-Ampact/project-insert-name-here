@@ -34,8 +34,8 @@ return (
               Ampact
           </Navbar.Brand>
           <Nav className="d-flex align-items-end">
-          <Nav.Link><Link to="/login">Login</Link></Nav.Link>
-          <Nav.Link>Register</Nav.Link>
+          <Nav.Link><Link to="/login" className="route-link">Login</Link></Nav.Link>
+          <Nav.Link><Link to="/register" className="route-link">Register</Link></Nav.Link>
           </Nav>
         </Navbar>
       <LandingContent/>
