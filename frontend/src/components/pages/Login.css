@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    background-color:  #ECECEC;
+}
+
+.login-title {
+    font-size: 40px;
+    color: #fa9200 ;
+}
+
+#african-impact-logo {
+    margin: 100 auto;
+    width: 200px; 
+    height: auto;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 50px auto;
+    font-size: 20px;
+}
+
+#register-form {
+    margin-top: 70px;
+}
+
+#register-form fieldset, #register-form  {
+    width: 500px;
+    
+}
+
+.login fieldset {
+    background-color: white;
+    width: 368px;
+    padding: 0;
+    border-radius: 5px;
+    border: 1.5px solid rgb(199, 199, 199);
+
+}
+
+#register-form fieldset {
+    border: 1.5px solid #bd6f00;
+}
+
+.login form header, .login form main {
+    margin: 20px 30px 0 30px;
+}
+
+.login form header {
+    margin-top: 30px;
+}
+
+.wrapper-register {
+    overflow: hidden;
+}
+
+.login form label {
+    line-height: 25px;
+    padding-bottom: 6px;
+    font-size: 17px;
+    float: left;
+    font-weight: bold;
+}
+
+.login form input {
+    height: 30px;
+    width: 285px;       
+    padding: 0 15px;
+    margin: 5px 0 35px 0;
+    float: left;
+}
+
+#password {
+    margin-bottom: 60px;
+}
+
+.login form fieldset header *{
+    text-align: center;
+}
+
+.submit-button {
+    display: block;
+    margin: 40px auto;
+    padding: 15px 90px;
+    border-radius: 3%;
+    background-color: #77DD77;
+    border: none;
+  
+}
+
+.submit-button:hover {
+    background-color: rgb(90, 190, 90);
+}
+
+
+
+.submit-button:active {
+    background-color: #03c03c;
+}
+
+#account-creation-text {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#create-account  {
+  display: block;
+  text-align: center;
+  margin-bottom: 50px;
+    color:  #249cff;
+    text-decoration: none;
+}
+#create-account:hover {
+    color:  #061efa;
+}
