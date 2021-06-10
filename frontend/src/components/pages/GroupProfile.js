@@ -1,8 +1,7 @@
-import React from 'react';
-import Link from "react-router-dom/Link";
-import logo from '../../assets/logo.png'
-import { Row, Col, Card } from 'react-bootstrap'
-import './Landing.css'
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+//import { Row, Col, Card, Button, Container } from "react-bootstrap";
+import Group from "../groupProfile/Group.js"
 
 /*function GroupProfileContent() {
     return (
@@ -10,22 +9,23 @@ import './Landing.css'
     )
   }*/
 
-function GroupProfile() {
-return (
-   <Row>
-       <div class="card">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
+const DUMMY_DATA1 = {
+    name: 'AlphaTeam',
+    image: 'https://picsum.photos/200/100',
+    about: 'We are AlphaTeam'
+}
 
-   </Row>
-    )
+const DUMMY_DATA2 = {
+  name: 'BetaTeam',
+  image: 'https://picsum.photos/200/100',
+  about: 'We are BetaTeam'
+}
+
+function GroupProfile() {
+  return (
+    <Group {...DUMMY_DATA2}/>
+    //Group members component goes here
+  );
 }
 
 export default GroupProfile;
