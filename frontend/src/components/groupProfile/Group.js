@@ -11,12 +11,13 @@ import APIAccess from "../../controller.js";
   }*/
 
 function Group(props) {
+  //let {gid} = useParams()
   const removeMember = async (e) => {
     e.preventDefault();
     try {
       let _id = document.getElementById("_id").value;
       console.log(_id);
-      let user = await APIAccess.removeGroupMember(_id);
+      let user = await APIAccess.removeGroupMember(props.gid, _id);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
@@ -27,7 +28,7 @@ function Group(props) {
     try {
       let _id = document.getElementById("_id").value;
       console.log(_id);
-      let user = await APIAccess.addGroupMember(_id);
+      let user = await APIAccess.addGroupMember(props.gid, _id);
       console.log("Made it here");
     } catch (err) {
       console.log(err);

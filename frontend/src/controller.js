@@ -53,12 +53,12 @@ const APIAccess = {
         }
     },
 
-    addGroupMember(_id){
+    /*addGroupMember(gid, _id){
         try{
-            return fetch('http://localhost:8000/group/60c13863b069455054d4b224', { // Group id here
+            return fetch('http://localhost:8000/group/' + gid, { // Group id here
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({userID: _id}) // member id here
+                body: JSON.stringify({userID: _id, groupID: gid}) // member id here
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -77,11 +77,30 @@ const APIAccess = {
         }catch(err){
             throw err;
         }
+    },*/
+    addMember(group, member) {
+        try{
+            fetch('http://localhost:8000/group/add/' + group, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userID: member})
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return "Success";
+            });
+        } catch {
+
+        }
     },
 
-    removeGroupMember(_id){
+    removeGroupMember(gid, _id){
         try{
-            return fetch('http://localhost:8000/group/60c13863b069455054d4b224/' + _id, { // Group id and member id here
+            return fetch('http://localhost:8000/group/' + gid + "/" + _id, { // Group id and member id here
                 method: 'DELETE'
                 //headers: {'Content-Type':'application/json'},
                // body: JSON.stringify({_id: _id}) // member id here

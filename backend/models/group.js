@@ -6,8 +6,13 @@ const groupSchema = Schema({
         type: String,
         required: true
     },
-    members: [{ type: String, ref: 'User'}], 
-    owner: Schema.Types.ObjectId,
+    members: { 
+        type: Array, 
+        required: true
+    }, 
+    owner: {
+        type: String
+    },
     about: {
         type: String,
         required: false,
@@ -16,7 +21,7 @@ const groupSchema = Schema({
     picture: {
         type: String,
         required: false,
-        default: "Default"
+        default: "https://picsum.photos/200/100"
     } 
 });
 
