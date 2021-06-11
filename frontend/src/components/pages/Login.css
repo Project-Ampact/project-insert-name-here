@@ -116,3 +116,11 @@ body {
 #create-account:hover {
     color:  #061efa;
 }
+
+#error-message {
+    color: rgb(255, 93, 93);
+    font-weight: bolder;
+    font-size: 20px;
+    text-align: center;
+    visibility: hidden;
+}

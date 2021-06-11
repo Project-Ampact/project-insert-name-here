@@ -16,23 +16,8 @@
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({username: "MikeOxlong", password: "abc", role: "instructor"})
-
-### Sign In
-- Description: sign in already registered user
-- Request `POST /signin`
-    - content-type: application/json
-    - body: object
-        - username: (String) user's username
-        - password: (String) user's password
-    - example: 
     ```
-        fetch('http://localhost:8000/signin', {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({username: "abc", password: "xyz"})
-        })
-    ```
-- Responses:
+    Responses:
     - Status: 200 
         - indication: User successfully registered without error
         - content-type: application/json
@@ -46,25 +31,13 @@
         - body: json object
             - message: (String) "Request body must contain username, password and role attributes"
             - success: (bool) false
-    - Status: 401
-        - indication: Incorrect password used
-        - content-type: application/json
-        - body: json object
-            - message: (String) "Access Denied: Incorrect password"
-            - success: (bool) false (indicates sign in unsuccessful)
-    - Status: 401
-        - indication: Username does not belong to an existing user
-        - content-type: application/json
-        - body: json object
-            - message: (String) "Access Denied: No user with username " username "is registered"
-            - success: (bool) false
     - Status: 409 
         - indication: user registering with same username of an existing user
         - content-type: application/json
         - body: json object
             - message: (String) username + " is already taken"
             - success: (bool) false
-    - Status: 422
+        - Status: 422
         - indication: request made with empty username field
         - content-type: application/json
         - body: json object
@@ -81,6 +54,44 @@
         - content-type: application/json
         - body: json object
             - message: (String) "bad input: password must be non-empty "
+
+
+### Sign In
+- Description: sign in already registered user
+- Request `POST /signin`
+    - content-type: application/json
+    - body: object
+        - username: (String) user's username
+        - password: (String) user's password
+    - example: 
+    ```
+        fetch('http://localhost:8000/signin', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({username: "abc", password: "xyz"})
+        })
+    ```
+
+    Responses
+    - Status: 200 
+        - indication: User successfully registered without error
+        - content-type: application/json
+        - cookie: json object
+            - username: (String) the username of the new user
+        - body: json object
+            - success: (bool) true
+    - Status: 401
+        - indication: Incorrect password used
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Access Denied: Incorrect password"
+            - success: (bool) false (indicates sign in unsuccessful)
+    - Status: 401
+        - indication: Username does not belong to an existing user
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Access Denied: No user with username " username "is registered"
+            - success: (bool) false
     - Status: 500
         - indication: Server side error occured when saving user
         - content-type: application/json
