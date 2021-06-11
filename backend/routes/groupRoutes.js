@@ -22,13 +22,13 @@ router.get("/", async (req, res) => {
     }*/
 });
 
-// Get specific group 
-router.get("/:groupID", getGroup, async (req, res) => {
+// Get specific group  getGroup,
+router.get("/:groupID", async (req, res) => {
     let groupId = req.params.groupID;
     Group.findById(groupId, (err, groups) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         console.log(groups);
-        if (!groups) return res.status(401).send({success: false, message: err.toString()});
+        if (!groups) return res.status(401).send({success: false, message: "Bad input"});
         return res.json(groups);
     });
     /*res.send(res.group); 
@@ -80,10 +80,10 @@ router.post("/add/:groupID", async (req, res) => {
     // TODO: check userID is valid 
     let userID = req.body.userID; 
     let groupID = req.params.groupID;
-    User.findById(userID, (err, user) => {
+    let user = await User.findById(userID, (err, user) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
-        if (!user) return res.status(401).send({success: false, message: "User with username " + userID + " does not exist"});
     });
+    if (!user) return res.status(401).send({success: false, message: "User with username " + userID + " does not exist"});
     Group.findById(groupID, (err, group) => {
         console.log(group);
         if (err) return res.status(500).send({success: false, message: err.toString()});
@@ -151,6 +151,7 @@ router.delete("/delete/:groupID/:userID", async (req, res) => {
         });
     });
 });
+
 /*router.delete("/:groupID/:userID", getGroup, async (req, res) => {
     let userID = req.params.userID;
     let groupID = req.params.groupID; 

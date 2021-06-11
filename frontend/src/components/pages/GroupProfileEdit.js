@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect,useParams } from "react";
 import "./GroupProfileEdit.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
 
 function GroupProfileEdit() {
+  //let {gid} = useParams()
   const update = async (e) => {
     e.preventDefault();
     try {
