@@ -19,6 +19,7 @@ router.get("/", async (req, res) => {
 // Get specific group 
 router.get("/:groupID", getGroup, async (req, res) => {
     res.send(res.group); 
+    console.log(res.group)
 });
 
 // Update a group attribute(s) 
