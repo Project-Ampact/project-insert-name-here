@@ -21,11 +21,11 @@ app.use((req, res, next) => {
     next();
 });
 
+//set up session
 app.use(session({
     secret: 'secret',
     resave: false,
-    saveUninitialized: true,
-    cookie: {maxAge: 60 * 60 * 24 * 7}
+    saveUninitialized: true
 }));
 
 //Send cookie back with signed in user info
@@ -33,19 +33,22 @@ app.use(function(req, res, next){
     req.user = ('user' in req.session)? req.session.user : null;
     let username = (req.user)? req.user._id : '';
     res.setHeader('Set-Cookie', cookie.serialize('username', username, {
-          path : '/', 
-          maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+        path : '/', 
+        maxAge: 60 * 60 * 24 * 7
     }));
     next();
 });
 
-//Authenticate user
+//Check if user is authenticated user. Necessary to ensure the only people 
 const isAuthenticated = (req, res, next) => {
     if (!req.user) return res.status(401).end("Access denied");
     next();
 };
 
-app.use(cors());
+app.use(cors({ 
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 const hashPassword = (password, salt) => {
     var hash = crypto.createHmac('sha512', salt);
@@ -62,6 +65,7 @@ app.post('/signin', (req, res) => {
         if (!user) return res.status(401).send({success: false, message: "Access Denied: No user with username " + username + " is registered"});
         let hashword = hashPassword(password, user.salt);
         if (hashword != user.password) return res.status(401).send({success: false, message: "Access Denied: Incorrect password"});
+        req.session.user = user;
         res.setHeader('Set-Cookie', cookie.serialize('username', username, {
             path : '/', 
             maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
