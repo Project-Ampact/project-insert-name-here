@@ -20,8 +20,6 @@ const APIAccess = {
                 
                 var error = document.getElementById("error-message");
                 error.style.visibility = "hidden";
-                window.location = "/";
-                // if you want to redirect to another page do it here
                 return {user: jsonRes.username, role: jsonRes.role};
             });
         }catch(err){
