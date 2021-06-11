@@ -1,30 +1,28 @@
 /*jshint esversion: 10*/
-const APIAccess = {
-    
-    //use this to check the current user logged into the database
-    currentUser(){
-        var username = document.cookie.split("username=")[1];
-        if(!username) return "";
-        if (username.length === 0) return "";
-        return username;
-    },
 
-    //sign in user
-    signInUser(username, password){
+const APIAccess = {
+    registerUser(username, password, role){
         try{
-            fetch('http://localhost:8000/signin', {
+            return fetch('http://localhost:8000/signup', {
                 method: 'POST',
-                credentials: 'include',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({username: username, password: password})
+                body: JSON.stringify({username: username, password: password, role: role})
             }).then(async (response) => {
                 let jsonRes = await response.json();
-                if(!jsonRes.success) {
-                    throw jsonRes.message;
+                console.log(jsonRes);
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    var error = document.getElementById("error-message");
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
                 }
-                window.location = "/";
+                if(!jsonRes.success) throw jsonRes.message;
+                
+                var error = document.getElementById("error-message");
+                error.style.visibility = "hidden";
+                return {user: jsonRes.username, role: jsonRes.role};
             });
-        } catch(err){
+        }catch(err){
             throw err;
         }
     }
