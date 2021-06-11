@@ -5,6 +5,12 @@ import Group from "../groupProfile/Group.js";
 import GroupMemberList from "../group_members/GroupMemberList.js";
 import "../groupProfile/Group.css";
 import APIAccess from "../../controller.js";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams,
+} from "react-router-dom";
 
 
 let mock_data = [
@@ -51,13 +57,15 @@ let mock_data = [
 ];
 let memData;
 function GroupProfile() {
+  let {gid} = useParams()
   const [isLoading, setIsLoading] = useState(true);
   const [loadedGroupData, setLoadedGroupData] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/group/60c13863b069455054d4b224")
+    fetch("http://localhost:8000/group/" + gid)
       .then((response) => {
+        console.log( response.json())
         return response.json();
       })
       .then((data) => {
@@ -79,7 +87,7 @@ function GroupProfile() {
   
   return (
     <Container className="mt-3 profile container-fluid">
-      <Group groupData={loadedGroupData} />
+      <Group gid = {gid} groupData={loadedGroupData} />
       <GroupMemberList members={mock_data} /> 
     </Container>
   );

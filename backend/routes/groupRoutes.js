@@ -5,21 +5,34 @@ const router = express.Router();
 
 // Get all groups 
 router.get("/", async (req, res) => {
-    let group
+    Group.find({}, (err, groups) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        console.log(groups)
+        if (!groups) return res.json([]);
+        return res.json(groups);
+    });
+   /* let group
     try {
-        group = await Group.find().populate('members', '_id role');
+        group = await Group.find().populate('members', '_id');
         console.log(group);
         res.status(200).send(group); 
     } catch(err) {                                  // Serverside error occured, thus return error message
         // console.error(err); 
         res.status(500).send({error: err.message});  
-    }
+    }*/
 });
 
 // Get specific group 
 router.get("/:groupID", getGroup, async (req, res) => {
-    res.send(res.group); 
-    console.log(res.group)
+    let groupId = req.params.groupID;
+    Group.findById(groupId, (err, groups) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        console.log(groups);
+        if (!groups) return res.status(401).send({success: false, message: err.toString()});
+        return res.json(groups);
+    });
+    /*res.send(res.group); 
+    console.log(res.group)*/
 });
 
 // Update a group attribute(s) 
@@ -63,7 +76,27 @@ router.post("/", async (req, res) => {
 }); 
 
 // Add new member to group 
-router.post("/:groupID", getGroup, async (req, res) => {
+router.post("/add/:groupID", async (req, res) => {
+    // TODO: check userID is valid 
+    let userID = req.body.userID; 
+    let groupID = req.params.groupID;
+    User.findById(userID, (err, user) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!user) return res.status(401).send({success: false, message: "User with username " + userID + " does not exist"});
+    });
+    Group.findById(groupID, (err, group) => {
+        console.log(group);
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!group) return res.status(401).send({success: false, message: "Group with Id " + groupID + " does not exist"});
+        group.members.push(userID);
+        Group.findByIdAndUpdate(groupID, {members: group.members}, (err, group) => {
+            if (err) return res.status(500).send({success: false, message: err.toString()});
+            console.log("Group member added"); 
+            return res.json({success: true});
+        });
+    });
+})
+/*router.post("/:groupID", getGroup, async (req, res) => {
     try{
         let userID = req.body.userID;
         // check user exists
@@ -79,7 +112,7 @@ router.post("/:groupID", getGroup, async (req, res) => {
     } catch(err) {
         res.status(400).json({ message: err.message})
     }
-}); 
+}); */
 
 async function userExists(id) {
     let found = await User.findById(id); 
@@ -101,7 +134,24 @@ async function getGroup(req, res, next) {
 }
 
 // Remove member from group 
-router.delete("/:groupID/:userID", getGroup, async (req, res) => {
+router.delete("/delete/:groupID/:userID", async (req, res) => {
+    let userID = req.params.userID; 
+    let groupID = req.params.groupID;
+
+    Group.findById(groupID, (err, group) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!group) return res.status(401).send({success: false, message: "Group with Id " + groupID + " does not exist"});
+        if (!group.members.includes(userID)) return res.status(401).send({success: false, message: "Member not group"});
+        for (i = 0; i < group.members.length; i++) if(group.members[i] == userID) group.members.splice(i, 1);
+        console.log(group.members);
+        Group.findByIdAndUpdate(groupID, {members: group.members}, (err, groups) => {
+            if (err) return res.status(500).send({success: false, message: err.toString()});
+            console.log("Group member removed"); 
+            return res.json({success: true});
+        });
+    });
+});
+/*router.delete("/:groupID/:userID", getGroup, async (req, res) => {
     let userID = req.params.userID;
     let groupID = req.params.groupID; 
 
@@ -119,6 +169,6 @@ router.delete("/:groupID/:userID", getGroup, async (req, res) => {
     }
     // could not find group member; returns error 
     res.status(404).json({message: 'Member does not exist or is not in group'}); 
-}); 
+}); */
 
 module.exports = router; 
