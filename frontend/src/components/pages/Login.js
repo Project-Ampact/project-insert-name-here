@@ -1,7 +1,7 @@
 import React from 'react'
 import './Login.css'
 import Logo from '../../assets/logo.png'
-import Link from "react-router-dom/Link"
+import { Link } from "react-router-dom"
 
 function Login() {
 	return (
