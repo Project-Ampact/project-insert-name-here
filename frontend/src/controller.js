@@ -12,17 +12,22 @@ const APIAccess = {
     //sign in user
     signInUser(username, password){
         try{
-            fetch('http://localhost:8000/signin', {
+            return fetch('http://localhost:8000/signin', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({username: username, password: password})
             }).then(async (response) => {
                 let jsonRes = await response.json();
+                var error = document.getElementById("error-message");
                 if(!jsonRes.success) {
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
                     throw jsonRes.message;
                 }
-                window.location = "/";
+                // TODO server needs to return back role
+                return {user: username, role: 'partner'};
             });
         } catch(err){
             throw err;
