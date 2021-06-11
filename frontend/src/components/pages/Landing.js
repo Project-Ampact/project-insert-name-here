@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from "react-router-dom/Link";
+import  { Link } from "react-router-dom";
 import logo from '../../assets/logo.png'
 import { Nav, Navbar } from 'react-bootstrap'
 import './Landing.css'
@@ -34,8 +34,8 @@ return (
               Ampact
           </Navbar.Brand>
           <Nav className="d-flex align-items-end">
-          <Nav.Link><Link to="/login" className="route-link">Login</Link></Nav.Link>
-          <Nav.Link><Link to="/register" className="route-link">Register</Link></Nav.Link>
+          <Link to="/login" className="route-link">Login</Link>
+          <Link to="/register" className="route-link">Register</Link>
           </Nav>
         </Navbar>
       <LandingContent/>
