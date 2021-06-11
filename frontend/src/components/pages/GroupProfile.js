@@ -7,7 +7,7 @@ import "../groupProfile/Group.css";
 import APIAccess from "../../controller.js";
 
 
-const mock_data = [
+let mock_data = [
   {
     _id: "0000000001",
     name: "test person",
@@ -49,7 +49,7 @@ const mock_data = [
     role: "Student",
   },
 ];
-let groupData;
+let memData;
 function GroupProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedGroupData, setLoadedGroupData] = useState([]);
@@ -61,8 +61,11 @@ function GroupProfile() {
         return response.json();
       })
       .then((data) => {
-        setIsLoading(false);
+        mock_data = data.members
         setLoadedGroupData(data);
+        setIsLoading(false);
+       
+     
       });
   }, []);
 
@@ -73,11 +76,11 @@ function GroupProfile() {
       </section>
     );
   }
-  //  <GroupMemberList members={loadedGroupData.members} /> This is when you fix members
+  
   return (
     <Container className="mt-3 profile container-fluid">
       <Group groupData={loadedGroupData} />
-      <GroupMemberList members={mock_data} />
+      <GroupMemberList members={mock_data} /> 
     </Container>
   );
 }

@@ -7,7 +7,7 @@ function GroupMemberList(props) {
         <h1 className="group-members">Group Members</h1>
         <CardColumns>
             {props.members.map((member) => {
-                return <GroupMember key={member._id} name={member.name} role={member.role}/>
+                return <GroupMember key={member._id} name={member._id} role={member.role}/>
             })}
         </CardColumns>
     </div>)
