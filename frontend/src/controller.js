@@ -14,6 +14,7 @@ const APIAccess = {
         try{
             fetch('http://localhost:8000/signin', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({username: username, password: password})
             }).then(async (response) => {
