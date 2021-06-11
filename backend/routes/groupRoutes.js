@@ -1,13 +1,13 @@
 const express = require("express"); 
 const Group = require("../models/Group");
+const User = require("../models/User");
 const router = express.Router();
-const bodyParser = require('body-parser');
 
 // Get all groups 
 router.get("/", async (req, res) => {
     let group
     try {
-        group = await Group.find(); 
+        group = await Group.find().populate('members', '_id role');
         console.log(group);
         res.status(200).send(group); 
     } catch(err) {                                  // Serverside error occured, thus return error message
@@ -64,21 +64,35 @@ router.post("/", async (req, res) => {
 
 // Add new member to group 
 router.post("/:groupID", getGroup, async (req, res) => {
-    // TODO: check userID is valid 
-    let userID = req.body.userID; 
+    try{
+        let userID = req.body.userID;
+        // check user exists
+        if (!await userExists(userID)) {
+            res.status(404).json({message: "User does not exist"});
+        }
 
-    res.group.members.push(userID); 
-    res.group.save(); 
-    console.log("Group member added"); 
+        res.group.members.push(userID); 
+        res.group.save(); 
+        console.log("Group member added"); 
 
-    res.status(200).send(); 
+        res.status(200).send(); 
+    } catch(err) {
+        res.status(400).json({ message: err.message})
+    }
 }); 
+
+async function userExists(id) {
+    let found = await User.findById(id); 
+    if (found == null) {
+        return false; 
+    } return true; 
+}
 
 // Middleware used to getGroup from MongoDB database
 async function getGroup(req, res, next) {
     let group
     try {
-        group = await Group.findById(req.params.groupID); //.populate('members'); 
+        group = await Group.findById(req.params.groupID).populate('members', '_id role');
     } catch(error) {
        return res.status(404).json({ message: 'Group does not exist'})
     }
@@ -88,7 +102,6 @@ async function getGroup(req, res, next) {
 
 // Remove member from group 
 router.delete("/:groupID/:userID", async (req, res) => {
-    // TODO: check userID is valid 
     let userID = req.params.userID;
     let groupID = req.params.groupID; 
 
@@ -109,5 +122,3 @@ router.delete("/:groupID/:userID", async (req, res) => {
 }); 
 
 module.exports = router; 
-
-// TODO: fix error handling / responses 
