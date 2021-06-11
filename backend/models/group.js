@@ -6,7 +6,7 @@ const groupSchema = Schema({
         type: String,
         required: true
     },
-    members: [{ type: Schema.Types.ObjectId, ref: 'User'}], 
+    members: [{ type: String, ref: 'User'}], 
     owner: Schema.Types.ObjectId,
     about: {
         type: String,
