@@ -1,26 +1,21 @@
 /*jshint esversion: 10*/
 
 const APIAccess = {
-    updateGroupProfile(gid, groupName, about, picture){
+    updateGroupProfile(group, groupName, about, picture){
         try{
-            return fetch('http://localhost:8000/group/' + gid, {
+            return fetch('http://localhost:8000/group/' + group, {
                 method: 'PATCH',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({name: groupName, about: about, picture: picture})
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
-                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
-                    var error = document.getElementById("error-message");
-                    error.style.visibility = "visible";
-                    console.log(jsonRes.message);
-                    error.innerHTML = jsonRes.message + '*';
-                }
+               
                 if(!jsonRes.success) throw jsonRes.message;
                 
                 var error = document.getElementById("error-message");
                 error.style.visibility = "hidden";
-                return {user: jsonRes.name, role: jsonRes.about};
+                return {name: jsonRes.name, about: jsonRes.about};
             });
         }catch(err){
             throw err;
@@ -53,31 +48,6 @@ const APIAccess = {
         }
     },
 
-    /*addGroupMember(gid, _id){
-        try{
-            return fetch('http://localhost:8000/group/' + gid, { // Group id here
-                method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({userID: _id, groupID: gid}) // member id here
-            }).then(async (response) => {
-                let jsonRes = await response.json();
-                console.log(jsonRes);
-                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
-                    var error = document.getElementById("error-message");
-                    error.style.visibility = "visible";
-                    console.log(jsonRes.message);
-                    error.innerHTML = jsonRes.message + '*';
-                }
-                if(!jsonRes.success) throw jsonRes.message;
-                
-                var error = document.getElementById("error-message");
-                error.style.visibility = "hidden";
-                return {user: jsonRes.name, role: jsonRes.about};
-            });
-        }catch(err){
-            throw err;
-        }
-    },*/
     addMember(group, member) {
         try{
             fetch('http://localhost:8000/group/add/' + group, {
@@ -98,31 +68,6 @@ const APIAccess = {
         }
     },
 
-   /* removeMember(gid, _id){
-        try{
-            return fetch('http://localhost:8000/group/' + gid + "/" + _id, { // Group id and member id here
-                method: 'DELETE'
-                //headers: {'Content-Type':'application/json'},
-               // body: JSON.stringify({_id: _id}) // member id here
-            }).then(async (response) => {
-                let jsonRes = await response.json();
-                console.log(jsonRes);
-                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
-                    var error = document.getElementById("error-message");
-                    error.style.visibility = "visible";
-                    console.log(jsonRes.message);
-                    error.innerHTML = jsonRes.message + '*';
-                }
-                if(!jsonRes.success) throw jsonRes.message;
-                
-                var error = document.getElementById("error-message");
-                error.style.visibility = "hidden";
-                return {user: jsonRes.name, role: jsonRes.about};
-            });
-        }catch(err){
-            throw err;
-        }
-    }*/
     removeMember(group, member){
         try{
             fetch('http://localhost:8000/group/delete/' + group + '/' + member, {
@@ -137,7 +82,24 @@ const APIAccess = {
         } catch {
 
         }
+    },
+
+    deleteGroup(group){
+        try{
+            fetch('http://localhost:8000/group/delete/' + group, {
+                method: 'DELETE',
+                credentials: 'include',
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return "Success";
+            });
+        } catch {
+
+        }
     }
+
 };
 
 export default APIAccess;
