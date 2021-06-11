@@ -6,17 +6,6 @@ import GroupMemberList from "../group_members/GroupMemberList.js";
 import "../groupProfile/Group.css";
 import APIAccess from "../../controller.js";
 
-const DUMMY_DATA1 = {
-  name: "AlphaTeam",
-  image: "https://picsum.photos/200/100",
-  about: "We are AlphaTeam",
-};
-
-const DUMMY_DATA2 = {
-  name: "BetaTeam",
-  image: "https://picsum.photos/200/100",
-  about: "We are BetaTeam",
-};
 
 const mock_data = [
   {
@@ -67,25 +56,23 @@ function GroupProfile() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/group/60c148db4df89114682f519f")
+    fetch("http://localhost:8000/group/60c2cd77fe2ec82cb0c5b544")
       .then((response) => {
-        let jsonRes= response.json();
-        setIsLoading(false);
-        setLoadedGroupData({name: jsonRes.name, about: jsonRes.about, members: jsonRes.members, picture: jsonRes.picture});
+        return response.json();
       })
-     /* .then((data) => {
+      .then((data) => {
         setIsLoading(false);
         setLoadedGroupData(data);
-      });*/
+      });
   }, []);
 
-  /*if (isLoading) {
+  if (isLoading) {
     return (
       <section>
         <p>Loading...</p>
       </section>
     );
-  }*/
+  }
   return (
     <Container className="mt-3 profile container-fluid">
       <Group groupData={loadedGroupData} />
@@ -95,24 +82,3 @@ function GroupProfile() {
 }
 
 export default GroupProfile;
-
-/*
-function getGroups() {
-    console.log("made it")
-  //  let groupData
-   // useEffect(() => {
-      // Update the document title using the browser API
-     
-      try {
-        groupData = APIAccess.getGroup('60c148db4df89114682f519f');
-        console.log(groupData);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-      //document.title = `You clicked ${count} times`;
-    //});
-   
- // };
-
-*/
