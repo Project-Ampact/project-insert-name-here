@@ -59,6 +59,7 @@ function Registration() {
                     <input type="register" name="role" id="role" placeholder=""/>
                 </div>
             </div>
+            <div class="wrapper-register"><p id="error-message">Error please change your information*</p></div>
             <button type="submit" onClick={register} className="submit-button">Register</button>
           </main>
         </fieldset>
