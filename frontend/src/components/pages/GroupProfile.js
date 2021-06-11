@@ -56,7 +56,7 @@ function GroupProfile() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/group/60c2cd77fe2ec82cb0c5b544")
+    fetch("http://localhost:8000/group/60c13863b069455054d4b224")
       .then((response) => {
         return response.json();
       })
@@ -73,6 +73,7 @@ function GroupProfile() {
       </section>
     );
   }
+  //  <GroupMemberList members={loadedGroupData.members} /> This is when you fix members
   return (
     <Container className="mt-3 profile container-fluid">
       <Group groupData={loadedGroupData} />
