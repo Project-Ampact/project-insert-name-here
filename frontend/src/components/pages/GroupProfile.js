@@ -65,8 +65,10 @@ function GroupProfile() {
     setIsLoading(true);
     fetch("http://localhost:8000/group/" + gid)
       .then((response) => {
-        console.log( response.json())
-        return response.json();
+       // console.log( response.json())
+       return response.json()
+    //  setLoadedGroupData(response.json());
+    //  setIsLoading(false)
       })
       .then((data) => {
         mock_data = data.members

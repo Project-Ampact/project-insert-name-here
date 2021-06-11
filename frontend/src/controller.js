@@ -1,9 +1,9 @@
 /*jshint esversion: 10*/
 
 const APIAccess = {
-    updateGroupProfile(groupName, about, picture){
+    updateGroupProfile(gid, groupName, about, picture){
         try{
-            return fetch('http://localhost:8000/group/60c13863b069455054d4b224', {
+            return fetch('http://localhost:8000/group/' + gid, {
                 method: 'PATCH',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({name: groupName, about: about, picture: picture})
@@ -98,7 +98,7 @@ const APIAccess = {
         }
     },
 
-    removeGroupMember(gid, _id){
+   /* removeMember(gid, _id){
         try{
             return fetch('http://localhost:8000/group/' + gid + "/" + _id, { // Group id and member id here
                 method: 'DELETE'
@@ -121,6 +121,21 @@ const APIAccess = {
             });
         }catch(err){
             throw err;
+        }
+    }*/
+    removeMember(group, member){
+        try{
+            fetch('http://localhost:8000/group/delete/' + group + '/' + member, {
+                method: 'DELETE',
+                credentials: 'include',
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return "Success";
+            });
+        } catch {
+
         }
     }
 };

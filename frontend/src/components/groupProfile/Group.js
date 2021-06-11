@@ -17,7 +17,7 @@ function Group(props) {
     try {
       let _id = document.getElementById("_id").value;
       console.log(_id);
-      let user = await APIAccess.removeGroupMember(props.gid, _id);
+      let user = await APIAccess.removeMember(props.gid, _id);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
@@ -28,7 +28,7 @@ function Group(props) {
     try {
       let _id = document.getElementById("_id").value;
       console.log(_id);
-      let user = await APIAccess.addGroupMember(props.gid, _id);
+      let user = await APIAccess.addMember(props.gid, _id);
       console.log("Made it here");
     } catch (err) {
       console.log(err);

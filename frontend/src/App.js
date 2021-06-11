@@ -42,9 +42,9 @@ function App() {
         <Route path="/login" component={Login}/>
         <Route path="/test" component={NavigationBar}/>
         <Route path="/register" component={Registration}/>
-        <Route path="/groupProfile/edit" component={GroupProfileEdit}/>
+        <Route path="/groupProfile/edit/" component={GroupProfileEdit}/>
         <Route path="/groupProfile/create" component={GroupProfileCreate}/>
-        <Route path="/groupProfile/:gid" children={<GroupProfile/>} />
+        <Route path="/groupProfile/:gid" children={<GroupProfile/>}/>
       </Switch>
     </Router>
   )};

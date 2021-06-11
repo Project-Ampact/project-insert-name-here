@@ -130,11 +130,11 @@ function GroupProfileCreate() {
     setIsLoading(true);
     fetch("http://localhost:8000/group/")
       .then((response) => {
-        console.log(response.json())
+        //console.log(response.json())
         return response.json();
       })
       .then((data) => {
-        console.log(data)
+       // console.log(data)
         mock_data = data;
         
         setLoadedGroupData(data);
