@@ -1,25 +1,104 @@
 /*jshint esversion: 10*/
 
 const APIAccess = {
-    getGroup(gid){
+    updateGroupProfile(groupName, about, picture){
         try{
-            fetch('http://localhost:8000/group/' + gid, )
-            .then(async (response) => {
+            return fetch('http://localhost:8000/group/60c13863b069455054d4b224', {
+                method: 'PATCH',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({name: groupName, about: about, picture: picture})
+            }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
-             /*   if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
                     var error = document.getElementById("error-message");
                     error.style.visibility = "visible";
                     console.log(jsonRes.message);
                     error.innerHTML = jsonRes.message + '*';
                 }
-                if(!jsonRes.success) throw jsonRes.message;*/
+                if(!jsonRes.success) throw jsonRes.message;
                 
-              /*  var error = document.getElementById("error-message");
+                var error = document.getElementById("error-message");
                 error.style.visibility = "hidden";
-                window.location = "/";*/
-                // if you want to redirect to another page do it here
-                return {name: jsonRes.name, about: jsonRes.about, members: jsonRes.members, picture: jsonRes.picture};
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        }catch(err){
+            throw err;
+        }
+    },
+
+    createGroupProfile(groupName, about, picture){
+        try{
+            return fetch('http://localhost:8000/group/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({name: groupName, about: about, picture: picture})
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    var error = document.getElementById("error-message");
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                }
+                if(!jsonRes.success) throw jsonRes.message;
+                
+                var error = document.getElementById("error-message");
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        }catch(err){
+            throw err;
+        }
+    },
+
+    addGroupMember(_id){
+        try{
+            return fetch('http://localhost:8000/group/60c13863b069455054d4b224', { // Group id here
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({userID: _id}) // member id here
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    var error = document.getElementById("error-message");
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                }
+                if(!jsonRes.success) throw jsonRes.message;
+                
+                var error = document.getElementById("error-message");
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        }catch(err){
+            throw err;
+        }
+    },
+
+    removeGroupMember(_id){
+        try{
+            return fetch('http://localhost:8000/group/60c13863b069455054d4b224/' + _id, { // Group id and member id here
+                method: 'DELETE'
+                //headers: {'Content-Type':'application/json'},
+               // body: JSON.stringify({_id: _id}) // member id here
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    var error = document.getElementById("error-message");
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                }
+                if(!jsonRes.success) throw jsonRes.message;
+                
+                var error = document.getElementById("error-message");
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
             });
         }catch(err){
             throw err;

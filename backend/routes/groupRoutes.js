@@ -101,7 +101,7 @@ async function getGroup(req, res, next) {
 }
 
 // Remove member from group 
-router.delete("/:groupID/:userID", async (req, res) => {
+router.delete("/:groupID/:userID", getGroup, async (req, res) => {
     let userID = req.params.userID;
     let groupID = req.params.groupID; 
 
