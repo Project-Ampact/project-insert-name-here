@@ -99,6 +99,7 @@ app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
     catch(err){
         return res.status(500).send({success: false, message: err.toString()});
     }
+});
 
 //signin
 app.post('/signin', (req, res) => {
