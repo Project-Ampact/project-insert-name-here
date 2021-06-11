@@ -10,7 +10,17 @@ const APIAccess = {
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    var error = document.getElementById("error-message");
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                }
                 if(!jsonRes.success) throw jsonRes.message;
+                
+                var error = document.getElementById("error-message");
+                error.style.visibility = "hidden";
+                window.location = "/";
                 // if you want to redirect to another page do it here
                 return {user: jsonRes.username, role: jsonRes.role};
             });
