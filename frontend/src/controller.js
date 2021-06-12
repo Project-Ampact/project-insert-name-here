@@ -63,15 +63,14 @@ const APIAccess = {
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
+                var error = document.getElementById("error-message");
                 if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
-                    var error = document.getElementById("error-message");
                     error.style.visibility = "visible";
                     console.log(jsonRes.message);
                     error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
                 }
-                if(!jsonRes.success) throw jsonRes.message;
                 
-                var error = document.getElementById("error-message");
                 error.style.visibility = "hidden";
                 return {user: jsonRes.name, role: jsonRes.about};
             });
