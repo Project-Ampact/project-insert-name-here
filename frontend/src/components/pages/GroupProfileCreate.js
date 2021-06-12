@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import "../groupProfile/Group.css";
 import GroupsList from "../groups/GroupsList.js"
+import NavigationBar from "../NavigationBar";
 
 
 let mock_data = [
@@ -124,7 +125,6 @@ let mock_data = [
 
 function GroupProfileCreate() {
   const [isLoading, setIsLoading] = useState(true);
-  const [loadedGroupData, setLoadedGroupData] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -137,7 +137,6 @@ function GroupProfileCreate() {
        // console.log(data)
         mock_data = data;
         
-        setLoadedGroupData(data);
         setIsLoading(false);
       });
   }, []);
@@ -157,7 +156,8 @@ function GroupProfileCreate() {
       let about = document.getElementById("about").value;
       let picture = document.getElementById("picture").value;
       console.log(groupName, about, picture);
-      let user = await APIAccess.createGroupProfile(groupName, about, picture);
+      window.location.reload()
+      await APIAccess.createGroupProfile(groupName, about, picture);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
@@ -165,56 +165,59 @@ function GroupProfileCreate() {
   };
 
   return (
-    <Container className="mt-3 profile container-fluid">
-      <div className="register">
-        <form id="register-form">
-          <fieldset>
-            <header>
-              <h1 className="register-title">Ampact</h1>
-            </header>
-            <main>
-              <h2 className="register-subtitle">Create Group</h2>
-              <div class="wrapper-register">
-                <label for="picture">GroupPicture:</label>
-                <input
-                  type="register"
-                  name="picture"
-                  id="picture"
-                  placeholder=""
-                />
-              </div>
+    <div>
+      <NavigationBar/>
+      <Container className="profile container-fluid">
+        <div className="register">
+          <form id="register-form">
+            <fieldset>
+              <header>
+                <h1 className="register-title">Ampact</h1>
+              </header>
+              <main>
+                <h2 className="register-subtitle">Create Group</h2>
+                <div class="wrapper-register">
+                  <label for="picture">GroupPicture:</label>
+                  <input
+                    type="register"
+                    name="picture"
+                    id="picture"
+                    placeholder=""
+                  />
+                </div>
 
-              <div class="wrapper-register">
-                <label for="about">About:</label>
-                <div>
-                  <input
-                    type="register"
-                    name="about"
-                    id="about"
-                    placeholder=""
-                  />
+                <div class="wrapper-register">
+                  <label for="about">About:</label>
+                  <div>
+                    <input
+                      type="register"
+                      name="about"
+                      id="about"
+                      placeholder=""
+                    />
+                  </div>
                 </div>
-              </div>
-              <div class="wrapper-register">
-                <label for="groupName">GroupName:</label>
-                <div>
-                  <input
-                    type="register"
-                    name="groupName"
-                    id="groupName"
-                    placeholder=""
-                  />
+                <div class="wrapper-register">
+                  <label for="groupName">GroupName:</label>
+                  <div>
+                    <input
+                      type="register"
+                      name="groupName"
+                      id="groupName"
+                      placeholder=""
+                    />
+                  </div>
                 </div>
-              </div>
-              <button type="submit" onClick={update} className="submit-button">
-                Create
-              </button>
-            </main>
-          </fieldset>
-        </form>
-      </div>
-      <GroupsList groups={mock_data} />
-    </Container>
+                <button type="submit" onClick={update} className="submit-button">
+                  Create
+                </button>
+              </main>
+            </fieldset>
+          </form>
+        </div>
+        <GroupsList groups={mock_data} />
+      </Container>
+    </div>
   );
 }
 
