@@ -26,3 +26,8 @@
 .sign-out {
     background-color: red;
 }
+
+.nav-l a {
+    color: white;
+    text-decoration: none;
+}

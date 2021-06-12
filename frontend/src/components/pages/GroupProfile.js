@@ -4,13 +4,8 @@ import { Container } from "react-bootstrap";
 import Group from "../groupProfile/Group.js";
 import GroupMemberList from "../group_members/GroupMemberList.js";
 import "../groupProfile/Group.css";
-import APIAccess from "../../controller.js";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import NavigationBar from '../NavigationBar';
 
 
 let mock_data = [
@@ -55,7 +50,7 @@ let mock_data = [
     role: "Student",
   },
 ];
-let memData;
+
 function GroupProfile() {
   let {gid} = useParams()
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +72,7 @@ function GroupProfile() {
        
      
       });
-  }, []);
+  }, [gid]);
 
   if (isLoading) {
     return (
@@ -88,10 +83,13 @@ function GroupProfile() {
   }
   
   return (
-    <Container className="mt-3 profile container-fluid">
-      <Group gid = {gid} groupData={loadedGroupData} />
-      <GroupMemberList members={mock_data} /> 
-    </Container>
+    <div>
+      <NavigationBar/>
+      <Container className="profile container-fluid">
+        <Group gid = {gid} groupData={loadedGroupData} />
+        <GroupMemberList members={mock_data} /> 
+      </Container>
+    </div>
   );
 }
 
