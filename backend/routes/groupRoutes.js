@@ -1,7 +1,7 @@
 const express = require("express"); 
-const { findByIdAndDelete } = require("../models/Group");
-const Group = require("../models/Group");
-const User = require("../models/User");
+const { findByIdAndDelete } = require("../models/group");
+const Group = require("../models/group");
+const User = require("../models/user");
 const router = express.Router();
 
 // Get all groups 
