@@ -1,4 +1,3 @@
-
 .vertical-nav ul {
     display: flex;
     flex-direction: column;
@@ -26,4 +25,9 @@
 
 .sign-out {
     background-color: red;
+}
+
+.nav-l a {
+    color: white;
+    text-decoration: none;
 }

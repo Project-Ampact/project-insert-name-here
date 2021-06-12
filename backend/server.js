@@ -124,5 +124,8 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
     console.log("connected to DB");
 });
 
+const groups = require('./routes/groupRoutes');
+app.use('/group', groups);
+
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));
