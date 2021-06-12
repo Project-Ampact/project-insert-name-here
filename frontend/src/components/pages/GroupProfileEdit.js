@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button, Container } from "react-bootstrap";
+import React from "react";
+import { Button } from "react-bootstrap";
 import "./GroupProfileEdit.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
+import NavigationBar from "../NavigationBar";
 
 function GroupProfileEdit() {
   let { gid } = useParams();
@@ -18,7 +14,7 @@ function GroupProfileEdit() {
       let about = document.getElementById("about").value;
       let picture = document.getElementById("picture").value;
       //console.log(group, groupName, about, picture);
-      let user = await APIAccess.updateGroupProfile(
+      await APIAccess.updateGroupProfile(
         gid,
         groupName,
         about,
@@ -33,7 +29,7 @@ function GroupProfileEdit() {
   const deleteGroup = async (e) => {
     e.preventDefault();
     try {
-      let user = await APIAccess.deleteGroup(gid);
+      await APIAccess.deleteGroup(gid);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
@@ -42,6 +38,7 @@ function GroupProfileEdit() {
 
   return (
     <div>
+      <NavigationBar/>
       <div className="register">
         <form id="register-form">
           <fieldset>
