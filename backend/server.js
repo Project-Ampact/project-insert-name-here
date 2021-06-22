@@ -125,6 +125,8 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 });
 
 const groups = require('./routes/groupRoutes');
+const videos = require('./routes/videoRoutes');
+app.use('/video', videos);
 app.use('/group', groups);
 
 const port = 8000;
