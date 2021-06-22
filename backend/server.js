@@ -25,7 +25,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
 //set up session
 app.use(session({
     secret: 'secret',
