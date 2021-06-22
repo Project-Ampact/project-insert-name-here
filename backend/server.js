@@ -11,6 +11,7 @@ const validator = require('validator');
 const cookie = require('cookie');
 
 const User = require('./models/user');
+const Profile = require('./models/profile');
 require('dotenv/config');
 
 app.use(express.json());
@@ -89,12 +90,16 @@ app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
     let newUser = new User({
         _id: username,
         password: hashword,
-        salt: salt,
-        role: req.body.role,
+        salt: salt
+    });
+    let newProfile = new Profile({
+        _id: username,
+        role: req.body.role
     });
     try{
         let savedUser = await newUser.save();
-        return res.json({success: true, username: savedUser._id, role: savedUser._id});
+        let savedProfile = await newProfile.save();
+        return res.json({success: true, username: savedUser._id, role: savedProfile.role});
     }
     catch(err){
         return res.status(500).send({success: false, message: err.toString()});
