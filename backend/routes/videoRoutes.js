@@ -7,8 +7,6 @@ const { query } = require("express");
 
 //insert valid subjects here
 const validator = require('validator');
-
-//insert valid subjects here
 const validSubjects = [''];
 
 const isAuthenticated = (req, res, next) => {
@@ -51,12 +49,14 @@ router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
     let url = req.body.url;
     let subject = req.body.subject.toLowerCase().trim();
     let description = req.body.description;
+    let tags = req.body.tags;
     let newVideo = new Video({
         title: title,
         videoUrl: url,
         description: description,
         poster: req.user.username,
-        subject: subject
+        subject: subject,
+        tags: tags
     });
     try{
         let savedVideo = await newVideo.save();
@@ -65,6 +65,17 @@ router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
     catch(err){
         return res.status(500).send({success: false, message: err.toString()});
     }
+});
+
+//Get videos matching the given tag
+router.get("/browse/:tag", async(req, res) => {
+    let tag = req.params.tag;
+    
+    let query = { tags: tag };
+    Video.find(query, (err, videos) => {
+        if (err) return res.status(500).send();
+        return res.json(videos);
+    });
 });
 
 module.exports = router; 
