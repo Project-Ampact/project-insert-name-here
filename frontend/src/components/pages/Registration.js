@@ -55,8 +55,13 @@ function Registration() {
             </div>
             <div  className="wrapper-register">
                 <label htmlFor="role">Role:</label>
-                <div>
-                    <input type="register" name="role" id="role" placeholder=""/>
+                  <select name="role" id="role-dropdown">
+                  <option value="entrepreneur">Entrepreneur</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="Partner">Partner</option>
+                  </select>
+                <div class="dropdown-role-content">
+                   <a></a>
                 </div>
             </div>
             <div class="wrapper-register"><p id="error-message">Error please change your information*</p></div>
