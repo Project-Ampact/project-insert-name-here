@@ -17,7 +17,7 @@ const profileSchema = new mongoose.Schema({
     },
     picture: {
         type: String,
-        default: ""
+        default: "https://picsum.photos/200/100"
     },
     bio: {
         type: String,
