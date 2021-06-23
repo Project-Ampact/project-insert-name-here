@@ -18,7 +18,7 @@ function Registration() {
     try{    
       let username = document.getElementById("username").value;
       let password = document.getElementById("password").value;
-      let role = document.getElementById("role").value;
+      let role = document.getElementById("role-dropdown").value;
       console.log(username, password, role);
       let user = await APIAccess.registerUser(username, password, role);
       console.log("Made it here");
@@ -58,7 +58,7 @@ function Registration() {
                   <select name="role" id="role-dropdown">
                   <option value="entrepreneur">Entrepreneur</option>
                   <option value="instructor">Instructor</option>
-                  <option value="Partner">Partner</option>
+                  <option value="partner">Partner</option>
                   </select>
                 <div class="dropdown-role-content">
                    <a></a>
