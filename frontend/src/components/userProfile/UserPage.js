@@ -6,12 +6,15 @@ import "./UserPage.css";
 
 function UserPage(props) {
   // if first name and last name are not available, use username
+
+  const banner = "https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+
   return (
     <Container className="profile container-fluid">
       <Row className="mt-5 row2 container-fluid">
         <Col>
           <Card className="mb-3 userProfile" style={{ color: "#000" }}>
-            <Card.Img className="user-img" src={props.image} />
+            <Card.Img className="user-img" src={banner} />
             <Card.Body>
             <Container>
             <Row>
