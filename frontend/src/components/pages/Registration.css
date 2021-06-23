@@ -72,3 +72,8 @@
     text-align: center;
     visibility: hidden;
 }
+
+#role-dropdown {
+    margin-left: 20px;
+    padding: 2px 10px;
+}
