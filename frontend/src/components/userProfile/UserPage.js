@@ -4,14 +4,22 @@ import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import Image from 'react-bootstrap/Image'
 import "./UserPage.css";
 
-function UserPage(props) {
-  // if first name and last name are not available, use username
+function CanEditProfile(props) {
+  if (props.canEdit) {
+    return (
+      <Button className="userpbutton" variant="primary">Edit Profile</Button>
+    )
+  } else {
+    return null
+  }
+}
 
+function UserPage(props) {
   const banner = "https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 
     let name
     if (props.lastName === "" && props.firstName === "") {
-      name = props.username;
+      name = props._id;
     } else {
       name = `${props.firstName} ${props.lastName}`
     }
@@ -32,7 +40,7 @@ function UserPage(props) {
               <Card.Text>
                 {props.role}
               </Card.Text>
-              <Button className="userpbutton" variant="primary">Edit Profile</Button>
+              <CanEditProfile canEdit={props.canEdit}/>
             </Col>
             </Row></Container>
             </Card.Body>

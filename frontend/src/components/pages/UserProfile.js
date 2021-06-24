@@ -6,26 +6,14 @@ import "./LoggedIn.css"
 import NavigationBar from "../NavigationBar.js";
 import {useParams} from "react-router-dom";
 
-const DUMMY_DATA1 = {
-    name: 'John Doe',
-    teamname:'AlphaTeam',
-    image: 'https://picsum.photos/200/100',
-    about: 'A person of dsfkhlasoh...'
-}
-
-const DUMMY_DATA2 = {
-  name: 'Lily Abc',
-  teamname:'BetaTeam',
-  image: 'https://picsum.photos/200/100',
-  about: 'She is a sdlifhsdkjfh person...'
-}
-
-
-
 function UserProfile() {
   let {uid} = useParams()
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
+  const username = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('username='))
+    .split('=')[1]
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,7 +39,7 @@ function UserProfile() {
     return (
       <div className="logged-in">
         <NavigationBar/>
-        <UserPage {...loadedUserData} username={uid}/>
+        <UserPage {...loadedUserData} canEdit={username === uid}/>
       </div>
     );
   }
