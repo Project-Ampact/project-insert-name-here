@@ -5,6 +5,7 @@ import "../userProfile/UserPage.css";
 import "./LoggedIn.css"
 import NavigationBar from "../NavigationBar.js";
 import {useParams} from "react-router-dom";
+import APIAccess from "../../controller.js";
 
 function UserProfile() {
   let {uid} = useParams()
@@ -16,17 +17,17 @@ function UserProfile() {
     .split('=')[1]
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch("http://localhost:8000/profile/" + uid)
-      .then(response => {
-        return response.json()
+    async function fetchData() {
+      let data = await APIAccess.getUserProfile(uid)
+      return data
+    }
+    fetchData()
+      .then((x) => {
+        console.log("data is " + APIAccess.getUserProfile(uid))
+        setLoadedUserData(x)
+        setIsLoading(false)
       })
-      .then(data => {
-        setLoadedUserData(data);
-        setIsLoading(false);
-        console.log("got user data")
-      })
-    }, [uid]);
+  }, [uid]);
 
     if (isLoading) {
       return (
