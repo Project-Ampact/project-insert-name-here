@@ -9,7 +9,6 @@ import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,6 +17,7 @@ import {
 } from "react-router-dom";
 import Registration from './components/pages/Registration';
 import Profile from './components/pages/Profile';
+import SingleVideoPage from './components/pages/SingleVideoPage';
 
 function PrivateRoute({ children, ...rest }) {
   let auth = AuthService();
@@ -53,6 +53,7 @@ function App() {
           <Route path="/test" component={NavigationBar}/>
           <Route path="/register" component={Registration}/>
           <Route path="/browse" component={Browse}/>
+          <Route path="/video/:vid" children={<SingleVideoPage/>}/>
           <PrivateRoute path="/profile" children={<Profile/>}/>
           <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
           <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
