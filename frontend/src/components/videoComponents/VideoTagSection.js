@@ -16,7 +16,7 @@ function VideoTagSection(props) {
   for (let i=0; i < props.videos.length; i = i + cItem) {
     tempItems = props.videos.slice(i, i + cItem);
     renderCards = tempItems.map(video => (
-        <VideoPreview key={video._id} title={video.title} picture={video.picture} description={video.description}/>
+        <VideoPreview key={video._id} title={video.title} picture={video.picture} id={video._id} description={video.description}/>
     ));
     items.push( 
         <Carousel.Item>
