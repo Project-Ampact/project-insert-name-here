@@ -7,6 +7,7 @@ import NavigationBar from './components/NavigationBar'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
+import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
 
 import {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/test" component={NavigationBar}/>
           <Route path="/register" component={Registration}/>
+          <Route path="/browse" component={Browse}/>
           <PrivateRoute path="/profile" children={<Profile/>}/>
           <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
           <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>

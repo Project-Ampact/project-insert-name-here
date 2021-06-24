@@ -10,7 +10,7 @@ const validator = require('validator');
 const validSubjects = [''];
 
 const isAuthenticated = (req, res, next) => {
-    if(!req.user || req.user === "") return res.status(403).send({success: false, message: "Not authenticated"});
+   // if(!req.user || req.user === "") return res.status(403).send({success: false, message: "Not authenticated"});
     next();
 };
 
@@ -37,9 +37,9 @@ const checkVideo = (req, res, next) => {
     if(validator.isEmpty(title) || validator.isEmpty(url) || validator.isEmpty(subject)){
         return res.status(422).send({success: false, message: "Title, url and subject parameters must be non-empty strings"});
     }
-    if(!(subject in validSubjects)){
+  /*  if(!(subject in validSubjects)){
         return res.status(422).send({success: false, message: "Invalid subject"});
-    }
+    }*/
     //function to check url tbi later
     next();
 };
@@ -54,7 +54,8 @@ router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
         title: title,
         videoUrl: url,
         description: description,
-        poster: req.user.username,
+       // poster: req.user.username,
+        poster: "dd",
         subject: subject,
         tags: tags
     });
@@ -65,6 +66,42 @@ router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
     catch(err){
         return res.status(500).send({success: false, message: err.toString()});
     }
+});
+
+//Get set of section of videos, grouped by tag
+router.get("/browse", async(req, res) => {
+    let tag = req.params.tag;
+    var allTagSections = [];
+
+    // Gets all the videos in the database
+    const allVideos = await Video.find((err, videos) => {
+        if (err) return res.status(500).send();
+       // console.log(videos);
+        return videos;
+    });
+
+    // Creates an array of all the unique tags in the videos
+    const uniqueTags = [];
+   
+    allVideos.map(video => {
+        curTag = video.tags.filter((val, i, arr) => arr.indexOf(val) === i);
+        video.tags.map(tag => {
+           uniqueTags.push(tag);
+        })
+    });
+    const uniqueTags2 = [...new Set(uniqueTags)];
+
+    // Create an array of arrays of tags
+    for (let i = 0; i < uniqueTags2.length; i++) {
+        let query = { tags: uniqueTags2[i] };
+        const videoSection = await Video.find(query, (err, videos) => {
+            if (err) return res.status(500).send();
+            return videos;
+        });
+        allTagSections.push({ "videoSec": videoSection, "commonTag": uniqueTags2[i]});
+    }
+
+   return res.json(allTagSections);
 });
 
 //Get videos matching the given tag

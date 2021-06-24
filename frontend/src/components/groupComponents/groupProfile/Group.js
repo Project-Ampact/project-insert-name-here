@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import "./Group.css";
-import APIAccess from "../../controller.js";
+import APIAccess from "../../../controller.js";
 
 /*function GroupProfileContent() {
     return (

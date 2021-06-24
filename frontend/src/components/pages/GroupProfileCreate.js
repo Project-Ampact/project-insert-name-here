@@ -4,8 +4,8 @@ import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
-import "../groupProfile/Group.css";
-import GroupsList from "../groups/GroupsList.js"
+import "../groupComponents/groupProfile/Group.css";
+import GroupsList from "../groupComponents/groups/GroupsList.js"
 import NavigationBar from "../NavigationBar";
 
 
