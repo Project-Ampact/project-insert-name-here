@@ -72,7 +72,7 @@ const checkRegistrationInfo = async(req, res, next) => {
     if (username == undefined || password == undefined || role == undefined) return res.status(400).send({success: false, message: "Request body must contain username, password and role attributes"});
     if (validator.isEmpty(username)) return res.status(422).send({success: false, message: "bad input: username must be non-empty"});
     if (validator.isEmpty(password)) return res.status(422).send({success: false, message: "bad input: password must be non-empty"});
-    if (role != "instructor" && role != "partner" && role != "entrepreneur") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
+    if (role != "instructor" && role != "partner" && role != "entrepreneur" && role != "guest") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
     let user = await User.findById(username, (err, user) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
     });
