@@ -37,7 +37,7 @@ function GroupProfileEdit() {
   };
 
   return (
-    <div>
+    <div className="logged-in">
       <NavigationBar/>
       <div className="register">
         <form id="register-form">
