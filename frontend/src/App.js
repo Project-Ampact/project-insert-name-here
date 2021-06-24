@@ -51,7 +51,7 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/test" component={NavigationBar}/>
           <Route path="/register" component={Registration}/>
-          <Route path="/singleVideo" component={SingleVideoPage}/>
+          <Route path="/video/:vid" children={<SingleVideoPage/>}/>
           <PrivateRoute path="/profile" children={<Profile/>}/>
           <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
           <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
