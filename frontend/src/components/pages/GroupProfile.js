@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
-import Group from "../groupProfile/Group.js";
-import GroupMemberList from "../group_members/GroupMemberList.js";
-import "../groupProfile/Group.css";
+import Group from "../groupComponents/groupProfile/Group.js";
+import GroupMemberList from "../groupComponents/group_members/GroupMemberList.js";
+import "../groupComponents/groupProfile/Group.css";
 import {useParams} from "react-router-dom";
 import NavigationBar from '../NavigationBar';
 
