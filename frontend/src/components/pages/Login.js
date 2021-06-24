@@ -18,8 +18,12 @@ function Login() {
       let user = await APIAccess.signInUser(username, password);
 
       auth.set(user, () => {
-        console.log('user logged in')
-        history.replace('/profile')
+        const username = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('username='))
+        .split('=')[1]
+        console.log('user logged in', username)
+        history.replace('/profile/' + username)
       });
     } catch(err) {
       console.log("Error");
