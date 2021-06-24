@@ -153,6 +153,22 @@ const APIAccess = {
         } catch(err) {
             throw err;
         }
+    },
+
+    getUserProfile(uid) {
+        try {
+            return fetch("http://localhost:8000/profile/" + uid, {
+                method: 'GET',
+                credentials: 'include',
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json()
+                console.log(jsonRes)
+                return jsonRes
+            })
+        } catch(err) {
+            throw err;
+        }
     }
 };
 

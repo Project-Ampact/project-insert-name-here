@@ -4,10 +4,25 @@ import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import Image from 'react-bootstrap/Image'
 import "./UserPage.css";
 
-function UserPage(props) {
-  // if first name and last name are not available, use username
+function CanEditProfile(props) {
+  if (props.canEdit) {
+    return (
+      <Button className="userpbutton" variant="primary">Edit Profile</Button>
+    )
+  } else {
+    return null
+  }
+}
 
+function UserPage(props) {
   const banner = "https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+
+    let name
+    if (props.lastName === "" && props.firstName === "") {
+      name = props._id;
+    } else {
+      name = `${props.firstName} ${props.lastName}`
+    }
 
   return (
     <Container className="profile container-fluid">
@@ -18,14 +33,14 @@ function UserPage(props) {
             <Card.Body>
             <Container>
             <Row>
-              <Image src={props.image} className="user-icon" />
+              <Image src={props.picture} className="user-icon" />
 
             <Col>
-              <Card.Title className="user-title">{props.name}</Card.Title>
+              <Card.Title className="user-title">{name}</Card.Title>
               <Card.Text>
-                Team: {props.teamname}
+                {props.role}
               </Card.Text>
-              <Button className="userpbutton" variant="primary">Edit Profile</Button>
+              <CanEditProfile canEdit={props.canEdit}/>
             </Col>
             </Row></Container>
             </Card.Body>
@@ -37,7 +52,7 @@ function UserPage(props) {
           <Card className="mb-3 userProfile" style={{ color: "#000" }}>
             <Card.Body>
               <Card.Title className="user-about">About Me</Card.Title>
-              <Card.Text >{props.about}</Card.Text>
+              <Card.Text >{props.bio || "No bio set"}</Card.Text>
             </Card.Body>
           </Card>
         </Col>
