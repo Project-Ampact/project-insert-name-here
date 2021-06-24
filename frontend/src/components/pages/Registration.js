@@ -59,6 +59,7 @@ function Registration() {
                   <option value="entrepreneur">Entrepreneur</option>
                   <option value="instructor">Instructor</option>
                   <option value="partner">Partner</option>
+                  <option value="guest">Guest</option>
                   </select>
                 <div class="dropdown-role-content">
                    <a></a>
