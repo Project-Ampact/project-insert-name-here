@@ -25,7 +25,7 @@ function NavigationBar() {
           <li>Stuff 1</li>
           <li>Stuff 2</li>
           <li className="nav-l"><Link to="/groupProfile/create">Groups</Link></li>
-          <li className="nav-l"><Link to="/groupProfile/edit/60c148ae4df89114682f519e">Test</Link></li>
+          <li className="nav-l"><Link to="/profile">My Profile</Link></li>
         </div>
         <div className="sign-out">
           <li className="nav-l"><Link to="/" onClick={auth.signout}>Sign Out</Link></li>

@@ -16,7 +16,7 @@ import {
   Redirect
 } from "react-router-dom";
 import Registration from './components/pages/Registration';
-import Profile from './components/pages/Profile';
+import UserProfile from './components/pages/UserProfile';
 
 function PrivateRoute({ children, ...rest }) {
   let auth = AuthService();
@@ -51,7 +51,7 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/test" component={NavigationBar}/>
           <Route path="/register" component={Registration}/>
-          <PrivateRoute path="/profile" children={<Profile/>}/>
+          <PrivateRoute exact path="/profile" children={<UserProfile/>}/>
           <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
           <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
           <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
