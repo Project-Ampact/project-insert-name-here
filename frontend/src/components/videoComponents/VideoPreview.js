@@ -6,8 +6,9 @@ function VideoPreview(props) {
         e.preventDefault();
       };*/
 //onClick={videoSelectedCallback}
-//let videoLink = "http://localhost:3000/video/" + props._id;
-let videoLink = "https://www.youtube.com/watch?v=8GU3jWgz3m4&ab_channel=PewDiePie";
+let videoLink = "http://localhost:3000/video/" + props.id;
+//console.log(toString(props._id));
+//let videoLink = "http://localhost:3000/video/60d4c24fe069ec38e4248dc3";
     return(
         <Card key={props.key}>
             <a className="links" style={{ cursor: 'pointer' }} href= {videoLink} >
