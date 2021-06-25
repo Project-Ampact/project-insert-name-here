@@ -130,8 +130,10 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 
 const groups = require('./routes/groupRoutes');
 const videos = require('./routes/videoRoutes');
+const search = require('./routes/searchRoutes');
 app.use('/group', groups);
 app.use('/video', videos);
+app.use('/search', search);
 
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));
