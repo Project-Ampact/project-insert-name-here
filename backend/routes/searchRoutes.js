@@ -7,6 +7,10 @@ const router = express.Router();
 router.get("/group", async (req, res) => {
     let searchString = req.query.searchString; 
     let page = req.query.page;
+    if (searchString == null) {
+        return res.status(400).send({success: false, message: "Missing required fields"});
+    }
+
     (page > 0) ? page = parseInt(page) : page = 1;
 
     let group;
