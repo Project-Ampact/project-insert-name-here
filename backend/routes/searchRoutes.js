@@ -6,16 +6,20 @@ const router = express.Router();
 
 router.get("/group", async (req, res) => {
     let searchString = req.query.searchString; 
-    console.log(searchString);
-    Group.find(
+    let page = req.query.page;
+    (page > 0) ? page = parseInt(page) : page = 1;
+
+    let group;
+    try {
+    group = await Group.find(
         {$text: {
             $search: searchString,
             $caseSensitive: false
-        }}, async (err, groups) => {
-            if (err) return res.status(500).send({success: false, message: err.toString()});
-            return res.json(groups); 
-        }
-    )
+        }}).skip((page-1)*15).limit(15);
+    } catch {
+        return res.status(500).send({success: false, message: "Error while searching"});
+    }
+    return res.json(group);
 });
 
 
