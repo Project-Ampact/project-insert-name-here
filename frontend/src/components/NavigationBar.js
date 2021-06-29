@@ -1,14 +1,17 @@
 import React from 'react';
+
 import './NavigationBar.css'
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom';
+import { Nav, Row, Col, Container } from "react-bootstrap";
 import { AuthService } from '../util/authService'
 
 function NavigationBar() {
   let auth = AuthService();
 
   return (
-    <div className="vertical-nav">
+    <Container className="outer-nav">
+        <div className="vertical-nav">
       <ul>
         <div>
           <li>
@@ -22,7 +25,7 @@ function NavigationBar() {
           </li>
         </div>
         <div className="nav-links">
-          <li>Stuff 1</li>
+          <li className="links">Stuff 1</li>
           <li>Stuff 2</li>
           <li className="nav-l"><Link to="/groupProfile/create">Groups</Link></li>
           <li className="nav-l"><Link to="/groupProfile/edit/60c148ae4df89114682f519e">Test</Link></li>
@@ -32,6 +35,8 @@ function NavigationBar() {
         </div>
       </ul>
     </div>
+    </Container>
+    
   )
 }
 
