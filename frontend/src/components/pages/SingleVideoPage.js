@@ -6,6 +6,8 @@ import APIAccess from "../../controller.js";
 import { useHistory } from "react-router-dom";
 import { AuthService } from "../../util/authService";
 import { useParams } from "react-router-dom";
+import NavigationBar from '../NavigationBar';
+import { Container } from "react-bootstrap";
 
 let mock_data = 
   [{
@@ -56,6 +58,9 @@ function SingleVideoPage() {
   }
 
   return (
+    <div>
+    <NavigationBar/>
+    <Container>
     <div className="container-fluid mb-5">
       <div className="wrapper">
         {" "}
@@ -71,7 +76,7 @@ function SingleVideoPage() {
           class="embed-responsive-item"
           src={videoInfo.videoUrl}
           id="video"
-          alllowfullscreen
+          allowfullscreen= "true"
         ></iframe>
       </div>
       <div className="container-fluid video-info ">
@@ -85,6 +90,8 @@ function SingleVideoPage() {
         </p>
       </div>
       </div>
+    </div>
+    </Container>
     </div>
   );
 }

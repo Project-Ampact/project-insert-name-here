@@ -16,10 +16,10 @@ function VideoTagSection(props) {
   for (let i=0; i < props.videos.length; i = i + cItem) {
     tempItems = props.videos.slice(i, i + cItem);
     renderCards = tempItems.map(video => (
-        <VideoPreview key={video._id} title={video.title} picture={video.picture} id={video._id} description={video.description}/>
+        <VideoPreview key= {video._id} title={video.title} picture={video.picture} id={video._id} description={video.description}/>
     ));
     items.push( 
-        <Carousel.Item>
+        <Carousel.Item className="custom-carousel-item">
             <CardDeck className="cardDeck">
                 {renderCards}
             </CardDeck>
@@ -28,14 +28,14 @@ function VideoTagSection(props) {
   }
 
   return (
-      <Container className="mt-3 profile container-fluid">
-        <Row className="row2 container-fluid"> 
-            <Col>
-                <h1> {props.section} </h1>
-                <Carousel>
+      <Container fluid className="mt-3 vid-section profile container-fluid">
+        <Row  className="sec-name row-section"> 
+           
+                <h1 className="sec-name"> {props.section} </h1>
+                <Carousel className="custom-carousel">
                     {items}
                 </Carousel>
-            </Col>
+           
         </Row>
       </Container>
   );

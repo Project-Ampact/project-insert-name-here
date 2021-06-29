@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Nav, CardDeck, Carousel, Row, Col, Card, Button, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from "react-bootstrap";
+
 import Group from "../groupComponents/groupProfile/Group.js";
 import GroupMemberList from "../groupComponents/group_members/GroupMemberList.js";
 import "../groupComponents/groupProfile/Group.css";
@@ -9,6 +10,9 @@ import NavigationBar from '../NavigationBar';
 import VideoTagSection from "../videoComponents/VideoTagSection.js";
 import "../videoComponents/VideoTagSection.css"
 import APIAccess from "../../controller.js";
+import NavBar from "../NavBar.js";
+import '../NavigationBar.css';
+
 
 let mock_data2 = [];
 
@@ -88,14 +92,29 @@ function Browse() {
   }
 
   return (
-    <div>
-      <NavigationBar/>
-      <Container className=" profile container-fluid">
-            {mock_data2.map((mock_data_piece) => {
-                return <VideoTagSection section = {mock_data_piece.commonTag}  videos = {mock_data_piece.videoSec}/> 
-            })}
-      </Container>
-    </div>
+    <Container fluid>
+      <Row>
+        <Col xs={1} className="sidebar-wrapper">
+          <NavBar/>
+        </Col>
+        <Col xs={11} className="page-content-wrapper">
+          <div className="body-cus">
+          <div className="vid-sec2">
+            <Container>
+            <h1 className="h1-cus"> Browse</h1>
+            </Container>
+            <Container  fluid className=" col2 profile container-fluid">
+              <Row>
+              {mock_data2.map((mock_data_piece) => {
+                      return <VideoTagSection section = {mock_data_piece.commonTag}  videos = {mock_data_piece.videoSec}/> 
+                  })}
+              </Row>
+            </Container>
+          </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
