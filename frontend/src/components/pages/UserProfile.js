@@ -6,7 +6,7 @@ import "./LoggedIn.css"
 import NavigationBar from "../NavigationBar.js";
 import {useParams} from "react-router-dom";
 import APIAccess from "../../controller.js";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function UserProfile() {
