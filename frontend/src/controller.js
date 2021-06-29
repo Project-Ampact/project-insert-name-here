@@ -163,10 +163,28 @@ const APIAccess = {
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
-                console.log(jsonRes)
                 return jsonRes
             })
         } catch(err) {
+            throw err;
+        }
+    },
+    updateUserProfile(uid, first_name, last_name, picture, bio){
+        try{
+            return fetch('http://localhost:8000/profile/' + uid, {
+                method: 'PATCH',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({firstName: first_name, lastName: last_name, picture: picture, bio: bio})
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+               
+                if(!jsonRes.success) throw jsonRes.message;
+                
+                var error = document.getElementById("error-message");
+                error.style.visibility = "hidden";
+                return {name: jsonRes.name, about: jsonRes.about};
+            });
+        }catch(err){
             throw err;
         }
     }

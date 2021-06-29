@@ -23,7 +23,6 @@ function UserProfile() {
     }
     fetchData()
       .then((x) => {
-        console.log("data is " + APIAccess.getUserProfile(uid))
         setLoadedUserData(x)
         setIsLoading(false)
       })
