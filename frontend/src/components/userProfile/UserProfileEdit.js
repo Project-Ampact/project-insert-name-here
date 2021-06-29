@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import APIAccess from "../../controller.js";
 import { useParams, useHistory } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
@@ -39,6 +40,15 @@ function UserProfileEdit() {
     } catch (err) {
       console.log(err)
     }
+    toast.success('User info updated', {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      });
     history.push('/profile/' + uid)
   }
 

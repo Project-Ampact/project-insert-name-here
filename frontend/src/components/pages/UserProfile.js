@@ -6,6 +6,8 @@ import "./LoggedIn.css"
 import NavigationBar from "../NavigationBar.js";
 import {useParams} from "react-router-dom";
 import APIAccess from "../../controller.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserProfile() {
   let {uid} = useParams()
@@ -37,9 +39,22 @@ function UserProfile() {
     }
 
     return (
-      <div className="logged-in">
-        <NavigationBar/>
-        <UserPage {...loadedUserData} canEdit={username === uid}/>
+      <div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
+        <div className="logged-in">
+          <NavigationBar/>
+          <UserPage {...loadedUserData} canEdit={username === uid}/>
+        </div>
       </div>
     );
   }
