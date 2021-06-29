@@ -1,27 +1,24 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Row, Col, Card, Button, Container } from "react-bootstrap";
-import Image from 'react-bootstrap/Image'
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
-import "./UserPage.css";
 
 import APIAccess from "../../controller.js";
 import { useParams } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 
 function UserProfileEdit(props) {
+  const {uid} = useParams()
+
   return (
-    <div>
+    <div className="logged-in">
     <NavigationBar/>
     <div className="register">
       <form id="register-form">
         <fieldset>
           <header>
-            <h1 className="register-title">Ampact</h1>
+            <h1 className="register-title">{uid}</h1>
           </header>
           <main>
-          <h2 className="register-subtitle">Edit {props.firstName} {props.lastName}'s Profile</h2>
+          <h2 className="register-subtitle">Edit Profile</h2>
           <div class="wrapper-register">
               <label for="firstName">First Name:</label>
                 <input
@@ -39,24 +36,6 @@ function UserProfileEdit(props) {
                   placeholder=""
                   defaultValue={props.lastName}
                 />
-              <label>Current Role:</label> 
-              <input
-                  type="register"
-                  name="lastName"
-                  id="lname"
-                  placeholder=""
-                  readOnly={true}
-                  defaultValue={props.role}
-                /> 
-              <label>Current Group:</label> 
-              <input
-                  type="register"
-                  name="lastName"
-                  id="lname"
-                  placeholder=""
-                  readOnly={true}
-                  defaultValue={props.teamname}
-                /> 
 
               <label for="picture">Profile Picture:</label>
               <input

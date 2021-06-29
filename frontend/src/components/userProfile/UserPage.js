@@ -7,7 +7,7 @@ import "./UserPage.css";
 function CanEditProfile(props) {
   if (props.canEdit) {
     return (
-      <Button className="userpbutton" variant="primary">Edit Profile</Button>
+      <Button className="userpbutton" variant="primary" href={`/profile/${props.username}/edit`}>Edit Profile</Button>
     )
   } else {
     return null
@@ -40,7 +40,7 @@ function UserPage(props) {
               <Card.Text>
                 {props.role}
               </Card.Text>
-              <CanEditProfile canEdit={props.canEdit}/>
+              <CanEditProfile canEdit={props.canEdit} username={props._id}/>
             </Col>
             </Row></Container>
             </Card.Body>
