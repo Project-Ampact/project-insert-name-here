@@ -11,6 +11,7 @@ const validator = require('validator');
 const cookie = require('cookie');
 
 const User = require('./models/user');
+const Profile = require('./models/profile');
 require('dotenv/config');
 
 app.use(express.json());
@@ -23,7 +24,6 @@ app.use((req, res, next) => {
     console.log("HTTP request", req.method, req.url, req.body);
     next();
 });
-
 
 //set up session
 app.use(session({
@@ -72,7 +72,7 @@ const checkRegistrationInfo = async(req, res, next) => {
     if (username == undefined || password == undefined || role == undefined) return res.status(400).send({success: false, message: "Request body must contain username, password and role attributes"});
     if (validator.isEmpty(username)) return res.status(422).send({success: false, message: "bad input: username must be non-empty"});
     if (validator.isEmpty(password)) return res.status(422).send({success: false, message: "bad input: password must be non-empty"});
-    if (role != "instructor" && role != "partner" && role != " entrepeneur") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
+    if (role != "instructor" && role != "partner" && role != "entrepreneur" && role != "guest") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
     let user = await User.findById(username, (err, user) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
     });
@@ -89,12 +89,16 @@ app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
     let newUser = new User({
         _id: username,
         password: hashword,
-        salt: salt,
-        role: req.body.role,
+        salt: salt
+    });
+    let newProfile = new Profile({
+        _id: username,
+        role: req.body.role
     });
     try{
         let savedUser = await newUser.save();
-        return res.json({success: true, username: savedUser._id, role: savedUser._id});
+        let savedProfile = await newProfile.save();
+        return res.json({success: true, username: savedUser._id, role: savedProfile.role});
     }
     catch(err){
         return res.status(500).send({success: false, message: err.toString()});
@@ -125,7 +129,11 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 });
 
 const groups = require('./routes/groupRoutes');
+const videos = require('./routes/videoRoutes');
+const search = require('./routes/searchRoutes');
 app.use('/group', groups);
+app.use('/video', videos);
+app.use('/search', search);
 
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));

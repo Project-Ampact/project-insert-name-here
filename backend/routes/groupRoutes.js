@@ -19,7 +19,6 @@ router.get("/:groupID", async (req, res) => {
     let groupId = req.params.groupID;
     Group.findById(groupId, (err, groups) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
-        console.log(groups);
         if (!groups) return res.status(404).send({success: false, message: "Group not found"});
         return res.json(groups);
     }); 
