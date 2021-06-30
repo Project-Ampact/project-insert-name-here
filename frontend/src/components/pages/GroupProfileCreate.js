@@ -3,11 +3,11 @@ import "./GroupProfileEdit.css";
 import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from "react-bootstrap";
-import "../groupProfile/Group.css";
-import GroupsList from "../groups/GroupsList.js"
-import NavigationBar from "../NavigationBar";
-
+import "../groupComponents/groupProfile/Group.css";
+import "./GroupProfileCreate.css";
+import GroupsList from "../groupComponents/groups/GroupsList.js";
+import PageLayout from "./DefaultPage";
+import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
 let mock_data = [
   {
@@ -134,9 +134,9 @@ function GroupProfileCreate() {
         return response.json();
       })
       .then((data) => {
-       // console.log(data)
+        // console.log(data)
         mock_data = data;
-        
+
         setIsLoading(false);
       });
   }, []);
@@ -156,7 +156,7 @@ function GroupProfileCreate() {
       let about = document.getElementById("about").value;
       let picture = document.getElementById("picture").value;
       console.log(groupName, about, picture);
-      window.location.reload()
+      window.location.reload();
       await APIAccess.createGroupProfile(groupName, about, picture);
       console.log("Made it here");
     } catch (err) {
@@ -165,59 +165,52 @@ function GroupProfileCreate() {
   };
 
   return (
-    <div className="logged-in">
-      <NavigationBar/>
-      <Container className="profile container-fluid">
-        <div className="register">
-          <form id="register-form">
-            <fieldset>
-              <header>
-                <h1 className="register-title">Ampact</h1>
-              </header>
-              <main>
-                <h2 className="register-subtitle">Create Group</h2>
-                <div class="wrapper-register">
-                  <label for="picture">GroupPicture:</label>
-                  <input
-                    type="register"
-                    name="picture"
-                    id="picture"
-                    placeholder=""
-                  />
-                </div>
-
-                <div class="wrapper-register">
-                  <label for="about">About:</label>
-                  <div>
-                    <input
-                      type="register"
-                      name="about"
-                      id="about"
-                      placeholder=""
+    <PageLayout>
+      <div className="body-cus">
+        <div className="form-section">
+          <h1 className="h1-cus"> Create New Group</h1>
+          <Container fluid className="form-section-inner">
+            <Row>
+              <Col>
+                <Form className="form-cus">
+                  <Form.Group controlId="groupName">
+                    <Form.Label>Group Name</Form.Label>
+                    <Form.Control
+                      type="groupName"
+                      placeholder="Enter group name"
                     />
-                  </div>
-                </div>
-                <div class="wrapper-register">
-                  <label for="groupName">GroupName:</label>
-                  <div>
-                    <input
-                      type="register"
-                      name="groupName"
-                      id="groupName"
-                      placeholder=""
+                    <Form.Text className="text-muted">
+                      This is the name of your group or company.
+                    </Form.Text>
+                  </Form.Group>
+                  <Form.Group controlId="picture">
+                    <Form.Label>Group Picture</Form.Label>
+                    <Form.Control
+                      type="picture"
+                      placeholder="https://picsum.photos/200/100"
                     />
-                  </div>
-                </div>
-                <button type="submit" onClick={update} className="submit-button">
-                  Create
-                </button>
-              </main>
-            </fieldset>
-          </form>
+                  </Form.Group>
+                  <Form.Group controlId="about">
+                    <Form.Label>Group Description</Form.Label>
+                    <Form.Control type="about" as="textarea" rows={3} />
+                  </Form.Group>
+                  <Button onClick={update} variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
         </div>
-        <GroupsList groups={mock_data} />
-      </Container>
-    </div>
+        <div className="form-section">
+          <Container>
+            <Row>
+              <GroupsList groups={mock_data} />
+            </Row>
+          </Container>
+        </div>
+      </div>
+    </PageLayout>
   );
 }
 

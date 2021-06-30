@@ -187,6 +187,23 @@ const APIAccess = {
         }catch(err){
             throw err;
         }
+    },
+    getVideoSections() {
+        var loadedData = [];
+        try{
+            fetch("http://localhost:8000/video/browse/")
+                .then(async (response) => {
+                   return  await response.json();
+                })
+                .then(async (data) => {
+                    console.log(data)
+                    return await data;
+                });
+           // return loadedData;
+        } catch(err) {
+            throw err;
+        }
+       // return loadedData;
     }
 };
 

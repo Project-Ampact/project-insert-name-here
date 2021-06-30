@@ -4,63 +4,42 @@
     align-content: center;
 }
 
-.register-title {
-    font-size: 40px;
-    color: #fa9200 ;
+
+.form-cus {
+    margin: 0 auto;
 }
 
-.register-subtitle {
-    font-size: 25px;
-    color: #007706 ;
+.form-section {
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 2px 2px 16px 2px;
+    margin-top: 20px;
+    background-color: #fff;
+    border: #116466;
+    border-radius: 1%;
 }
 
-.register fieldset {
-    background-color: white;
-    width: 368px;
-    padding: 0;
-    border-radius: 5px;
-    border: 1.5px solid rgb(199, 199, 199);
-
+.form-section-inner {
+    padding: 7px 14px 7px 14px;
+    margin-top: 20px;
+    background-color: #fff;
+    border: #116466;
+    border-radius: 1%;
 }
 
-.register form header, .register form main {
-    margin: 20px 30px 0 30px;
-}
 
-.register form header {
-    margin-top: 30px;
-}
-
-.register form label {
-    line-height: 25px;
-    padding-bottom: 6px;
-    font-size: 17px;
-    float: left;
-    font-weight: bold;
-}
-
-.register form fieldset header *{
+.h1-cus {
     text-align: center;
-}
+    font-size: 550%;
+  }
+  .body {
+    background-color: #f2f2f2;
+  }
 
-#register-form {
-    margin-top: 70px;
-}
+  .body-cus {
+    background-color: #f2f2f2;
+    padding: 5px 5px 5px 5px;
+  }
 
-#register-form fieldset, #register-form  {
-    width: 500px;
-}
-
-#register-form input {
-    margin-bottom: 20px;
-    width: 250px;
-}
-
-.wrapper-register input {
-    margin-left: 20px;
-}
-
-.wrapper-register label {
-    margin-top: 5px;
-    width: 120px;
-}
+  
+  
