@@ -6,6 +6,7 @@ import "./LoggedIn.css"
 import NavigationBar from "../NavigationBar.js";
 import {useParams} from "react-router-dom";
 import APIAccess from "../../controller.js";
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserProfile() {
   let {uid} = useParams()
@@ -23,7 +24,6 @@ function UserProfile() {
     }
     fetchData()
       .then((x) => {
-        console.log("data is " + APIAccess.getUserProfile(uid))
         setLoadedUserData(x)
         setIsLoading(false)
       })

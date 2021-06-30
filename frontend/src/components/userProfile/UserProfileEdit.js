@@ -1,83 +1,116 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Row, Col, Card, Button, Container } from "react-bootstrap";
-import Image from 'react-bootstrap/Image'
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
-import "./UserPage.css";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import APIAccess from "../../controller.js";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 
-function UserProfileEdit(props) {
+function UserProfileEdit() {
+  let history = useHistory()
+  const {uid} = useParams()
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedUserData, setLoadedUserData] = useState([])
+  const username = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('username='))
+    .split('=')[1] 
+
+  useEffect(() => {
+    async function fetchData() {
+      let data = await APIAccess.getUserProfile(uid)
+      return data
+    }
+    fetchData()
+      .then((x) => {
+        setLoadedUserData(x)
+        setIsLoading(false)
+      })
+  }, [uid])
+
+  const update = async (e) => {
+    e.preventDefault();
+    try {
+      let fName = document.getElementById("fname").value;
+      let lName = document.getElementById("lname").value;
+      let profile = document.getElementById("picture").value;
+      let bio = document.getElementById("about").value;
+      await APIAccess.updateUserProfile(uid, fName, lName, profile, bio)
+      console.log('after api call')
+    } catch (err) {
+      console.log(err)
+    }
+    toast.success('User info updated', {
+      position: "bottom-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      });
+    history.push('/profile/' + uid)
+  }
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    )
+  }
+
+  if (username !== uid) {
+    history.goBack()
+  }
+
   return (
-    <div>
+    <div className="logged-in">
     <NavigationBar/>
     <div className="register">
       <form id="register-form">
         <fieldset>
           <header>
-            <h1 className="register-title">Ampact</h1>
+            <h1 className="register-title">{uid}</h1>
           </header>
           <main>
-          <h2 className="register-subtitle">Edit {props.firstName} {props.lastName}'s Profile</h2>
-          <div class="wrapper-register">
-              <label for="firstName">First Name:</label>
+          <h2 className="register-subtitle">Edit Profile</h2>
+          <div className="wrapper-register">
+              <label htmlFor="firstName">First Name:</label>
                 <input
                   type="register"
                   name="firstName"
                   id="fname"
-                  placeholder=""
-                  defaultValue={props.firstName}
+                  defaultValue={loadedUserData.firstName}
                 />
-              <label for="lastName">Last Name:</label>
+              <label htmlFor="lastName">Last Name:</label>
                 <input
                   type="register"
                   name="lastName"
                   id="lname"
-                  placeholder=""
-                  defaultValue={props.lastName}
+                  defaultValue={loadedUserData.lastName}
                 />
-              <label>Current Role:</label> 
-              <input
-                  type="register"
-                  name="lastName"
-                  id="lname"
-                  placeholder=""
-                  readOnly={true}
-                  defaultValue={props.role}
-                /> 
-              <label>Current Group:</label> 
-              <input
-                  type="register"
-                  name="lastName"
-                  id="lname"
-                  placeholder=""
-                  readOnly={true}
-                  defaultValue={props.teamname}
-                /> 
 
-              <label for="picture">Profile Picture:</label>
+              <label htmlFor="picture">Profile Picture:</label>
               <input
                 type="register"
                 name="picture"
                 id="picture"
-                placeholder=""
+                defaultValue={loadedUserData.picture}
               />
 
-              <label for="about">About:</label><br></br>
+              <label htmlFor="about">About:</label><br></br>
               <div>
                 <textarea
                   type="register"
                   name="about"
                   id="about"
-                  placeholder={props.bio}
+                  defaultValue={loadedUserData.bio}
                 />
               </div>
             </div>
            
-            <button type="submit" /*onClick={update}*/ className="submit-button">
+            <button type="submit" onClick={update} className="submit-button">
               Update
             </button>
           </main>
