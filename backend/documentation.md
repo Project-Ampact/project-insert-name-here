@@ -373,8 +373,7 @@
             - success: (bool) false
 
 ## Search
-
-### Search Profiles
++### Search Profiles
 - Description: Search profiles
 - Request `GET /search/profile`
     - params:
@@ -399,6 +398,36 @@
             - success: (bool) false
     - Status: 500
         - indication: Server side error occured when searching profiles
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error while searching
+            - success: (bool) false
+
+### Search Groups
+- Description: Search profiles
+- Request `GET /search/group`
+    - params:
+        - searchString: String to search for 
+        - page: Search page to go to 
+    - example:
+    ```
+        fetch('localhost:8000/search/group?searchString=Spiders&page=1', {
+            method: 'GET',
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Search successful
+        - content-type: application/json
+        - body: Array of group objects matched by relevence to searchString 
+    - Status: 400 
+        - indication: request made without searchString in params
+        - content-type: application/json
+        - body: json object
+            - message: (String) Missing required fields
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when searching groups
         - content-type: application/json
         - body: json object
             - message: (String) Error while searching
