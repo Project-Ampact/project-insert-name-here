@@ -26,6 +26,7 @@
 
   .route-link {
     color: black;
+    margin-right: 15px;
   }
 
   .route-link:hover {
