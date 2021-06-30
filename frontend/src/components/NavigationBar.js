@@ -6,6 +6,12 @@ import { AuthService } from '../util/authService'
 
 function NavigationBar() {
   let auth = AuthService();
+  const username = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('username='))
+    .split('=')[1]
+  // const username = auth.user
+  // console.log(auth)
 
   return (
     <div className="vertical-nav">
@@ -25,7 +31,7 @@ function NavigationBar() {
           <li>Stuff 1</li>
           <li>Stuff 2</li>
           <li className="nav-l"><Link to="/groupProfile/create">Groups</Link></li>
-          <li className="nav-l"><Link to="/groupProfile/edit/60c148ae4df89114682f519e">Test</Link></li>
+          <li className="nav-l"><Link to={"/profile/" + username}>My Profile</Link></li>
         </div>
         <div className="sign-out">
           <li className="nav-l"><Link to="/" onClick={auth.signout}>Sign Out</Link></li>
