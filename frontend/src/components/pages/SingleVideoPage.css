@@ -8,9 +8,6 @@
     background-color: #D1E8E2;
 }
 
-* {
-    color: #2C3531;
-}
 
 @media (max-width: 768px) {
     .flexs{
