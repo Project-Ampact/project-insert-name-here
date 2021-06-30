@@ -3,7 +3,7 @@ import "./GroupProfileEdit.css";
 import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container } from "react-bootstrap";
+import { Container, InputGroup, FormControl, Button, Form } from "react-bootstrap";
 import "../groupProfile/Group.css";
 import GroupsList from "../groups/GroupsList.js"
 import NavigationBar from "../NavigationBar";
@@ -65,6 +65,8 @@ function CreateGroupForm(props) {
 
 function GroupProfileCreate() {
   const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState('')
+  const [groupData, setGroupData] = useState({})
 
   useEffect(() => {
     setIsLoading(true);
@@ -76,7 +78,7 @@ function GroupProfileCreate() {
       .then((data) => {
        // console.log(data)
         mock_data = data;
-        
+        setGroupData(data)
         setIsLoading(false);
       });
   }, []);
@@ -104,6 +106,22 @@ function GroupProfileCreate() {
     }
   };
 
+  const updateQuery = (x) => {
+    console.log('from updateQuery', x.target.value)
+    setQuery(x.target.value)
+  }
+
+  async function sendQuery(e) {
+    e.preventDefault()
+    console.log('inside sendQuery', query)
+    if (query !== '') {
+      let returnedData = await APIAccess.searchGroup(query)
+      setGroupData(returnedData)
+    } else {
+      setGroupData(mock_data)
+    }
+  }
+
   return (
     <div className="logged-in">
       <NavigationBar/>
@@ -111,7 +129,20 @@ function GroupProfileCreate() {
         <CreateGroupForm update={update}/>
         <div>
           <h1>Groups</h1>
-          <GroupsList groups={mock_data} />
+          <Form onSubmit={sendQuery} className="search-group">
+            <InputGroup size="lg" onChange={(event) => {updateQuery(event)}} onSubmit={sendQuery}>
+              <InputGroup.Prepend>
+                <InputGroup.Text id="inputGroup-sizing-lg">Search for groups</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+              <InputGroup.Append>
+                <Button variant="primary" type="submit">
+                    Search
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Form>
+          <GroupsList groups={groupData} />
         </div>
       </Container>
     </div>
