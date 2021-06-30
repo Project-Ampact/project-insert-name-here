@@ -24,6 +24,12 @@ import {
 
 const Nav2 = (props) => {
   let auth = AuthService();
+
+  const username = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("username="))
+    .split("=")[1];
+
   return (
     <>
       <ProSidebar>
@@ -40,7 +46,7 @@ const Nav2 = (props) => {
             <MenuItem icon={<FaBorderAll />}>
               <Link to="/browse">Browse</Link>
             </MenuItem>
-            <MenuItem icon={<FaRegUser />}>My Profile </MenuItem>
+            <MenuItem icon={<FaRegUser />}><Link to= {`/profile/${username}`} >My Profile</Link> </MenuItem>
             <SubMenu title="Search" icon={<FaSistrix />}>
               <MenuItem>
                 <Link to="/">Search Users</Link>
