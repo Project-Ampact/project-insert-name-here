@@ -56,7 +56,7 @@ function SingleVideoPage() {
   }
 
   return (
-    <div className="container-fluid mb-5">
+    <div className="container-fluid">
       <div className="wrapper">
         {" "}
         <img
@@ -74,13 +74,15 @@ function SingleVideoPage() {
           alllowfullscreen
         ></iframe>
       </div>
-      <div className="container-fluid video-info ">
-      <div class="d-flex flex-row">
-        <h1 className="mt-2 flex-fill" id="title">{videoInfo.title}</h1>
-        <h2 className="mt-2" id="poster">Posted by: {videoInfo.poster}</h2>
+      <div className="container-fluid video-info rounded-bottom  pb-3 mb-3">
+      <div class="d-flex flex-row flexs pb-4">
+        <h1 className="mt-2 mr-2 flex-fill text-responsive" id="title">{videoInfo.title}</h1>
+        <h3 className="mt-2 text-wrap text-break text-secondary " id="poster">Posted by: {videoInfo.poster}</h3>
         </div>
         <h3 className="text-secondary" id="subject">Subject: {videoInfo.subject}</h3>
-        <p className="text-start" id="description">
+        <p className="text-start pt-2" id="description">
+          Description:
+          <br></br>
         {videoInfo.description}
         </p>
       </div>
