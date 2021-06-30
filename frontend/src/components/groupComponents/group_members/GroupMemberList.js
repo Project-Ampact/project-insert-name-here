@@ -8,7 +8,7 @@ function GroupMemberList(props) {
         <h1 className="group-members">Group Members</h1>
         <CardColumns>
             {props.members.map((member) => {
-                return <GroupMember key={member} name={member} />
+                return <GroupMember key={member} name={member} uid={member} />
             })}
         </CardColumns>
     </div>)
