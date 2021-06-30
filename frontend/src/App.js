@@ -8,6 +8,7 @@ import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
 import {AuthService, AuthProvider} from './util/authService'
+import { ToastContainer } from 'react-toastify';
 
 import {
   BrowserRouter as Router,
@@ -17,6 +18,7 @@ import {
 } from "react-router-dom";
 import Registration from './components/pages/Registration';
 import UserProfile from './components/pages/UserProfile';
+import UserProfileEdit from './components/userProfile/UserProfileEdit';
 
 function PrivateRoute({ children, ...rest }) {
   let auth = AuthService();
@@ -44,20 +46,34 @@ function App() {
   let auth = AuthService();
   console.log(auth);
   return (
-    <AuthProvider>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Landing}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/test" component={NavigationBar}/>
-          <Route path="/register" component={Registration}/>
-          <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
-          <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
-          <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
-          <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
-        </Switch>
-      </Router>
-    </AuthProvider>
+    <div>
+      <ToastContainer
+          position="bottom-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          />
+      <AuthProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Landing}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/test" component={NavigationBar}/>
+            <Route path="/register" component={Registration}/>
+            <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
+            <PrivateRoute exact path="/profile/:uid/edit" children={<UserProfileEdit/>}/>
+            <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
+            <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
+            <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
+          </Switch>
+        </Router>
+      </AuthProvider>      
+    </div>
   );
 }
 
