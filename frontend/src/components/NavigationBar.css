@@ -27,14 +27,23 @@
 }
 
 .vertical-nav li {
-    color: #f5f5f5;
+    color: black;
     text-align: center;
     font-size: 20px;
     padding: 5%;
+    border-color: black;
     border-top-style: solid;
-    border-bottom-style: solid;
     border-top-width: 1px;
-    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  
+}
+
+.nav-item-cus {
+    padding: 5%;
+    border-color: black;
+    border-top-style: solid;
+    border-top-width: 1px;
 }
 
 .vertical-nav li:hover {
@@ -61,7 +70,7 @@
     padding: 48px 0 0;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     background-color: #48C1F4;
-}
+}*/
 .sidebar-wrapper{
     position: fixed;
     min-height: 100vh !important;
@@ -83,4 +92,8 @@
 .page-content-wrapper {
     min-width: 0;
     width: 100%;
-}*/
+}
+
+.sidebar-h1 {
+    margin-left: 7%;
+}

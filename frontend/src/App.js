@@ -3,10 +3,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/pages/Login'
 import Landing from './components/pages/Landing'
-import NavigationBar from './components/NavigationBar'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
+import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
 import {
@@ -50,7 +50,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Landing}/>
           <Route path="/login" component={Login}/>
-          <Route path="/test" component={NavigationBar}/>
+          <Route path="/test" component={<PageLayout></PageLayout>}/>
           <Route path="/register" component={Registration}/>
           <Route path="/browse" component={Browse}/>
           <Route path="/video/:vid" children={<SingleVideoPage/>}/>

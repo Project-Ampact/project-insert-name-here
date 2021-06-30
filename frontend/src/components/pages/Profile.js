@@ -1,14 +1,17 @@
 import React from 'react';
 import { AuthService } from '../../util/authService'
-import NavigationBar from '../NavigationBar'
+import PageLayout from "./DefaultPage";
+
 
 function Profile() {
     let auth = AuthService();
     console.log(auth)
     return (
-        <div>
-            <div><NavigationBar/>user sign in</div>
-        </div>
+        <PageLayout>
+            <div>
+                <div>user sign in</div>
+            </div>
+        </PageLayout>
     )
 }
 
