@@ -60,6 +60,12 @@
     margin-left: 20px;
 }
 
+.wrapper-register textarea {
+    margin-left: 20px;
+    width: 250px;
+    height: 150px;
+}
+
 .wrapper-register label {
     margin-top: 5px;
     width: 120px;

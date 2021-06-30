@@ -22,8 +22,12 @@ function Registration() {
       console.log("Made it here");
 
       auth.set(user, () => {
-        console.log("theoretically set the user");
-        history.replace("/profile");
+        const username = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('username='))
+        .split('=')[1]
+        console.log('user logged in', username)
+        history.replace('/profile/' + username)
       });
     } catch (err) {
       console.log(err);
