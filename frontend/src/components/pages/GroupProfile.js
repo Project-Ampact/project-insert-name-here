@@ -83,7 +83,7 @@ function GroupProfile() {
   }
   
   return (
-    <div>
+    <div className="logged-in">
       <NavigationBar/>
       <Container className="profile container-fluid">
         <Group gid = {gid} groupData={loadedGroupData} />

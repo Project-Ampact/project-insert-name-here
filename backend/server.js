@@ -135,5 +135,8 @@ app.use('/group', groups);
 app.use('/video', videos);
 app.use('/search', search);
 
+const profiles = require('./routes/profileRoutes');
+app.use('/profile', profiles);
+
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));

@@ -165,7 +165,7 @@ function GroupProfileCreate() {
   };
 
   return (
-    <div>
+    <div className="logged-in">
       <NavigationBar/>
       <Container className="profile container-fluid">
         <div className="register">
