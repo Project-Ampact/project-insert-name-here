@@ -15,19 +15,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
-        type: String,
-        required: true
-    },
 },
 {
     collection: 'LoginInfo'
 });
-
-class User{
-    //add custom static methods here
-}
-
-userSchema.loadClass(User);
 
 module.exports = mongoose.model('User', userSchema);
