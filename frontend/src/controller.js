@@ -169,6 +169,20 @@ const APIAccess = {
         } catch(err) {
             throw err;
         }
+    },
+    searchGroup(query) {
+        try {
+            return fetch(`http://localhost:8000/search/group?searchString=${query}&page=1`, {
+                method: 'GET'
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json()
+                console.log(jsonRes)
+                return jsonRes
+            })
+        } catch(err) {
+            throw err;
+        }
     }
 };
 
