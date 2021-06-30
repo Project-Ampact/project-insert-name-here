@@ -1,5 +1,6 @@
 import GroupMember from './GroupMember'; 
-import CardColumns from 'react-bootstrap/CardColumns'; 
+import CardColumns from 'react-bootstrap/CardColumns';
+ 
 import "../groupProfile/Group.css";
 
 function GroupMemberList(props) {

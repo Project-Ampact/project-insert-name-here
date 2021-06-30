@@ -2,6 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import "./Group.css";
+import "../groups/Groups.css";
 import APIAccess from "../../../controller.js";
 
 /*function GroupProfileContent() {
@@ -35,6 +36,8 @@ function Group(props) {
     }
   };
 
+  let editGroupProfile = "http://localhost:3000/groupProfile/edit/" + props.gid;
+
   return (
     <Container className="mt-3 profile container-fluid">
       <Row className="row2 container-fluid">
@@ -65,6 +68,15 @@ function Group(props) {
                       variant="primary"
                     >
                       Remove Member
+                    </Button>
+                    <Button
+                      type="submit"
+                      onClick={editGroupProfile}
+                      href={editGroupProfile}
+                      className="gbutton"
+                      variant="primary"
+                    >
+                      Edit
                     </Button>
                   </div>
                 </fieldset>
