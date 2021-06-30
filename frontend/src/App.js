@@ -3,10 +3,11 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/pages/Login'
 import Landing from './components/pages/Landing'
-import NavigationBar from './components/NavigationBar'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
+import PageLayout from "./components/pages/DefaultPage";
+import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
 import { ToastContainer } from 'react-toastify';
 
@@ -19,6 +20,8 @@ import {
 import Registration from './components/pages/Registration';
 import UserProfile from './components/pages/UserProfile';
 import UserProfileEdit from './components/userProfile/UserProfileEdit';
+import Profile from './components/pages/Profile';
+import SingleVideoPage from './components/pages/SingleVideoPage';
 
 function PrivateRoute({ children, ...rest }) {
   let auth = AuthService();
@@ -65,6 +68,8 @@ function App() {
             <Route path="/login" component={Login}/>
             <Route path="/test" component={NavigationBar}/>
             <Route path="/register" component={Registration}/>
+            <Route path="/browse" component={Browse}/>
+            <Route path="/video/:vid" children={<SingleVideoPage/>}/>
             <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
             <PrivateRoute exact path="/profile/:uid/edit" children={<UserProfileEdit/>}/>
             <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
