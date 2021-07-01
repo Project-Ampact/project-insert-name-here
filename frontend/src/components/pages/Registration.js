@@ -35,6 +35,7 @@ function Registration() {
   };
 
   return (
+    <div id="fullpage-wrapper">
     <div className="register">
       <form id="register-form">
         <fieldset>
@@ -93,6 +94,7 @@ function Registration() {
           </main>
         </fieldset>
       </form>
+    </div>
     </div>
   );
 }
