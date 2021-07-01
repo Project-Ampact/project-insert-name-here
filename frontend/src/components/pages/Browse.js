@@ -18,7 +18,6 @@ let mock_data2 = [];
 function Browse() {
   //let {gid} = useParams()
   const [isLoading, setIsLoading] = useState(true);
-  const [loadedGroupData, setLoadedGroupData] = useState([]);
 
   useEffect(() => {
     //setIsLoading(true);
@@ -31,7 +30,8 @@ function Browse() {
       })
       .then((data) => {
         mock_data2 = data;
-        setLoadedGroupData(data);
+       // console.log(mock_data2)
+      //  setLoadedGroupData(data);
         setIsLoading(false);
       });
   });
@@ -52,7 +52,7 @@ function Browse() {
             <h1 className="h1-cus"> Browse</h1>
           </Container>
           <Container fluid className=" col2 profile container-fluid">
-            <Row>
+            <Row className="adjust-row">
               {mock_data2.map((mock_data_piece) => {
                 return (
                   <VideoTagSection
