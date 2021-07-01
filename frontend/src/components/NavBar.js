@@ -32,7 +32,7 @@ const Nav2 = (props) => {
 
   return (
     <>
-      <ProSidebar>
+      <ProSidebar style={{position: 'fixed'}}>
         <SidebarHeader>
           {
             <div>
@@ -73,7 +73,6 @@ const Nav2 = (props) => {
           </Menu>
         </SidebarContent>
       </ProSidebar>
-      ;
     </>
   );
 };
