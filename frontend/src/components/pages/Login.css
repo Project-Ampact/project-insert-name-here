@@ -15,6 +15,19 @@ body {
     height: auto;
 }
 
+#fullpage-wrapper {
+    background-image: linear-gradient(120deg, #f7d461 0%, #fd9e83 100%);
+    position:fixed;
+    padding:0;
+    margin:0;
+    left:0;
+    top:0;
+    height: 100%; 
+    width: 100%;
+
+    
+}
+
 .login {
     display: flex;
     justify-content: center;
