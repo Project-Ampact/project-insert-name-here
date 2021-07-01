@@ -3,7 +3,7 @@ import "./GroupProfileEdit.css";
 import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, InputGroup, FormControl, Button, Form } from "react-bootstrap";
+import { Container, InputGroup, FormControl, Button, Form, Pagination } from "react-bootstrap";
 import "../groupProfile/Group.css";
 import GroupsList from "../groups/GroupsList.js"
 import NavigationBar from "../NavigationBar";
@@ -67,6 +67,7 @@ function GroupProfileCreate() {
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState('')
   const [groupData, setGroupData] = useState({})
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setIsLoading(true);
@@ -82,6 +83,10 @@ function GroupProfileCreate() {
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    sendQuery(null);
+  }, [page])
 
   if (isLoading) {
     return (
@@ -112,14 +117,29 @@ function GroupProfileCreate() {
   }
 
   async function sendQuery(e) {
-    e.preventDefault()
+    if (e != null) e.preventDefault()
     console.log('inside sendQuery', query)
     if (query !== '') {
-      let returnedData = await APIAccess.searchGroup(query)
+      let returnedData = await APIAccess.searchGroup(query, page)
       setGroupData(returnedData)
     } else {
       setGroupData(mock_data)
     }
+  }
+
+  async function nextPage() {
+    console.log("Next page: " + page)
+    setPage(page + 1);
+  }
+
+  async function prevPage() {
+    console.log("Prev page: " + page)
+    setPage(page - 1);
+  }
+
+  async function firstPage() {
+    console.log("First page: " + page)
+    setPage(1);
   }
 
   return (
@@ -142,6 +162,11 @@ function GroupProfileCreate() {
               </InputGroup.Append>
             </InputGroup>
           </Form>
+          <Pagination>
+            <Pagination.First disabled={page <= 1} onClick={firstPage}/>
+            <Pagination.Prev disabled={page <= 1} onClick={prevPage}/>
+            <Pagination.Next onClick={nextPage}/>
+          </Pagination>
           <GroupsList groups={groupData} />
         </div>
       </Container>
