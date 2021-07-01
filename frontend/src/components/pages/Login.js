@@ -31,6 +31,7 @@ function Login() {
   };
 
 	return (
+    <div id="fullpage-wrapper">
     <div className="login" id="log">
       <form className="login-form">
         <fieldset>
@@ -54,6 +55,7 @@ function Login() {
           </footer>
         </fieldset>
       </form>			
+    </div>
     </div>
 	)
 }
