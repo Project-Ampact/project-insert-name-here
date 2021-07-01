@@ -170,9 +170,9 @@ const APIAccess = {
             throw err;
         }
     },
-    searchGroup(query) {
+    searchGroup(query, page) {
         try {
-            return fetch(`http://localhost:8000/search/group?searchString=${query}&page=1`, {
+            return fetch(`http://localhost:8000/search/group?searchString=${query}&page=${page}`, {
                 method: 'GET'
             })
             .then(async (response) => {
