@@ -36,7 +36,10 @@ app.use(session({
 app.use(function(req, res, next){
     req.user = ('user' in req.session)? req.session.user : null;
     let username = (req.user)? req.user._id : '';
-    res.setHeader('Set-Cookie', cookie.serialize('username', username, {
+    let role = (req.user)? req.user.role : '';
+    let cookieData = username + " " + role;
+    if (role !== '' && username !== '') cookieData = '';
+    res.setHeader('Set-Cookie', cookie.serialize('user', cookieData, {
         path : '/', 
         maxAge: 60 * 60 * 24 * 7
     }));
@@ -70,13 +73,14 @@ const checkRegistrationInfo = async(req, res, next) => {
     let password = req.body.password;
     let role = req.body.role;
     if (username == undefined || password == undefined || role == undefined) return res.status(400).send({success: false, message: "Request body must contain username, password and role attributes"});
+    if (username.indexOf(' ') >= 0) return res.status(422).send({success: false, message: "bad input: username must have no whitespace"});
     if (validator.isEmpty(username)) return res.status(422).send({success: false, message: "bad input: username must be non-empty"});
     if (validator.isEmpty(password)) return res.status(422).send({success: false, message: "bad input: password must be non-empty"});
-    if (role != "instructor" && role != "partner" && role != "entrepreneur" && role != "guest") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
+    if (role != "instructor" && role != "partner" && role != " entrepeneur") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
     let user = await User.findById(username, (err, user) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
     });
-    if (user) return res.status(409).send({success: false, message: username + " is already taken"});
+    if (user) return res.status(409).send({success: false, message: "Username is already taken"});
     next();
 };
 
@@ -84,20 +88,28 @@ const checkRegistrationInfo = async(req, res, next) => {
 app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
+    let role = req.body.role;
     let salt = getSalt();
     let hashword = hashPassword(password, salt); 
     let newUser = new User({
         _id: username,
         password: hashword,
-        salt: salt
+        salt: salt, 
+        role: role
     });
     let newProfile = new Profile({
         _id: username,
-        role: req.body.role
+        role: role
     });
     try{
         let savedUser = await newUser.save();
         let savedProfile = await newProfile.save();
+        let cookieData = username + " " + role;
+        req.session.user = savedUser;
+        res.setHeader('Set-Cookie', cookie.serialize('user', cookieData, {
+            path : '/', 
+            maxAge: 60 * 60 * 24 * 7
+        }));
         return res.json({success: true, username: savedUser._id, role: savedProfile.role});
     }
     catch(err){
@@ -115,9 +127,10 @@ app.post('/signin', (req, res) => {
         let hashword = hashPassword(password, user.salt);
         if (hashword != user.password) return res.status(401).send({success: false, message: "Access Denied: Incorrect password"});
         req.session.user = user;
-        res.setHeader('Set-Cookie', cookie.serialize('username', username, {
+        let cookieData = username + " " + user.role;
+        res.setHeader('Set-Cookie', cookie.serialize('user', cookieData, {
             path : '/', 
-            maxAge: 60 * 60 * 24 * 7 // 1 week in number of seconds
+            maxAge: 60 * 60 * 24 * 7
         }));
         return res.json({success: true});
     });
@@ -129,12 +142,7 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 });
 
 const groups = require('./routes/groupRoutes');
-const videos = require('./routes/videoRoutes');
-app.use('/video', videos);
 app.use('/group', groups);
-
-const profiles = require('./routes/profileRoutes');
-app.use('/profile', profiles);
 
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));
