@@ -31,7 +31,7 @@ function Login() {
   };
 
 	return (
-    <div className="login">
+    <div className="login" id="log">
       <form className="login-form">
         <fieldset>
           <header>
