@@ -21,6 +21,8 @@ import Registration from './components/pages/Registration';
 import UserProfile from './components/pages/UserProfile';
 import UserProfileEdit from './components/userProfile/UserProfileEdit';
 import SingleVideoPage from './components/pages/SingleVideoPage';
+import SingleVideoAdd from './components/pages/SingleVideoAdd';
+
 
 function PrivateRoute({ children, ...rest }) {
   let auth = AuthService();
@@ -68,7 +70,8 @@ function App() {
             <Route path="/test" component={<PageLayout></PageLayout>}/>
             <Route path="/register" component={Registration}/>
             <Route path="/browse" component={Browse}/>
-            <Route path="/video/:vid" children={<SingleVideoPage/>}/>
+            <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
+            <Route exact path="/video/:vid" children={<SingleVideoPage/>}/>
             <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
             <PrivateRoute exact path="/profile/:uid/edit" children={<UserProfileEdit/>}/>
             <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>

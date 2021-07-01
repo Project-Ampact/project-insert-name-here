@@ -29,13 +29,14 @@ router.get("/", async(req, res) => {
 const checkVideo = (req, res, next) => {
     let title = req.body.title;
     let url = req.body.url;
-    let subject = req.body.subject.toLowerCase().trim();
+    let tag = req.body.tags;
+    //let subject = req.body.subject.toLowerCase().trim();
     let description = req.body.description;
-    if(title === undefined || url === undefined || subject === undefined || description === undefined){
-        return res.status(400).send({success: false, message: "Request body must conatin title, url, subject and description parameters"});
+    if(title === undefined || url === undefined || tag === undefined || description === undefined){
+        return res.status(400).send({success: false, message: "Request body must conatin title, url, tag and description parameters"});
     }
-    if(validator.isEmpty(title) || validator.isEmpty(url) || validator.isEmpty(subject)){
-        return res.status(422).send({success: false, message: "Title, url and subject parameters must be non-empty strings"});
+    if(validator.isEmpty(title) || validator.isEmpty(url) || validator.isEmpty(tag)){
+        return res.status(422).send({success: false, message: "Title, url and tag parameters must be non-empty strings"});
     }
   /*  if(!(subject in validSubjects)){
         return res.status(422).send({success: false, message: "Invalid subject"});
@@ -47,17 +48,20 @@ const checkVideo = (req, res, next) => {
 router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
     let title = req.body.title;
     let url = req.body.url;
-    let subject = req.body.subject.toLowerCase().trim();
+    //let subject = req.body.subject.toLowerCase().trim();
     let description = req.body.description;
     let tags = req.body.tags;
+    let picture = req.body.picture;
+    let poster = req.body.poster;
     let newVideo = new Video({
         title: title,
         videoUrl: url,
         description: description,
-       // poster: req.user.username,
-        poster: "dd",
-        subject: subject,
-        tags: tags
+        //poster: req.user.username,
+        poster: poster,
+        subject: "none",
+        tags: tags,
+        picture: picture
     });
     try{
         let savedVideo = await newVideo.save();

@@ -20,6 +20,7 @@ import {
   FaRegUserCircle,
   FaSistrix,
   FaTimesCircle,
+  FaServer,
 } from "react-icons/fa";
 
 const Nav2 = (props) => {
@@ -57,7 +58,7 @@ const Nav2 = (props) => {
             </SubMenu>
             <SubMenu title="Groups" icon={<FaRegUserCircle />}>
               <MenuItem>
-                <Link to="/groupProfile/60c148ae4df89114682f519e">
+                <Link to="/groupProfile/60de1c03e10e7f59d031746f">
                   My group
                 </Link>
               </MenuItem>
@@ -65,6 +66,11 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
+            <MenuItem icon={<FaServer/>}>
+              <Link to="/video/upload" >
+                Upload Video
+              </Link>
+            </MenuItem>
             <MenuItem icon={<FaTimesCircle />}>
               <Link to="/" onClick={auth.signout}>
                 Sign Out

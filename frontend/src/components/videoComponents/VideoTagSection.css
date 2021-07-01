@@ -20,8 +20,8 @@
     background-color: #f2f2f2;
   }
 
-  .root, .container {
-    max-width: '100%';
+  .adjust-row {
+    max-height: none !important;
   }
   .vid-sec2 {
     margin-left: 20%;
@@ -49,7 +49,7 @@
     background-color: #fff;
     border-radius: 1%;
     max-height: 500px;
-    align-items: center;
+    
     
   }
 
@@ -61,8 +61,6 @@
 
   .custom-carousel-item {
     background-color: #fff;
-    align-items: center;
-    align-content: center;
     
   }
 
@@ -80,15 +78,9 @@
       max-height: 500px;
   }
  
-  .groupProfile {
-    display: fluid;
-  }
+ 
 
-  .profile {
-    display: flex;
-    align-items: center;
-    
-  }
+  
 
   .links {
     text-decoration: none;

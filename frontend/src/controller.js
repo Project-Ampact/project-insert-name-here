@@ -78,6 +78,30 @@ const APIAccess = {
             throw err;
         }
     },
+    uploadNewVideo(title, videoLink, picture, tag, description, poster){
+        try{
+            return fetch('http://localhost:8000/video/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({title: title, url: videoLink, picture: picture, tags: tag, description: description, poster: poster})
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
     registerUser(username, password, role){
         try{
             return fetch('http://localhost:8000/signup', {
