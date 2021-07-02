@@ -58,17 +58,14 @@ import { useParams } from "react-router-dom";
 */
 
 const update = async (e) => {
-
+  e.preventDefault();
   try {
     let title = document.getElementById("title").value;
     let videoLink = document.getElementById("videoLink").value;
     let picture = document.getElementById("picture").value;
     let tag = document.getElementById("tag").value;
     let description = document.getElementById("description").value;
-    let poster = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("username="))
-      .split("=")[1];
+    let poster = document.cookie.split('user=')[1].split('%20')[0];
     // console.log(groupName, about, picture);
     window.location.reload();
     await APIAccess.uploadNewVideo(
@@ -147,7 +144,7 @@ function SingleVideoAdd(props) {
                     onClick={update}
                     variant="primary"
                     type="submit"
-                    href="http://localhost:3000/browse"
+                    //href="http://localhost:3000/browse"
                   >
                     Upload
                   </Button>
