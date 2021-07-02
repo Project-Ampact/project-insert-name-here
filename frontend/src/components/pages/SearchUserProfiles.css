@@ -1,53 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10%;
-    text-align: center;
-  }
-  
-  .groupProfile {
-    display: fluid;
-  }
-
-  .profile {
-    display: flex;
-    align-items: center;
-    
-  }
-
-  .group-title {
-    font-size: 50px;
-  }
-
-  .container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .group-img {
-    height: 50%;
-    width: 100%;
-  }
-
-  .group-about {
-    font-size: 30px;
-  }
-
-  .group-members {
-    align-items: center;
-    align-self: center;
-    text-align: center;
-  }
-  .gbutton {
-   margin-left: 5px;
-   margin-right: 5px;
-  }
-
-  .register {
+.register {
     display: flex;
     justify-content: center;
     align-content: center;
@@ -112,4 +63,8 @@
 .wrapper-register label {
     margin-top: 5px;
     width: 120px;
+}
+
+.del-button {
+    padding-bottom: 20px;
 }

@@ -1,18 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.content {
+ .content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10%;
     text-align: center;
   }
   
   .content ul {
     margin-top: 3%;
     text-align: left;
-    font-size: 14pt;
+    font-size: 20pt;
+    list-style-type: none;
   }
+
+  .content li::before{
+    
+    content: "➭";
+    margin-right: 2%;
+}
   
   /* Navbar */
   .navbar {
@@ -26,9 +32,87 @@
 
   .route-link {
     color: black;
+    margin-right: 15px;
+    font-size: 25px;
   }
 
   .route-link:hover {
     color: gray;
     text-decoration: none;
   }
+
+
+
+  /* Carousel*/
+  #landing-page .caption > *{
+    color: black;
+  }
+
+  #landing-page .carousel-item {
+    height: 901px;
+  }
+
+  #slide-1{
+    margin-top: 0% !important;
+    margin-bottom: 2% !important;
+    color: black;
+  }
+
+  #landing-page .carousel-caption{
+    margin-top: 10%;
+    margin-bottom: 20%;
+    background-image: linear-gradient(120deg, #f7d461 0%, #fd9e83 100%);
+    border-color: linear-gradient(120deg, #ffc400 0%, #f74f20 100%);
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;    opacity: 0.93;
+    border-radius: 15px;
+  }
+
+  #landing-page .caption > h3{
+    font-size: 60px;
+  }
+
+  #landing-page .caption > p{
+    font-size: 28px;
+  }
+
+  #landing-page .carousel {
+    width: 100%;
+  }
+
+  #landing-page #carousel-wrapper {
+   display: flex;
+   justify-content: center;
+  }
+
+  #landing-page .carousel-indicators li {  
+    background-color: #f9b74d;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+   }
+
+   .landing-blur {
+    filter: brightness(60%);
+   }
+
+   #landing-page .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+  }
+
+  #landing-page .carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+  }
+
+  #all-wrapper {
+    background-color: #f9b74d;
+    position:fixed;
+    padding:0;
+    margin:0;
+    left:0;
+    top:0;
+    height: 100%; 
+    width: 100%;
+}
+
+
+
