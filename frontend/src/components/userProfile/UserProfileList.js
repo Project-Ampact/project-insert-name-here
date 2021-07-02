@@ -15,7 +15,7 @@ function UserProfileList(props) {
     <div>
         <CardColumns>
             {props.profiles.map((profile) => {
-                return <UserProfileItem key={profile._id} firstName={profile.firstName} lastName={profile.lastName} role={profile._id}/>
+                return <UserProfileItem key={profile._id} firstName={profile.firstName} lastName={profile.lastName} username={profile._id} role={profile._id}/>
             })}
         </CardColumns>
     </div>)

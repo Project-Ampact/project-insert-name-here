@@ -1,3 +1,7 @@
 .profile-not-found {
     text-align: center;
 }
+
+.big-text {
+    font-size: 150% !important;
+}
