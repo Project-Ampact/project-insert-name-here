@@ -18,6 +18,7 @@ import {
 } from "react-router-dom";
 import Registration from './components/pages/Registration';
 import UserProfile from './components/pages/UserProfile';
+import SearchUserProfiles from './components/pages/SearchUserProfiles';
 
 function PrivateRoute({ children, ...rest }) {
   let auth = AuthService();
@@ -52,6 +53,7 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/test" component={NavigationBar}/>
           <Route path="/register" component={Registration}/>
+          <Route path="/profile/search" component={SearchUserProfiles}/>
           <PrivateRoute exact path="/video/:vid" children={<SingleVideoPage/>}/>
           <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
           <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>

@@ -183,6 +183,20 @@ const APIAccess = {
         } catch(err) {
             throw err;
         }
+    },
+    searchUserProfile(query, page) {
+        try {
+            return fetch(`http://localhost:8000/search/profile?searchString=${query}&page=${page}`, {
+                method: 'GET'
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json()
+                console.log(jsonRes)
+                return jsonRes
+            })
+        } catch(err) {
+            throw err;
+        }
     }
 };
 
