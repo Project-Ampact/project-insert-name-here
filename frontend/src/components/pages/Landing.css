@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-.content {
+ .content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,21 +44,21 @@
 
 
   /* Carousel*/
-  .caption > *{
+  #landing-page .caption > *{
     color: black;
   }
 
-  .carousel-item {
+  #landing-page .carousel-item {
     height: 901px;
   }
 
   #slide-1{
-    margin-top: 0%;
-    margin-bottom: 2%;
+    margin-top: 0% !important;
+    margin-bottom: 2% !important;
     color: black;
   }
 
-  .carousel-caption{
+  #landing-page .carousel-caption{
     margin-top: 10%;
     margin-bottom: 20%;
     background-image: linear-gradient(120deg, #f7d461 0%, #fd9e83 100%);
@@ -67,24 +67,24 @@
     border-radius: 15px;
   }
 
-  .caption > h3{
+  #landing-page .caption > h3{
     font-size: 60px;
   }
 
-  .caption > p{
+  #landing-page .caption > p{
     font-size: 28px;
   }
 
-  .carousel {
+  #landing-page .carousel {
     width: 100%;
   }
 
-  #carousel-wrapper {
+  #landing-page #carousel-wrapper {
    display: flex;
    justify-content: center;
   }
 
-  .carousel .carousel-indicators li {  
+  #landing-page .carousel-indicators li {  
     background-color: #f9b74d;
     width: 10px;
     height: 10px;
