@@ -20,15 +20,26 @@ import {
   FaRegUserCircle,
   FaSistrix,
   FaTimesCircle,
+  FaServer,
 } from "react-icons/fa";
+
+const AddVideo = (props) => {
+  if (props.canAdd) {
+    return (
+      <MenuItem icon={<FaServer/>}>
+        <Link to="/video/upload" >
+          Upload Video
+        </Link>
+      </MenuItem>
+    )
+  }
+  return null
+}
 
 const Nav2 = (props) => {
   let auth = AuthService();
-
-  const username = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("username="))
-    .split("=")[1];
+  const username = document.cookie.split('user=')[1].split('%20')[0]
+  const role = document.cookie.split('user=')[1].split('%20')[1]
 
   return (
     <>
@@ -57,7 +68,7 @@ const Nav2 = (props) => {
             </SubMenu>
             <SubMenu title="Groups" icon={<FaRegUserCircle />}>
               <MenuItem>
-                <Link to="/groupProfile/60c148ae4df89114682f519e">
+                <Link to="/groupProfile/60de1c03e10e7f59d031746f">
                   My group
                 </Link>
               </MenuItem>
@@ -65,6 +76,7 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
+            <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
             <MenuItem icon={<FaTimesCircle />}>
               <Link to="/" onClick={auth.signout}>
                 Sign Out
