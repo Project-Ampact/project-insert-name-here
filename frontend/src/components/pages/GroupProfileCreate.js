@@ -3,74 +3,27 @@ import "./GroupProfileEdit.css";
 import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Col, Row, Container, InputGroup, FormControl, Button, Form, Pagination } from "react-bootstrap";
-import "../groupProfile/Group.css";
-import GroupsList from "../groups/GroupsList.js"
-
+import {
+  Col,
+  Row,
+  Container,
+  InputGroup,
+  FormControl,
+  Button,
+  Form,
+  Pagination,
+} from "react-bootstrap";
 import "../groupComponents/groupProfile/Group.css";
 import "./GroupProfileCreate.css";
 import GroupsList from "../groupComponents/groups/GroupsList.js";
 import PageLayout from "./DefaultPage";
 
-
 let mock_data;
-
-function CreateGroupForm(props) {
-  return (
-    <div className="register">
-      <form id="register-form">
-        <fieldset>
-          <header>
-            <h1 className="register-title">Ampact</h1>
-          </header>
-          <main>
-            <h2 className="register-subtitle">Create Group</h2>
-            <div class="wrapper-register">
-              <label for="picture">GroupPicture:</label>
-              <input
-                type="register"
-                name="picture"
-                id="picture"
-                placeholder=""
-              />
-            </div>
-
-            <div class="wrapper-register">
-              <label for="about">About:</label>
-              <div>
-                <input
-                  type="register"
-                  name="about"
-                  id="about"
-                  placeholder=""
-                />
-              </div>
-            </div>
-            <div class="wrapper-register">
-              <label for="groupName">GroupName:</label>
-              <div>
-                <input
-                  type="register"
-                  name="groupName"
-                  id="groupName"
-                  placeholder=""
-                />
-              </div>
-            </div>
-            <button type="submit" onClick={props.update} className="submit-button">
-              Create
-            </button>
-          </main>
-        </fieldset>
-      </form>
-    </div>
-  )
-}
 
 function GroupProfileCreate() {
   const [isLoading, setIsLoading] = useState(true);
-  const [query, setQuery] = useState('')
-  const [groupData, setGroupData] = useState({})
+  const [query, setQuery] = useState("");
+  const [groupData, setGroupData] = useState({});
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -83,14 +36,14 @@ function GroupProfileCreate() {
       .then((data) => {
         // console.log(data)
         mock_data = data;
-        setGroupData(data)
+        setGroupData(data);
         setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
     sendQuery(null);
-  }, [page])
+  }, [page]);
 
   if (isLoading) {
     return (
@@ -116,65 +69,37 @@ function GroupProfileCreate() {
   };
 
   const updateQuery = (x) => {
-    console.log('from updateQuery', x.target.value)
-    setQuery(x.target.value)
-  }
+    console.log("from updateQuery", x.target.value);
+    setQuery(x.target.value);
+  };
 
   async function sendQuery(e) {
-    if (e != null) e.preventDefault()
-    console.log('inside sendQuery', query)
-    if (query !== '') {
-      let returnedData = await APIAccess.searchGroup(query, page)
-      setGroupData(returnedData)
+    if (e != null) e.preventDefault();
+    console.log("inside sendQuery", query);
+    if (query !== "") {
+      let returnedData = await APIAccess.searchGroup(query, page);
+      setGroupData(returnedData);
     } else {
-      setGroupData(mock_data)
+      setGroupData(mock_data);
     }
   }
 
   async function nextPage() {
-    console.log("Next page: " + page)
+    console.log("Next page: " + page);
     setPage(page + 1);
   }
 
   async function prevPage() {
-    console.log("Prev page: " + page)
+    console.log("Prev page: " + page);
     setPage(page - 1);
   }
 
   async function firstPage() {
-    console.log("First page: " + page)
+    console.log("First page: " + page);
     setPage(1);
   }
 
   return (
-    /*<div className="logged-in">
-      <NavigationBar/>
-      <Container className="profile container-fluid">
-        <CreateGroupForm update={update}/>
-        <div>
-          <h1>Groups</h1>
-          <Form onSubmit={sendQuery} className="search-group">
-            <InputGroup size="lg" onChange={(event) => {updateQuery(event)}} onSubmit={sendQuery}>
-              <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-lg">Search for groups</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
-              <InputGroup.Append>
-                <Button variant="primary" type="submit">
-                    Search
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </Form>
-          <Pagination>
-            <Pagination.First disabled={page <= 1} onClick={firstPage}/>
-            <Pagination.Prev disabled={page <= 1} onClick={prevPage}/>
-            <Pagination.Next onClick={nextPage}/>
-          </Pagination>
-          <GroupsList groups={groupData} />
-        </div>
-      </Container>
-    </div>*/
     <PageLayout>
       <div className="body-cus">
         <div className="form-section">
@@ -212,18 +137,46 @@ function GroupProfileCreate() {
             </Row>
           </Container>
         </div>
+        <Container className="profile container-fluid">
+          <div>
+            <h1>Groups</h1>
+            <Form onSubmit={sendQuery} className="search-group">
+              <InputGroup
+                size="lg"
+                onChange={(event) => {
+                  updateQuery(event);
+                }}
+                onSubmit={sendQuery}
+              >
+                <InputGroup.Prepend>
+                  <InputGroup.Text id="inputGroup-sizing-lg">
+                    Search for groups
+                  </InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                  aria-label="Large"
+                  aria-describedby="inputGroup-sizing-sm"
+                />
+                <InputGroup.Append>
+                  <Button variant="primary" type="submit">
+                    Search
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form>
+            <Pagination>
+              <Pagination.First disabled={page <= 1} onClick={firstPage} />
+              <Pagination.Prev disabled={page <= 1} onClick={prevPage} />
+              <Pagination.Next onClick={nextPage} />
+            </Pagination>
+            <GroupsList groups={groupData} />
+          </div>
+        </Container>
         <Pagination>
-            <Pagination.First disabled={page <= 1} onClick={firstPage}/>
-            <Pagination.Prev disabled={page <= 1} onClick={prevPage}/>
-            <Pagination.Next onClick={nextPage}/>
+          <Pagination.First disabled={page <= 1} onClick={firstPage} />
+          <Pagination.Prev disabled={page <= 1} onClick={prevPage} />
+          <Pagination.Next onClick={nextPage} />
         </Pagination>
-        <div className="form-section">
-          <Container>
-            <Row>
-              <GroupsList groups={mock_data} />
-            </Row>
-          </Container>
-        </div>
       </div>
     </PageLayout>
   );
