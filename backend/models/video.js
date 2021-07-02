@@ -21,6 +21,18 @@ const videoSchema = new mongoose.Schema({
     },
     subject: {
         type: String,
+       
+    },
+    picture: {
+        type: String,
+        required: false,
+        default: "https://picsum.photos/200/100"
+    },
+    date: {
+        type: Date,
+        default: Date.now(),
+    }, tags: {
+        type: Array,
         required: true
     }
 },

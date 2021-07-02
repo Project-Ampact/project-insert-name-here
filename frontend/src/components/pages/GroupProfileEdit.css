@@ -68,3 +68,48 @@
 .del-button {
     padding-bottom: 20px;
 }
+
+.register {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.form-cus {
+    margin: 0 auto;
+}
+
+.form-section {
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 2px 2px 16px 2px;
+    margin-top: 20px;
+    background-color: #fff;
+    border: #116466;
+    border-radius: 1%;
+}
+
+.form-section-inner {
+    padding: 7px 14px 7px 14px;
+    margin-top: 20px;
+    background-color: #fff;
+    border: #116466;
+    border-radius: 1%;
+}
+
+
+.h1-cus {
+    text-align: center;
+    font-size: 550%;
+  }
+  .body {
+    background-color: #f2f2f2;
+  }
+
+  .body-cus {
+    background-color: #f2f2f2;
+  }
+
+  
+  

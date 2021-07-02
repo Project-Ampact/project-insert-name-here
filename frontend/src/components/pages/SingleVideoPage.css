@@ -3,3 +3,18 @@
     width: 150px; 
     height: auto;
 }
+
+.video-info {
+    background-color: #D1E8E2;
+}
+
+
+@media (max-width: 768px) {
+    .flexs{
+        flex-flow: row wrap;
+    }
+}
+
+.text-responsive {
+    font-size: calc(100% + 1vh + 1vw);
+}

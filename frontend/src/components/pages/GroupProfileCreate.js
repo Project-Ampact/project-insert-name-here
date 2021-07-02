@@ -3,10 +3,14 @@ import "./GroupProfileEdit.css";
 import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, InputGroup, FormControl, Button, Form, Pagination } from "react-bootstrap";
+import { Col, Row, Container, InputGroup, FormControl, Button, Form, Pagination } from "react-bootstrap";
 import "../groupProfile/Group.css";
 import GroupsList from "../groups/GroupsList.js"
-import NavigationBar from "../NavigationBar";
+
+import "../groupComponents/groupProfile/Group.css";
+import "./GroupProfileCreate.css";
+import GroupsList from "../groupComponents/groups/GroupsList.js";
+import PageLayout from "./DefaultPage";
 
 
 let mock_data;
@@ -77,7 +81,7 @@ function GroupProfileCreate() {
         return response.json();
       })
       .then((data) => {
-       // console.log(data)
+        // console.log(data)
         mock_data = data;
         setGroupData(data)
         setIsLoading(false);
@@ -103,7 +107,7 @@ function GroupProfileCreate() {
       let about = document.getElementById("about").value;
       let picture = document.getElementById("picture").value;
       console.log(groupName, about, picture);
-      window.location.reload()
+      window.location.reload();
       await APIAccess.createGroupProfile(groupName, about, picture);
       console.log("Made it here");
     } catch (err) {
@@ -143,7 +147,7 @@ function GroupProfileCreate() {
   }
 
   return (
-    <div className="logged-in">
+    /*<div className="logged-in">
       <NavigationBar/>
       <Container className="profile container-fluid">
         <CreateGroupForm update={update}/>
@@ -170,7 +174,58 @@ function GroupProfileCreate() {
           <GroupsList groups={groupData} />
         </div>
       </Container>
-    </div>
+    </div>*/
+    <PageLayout>
+      <div className="body-cus">
+        <div className="form-section">
+          <h1 className="h1-cus"> Create New Group</h1>
+          <Container fluid className="form-section-inner">
+            <Row>
+              <Col>
+                <Form className="form-cus">
+                  <Form.Group controlId="groupName">
+                    <Form.Label>Group Name</Form.Label>
+                    <Form.Control
+                      type="groupName"
+                      placeholder="Enter group name"
+                    />
+                    <Form.Text className="text-muted">
+                      This is the name of your group or company.
+                    </Form.Text>
+                  </Form.Group>
+                  <Form.Group controlId="picture">
+                    <Form.Label>Group Picture</Form.Label>
+                    <Form.Control
+                      type="picture"
+                      placeholder="https://picsum.photos/200/100"
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="about">
+                    <Form.Label>Group Description</Form.Label>
+                    <Form.Control type="about" as="textarea" rows={3} />
+                  </Form.Group>
+                  <Button onClick={update} variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+        <Pagination>
+            <Pagination.First disabled={page <= 1} onClick={firstPage}/>
+            <Pagination.Prev disabled={page <= 1} onClick={prevPage}/>
+            <Pagination.Next onClick={nextPage}/>
+        </Pagination>
+        <div className="form-section">
+          <Container>
+            <Row>
+              <GroupsList groups={mock_data} />
+            </Row>
+          </Container>
+        </div>
+      </div>
+    </PageLayout>
   );
 }
 

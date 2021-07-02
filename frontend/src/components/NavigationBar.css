@@ -1,33 +1,10 @@
-.vertical-nav ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 250px;
-    background-color: #48C1F4;
-    height: 100%;
+.sidebar-wrapper{
     position: fixed;
-    overflow: auto;
+    min-height: 100vh !important;
+    width: 100vw;
+    margin-left: -1rem;
 }
 
-.vertical-nav li {
-    color: white;
-    text-align: center;
-    font-size: 20px;
-    padding: 5%;
-}
-
-.vertical-nav li:hover {
-    background-color: #45849F;
-}
-
-.sign-out {
-    background-color: red;
-}
-
-.nav-l a {
-    color: white;
-    text-decoration: none;
+.sidebar-h1 {
+    margin-left: 7%;
 }
