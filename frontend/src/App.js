@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import Registration from './components/pages/Registration';
 import UserProfile from './components/pages/UserProfile';
+import SearchUserProfiles from './components/pages/SearchUserProfiles';
 import UserProfileEdit from './components/userProfile/UserProfileEdit';
 import SingleVideoPage from './components/pages/SingleVideoPage';
 import SingleVideoAdd from './components/pages/SingleVideoAdd';
@@ -70,6 +71,7 @@ function App() {
             <Route path="/test" component={<PageLayout></PageLayout>}/>
             <Route path="/register" component={Registration}/>
             <Route path="/browse" component={Browse}/>
+            <Route path="/profile/search" component={SearchUserProfiles}/>
             <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
             <Route exact path="/video/:vid" children={<SingleVideoPage/>}/>
             <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
