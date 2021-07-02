@@ -65,7 +65,7 @@ function UserProfileEdit() {
     <PageLayout>
          <div className="body-cus">
         <div className="form-section">
-          <h1 className="h1-cus"> Edit Group Information</h1>
+          <h1 className="h1-cus"> Edit User Profile</h1>
           <Container fluid className="form-section-inner">
             <Row>
               <Col>
