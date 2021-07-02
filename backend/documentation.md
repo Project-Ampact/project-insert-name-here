@@ -35,7 +35,7 @@
         - indication: user registering with same username of an existing user
         - content-type: application/json
         - body: json object
-            - message: (String) username + " is already taken"
+            - message: (String) "Username is already taken"
             - success: (bool) false
      - Status: 422
         - indication: request made with empty username field
@@ -82,7 +82,7 @@
         - indication: User successfully registered without error
         - content-type: application/json
         - cookie: json object
-            - username: (String) the username of the new user
+            - user: (String) the username and role of the user seperated by a space
         - body: json object
             - success: (bool) true
     - Status: 401
@@ -325,6 +325,7 @@
             method: 'PATCH',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({name: "groupName", about: "about", picture: "pictureUrl"})
+            credentials: ‘include’
         })
     ```
 - Responses:
@@ -356,7 +357,8 @@
     - example:
     ```
         fetch('http://localhost:8000/video/?subject=art&author=jo', {
-            method: 'GET'
+            method: 'GET',
+            credentials: ‘include’
         });
     ```
 - Responses:
@@ -385,7 +387,9 @@
         fetch('http://localhost:8000/video/', {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({title: "A science video", subject: "science", url: "youtube.com", description: "Science stuff"})
+            body: JSON.stringify({title: "A science video", subject: "science", url: "youtube.com", description: "Science stuff"}),
+            credentials: ‘include’
+        }
     ```
     - Responses:
         - Status: 200
