@@ -23,10 +23,23 @@ import {
   FaServer,
 } from "react-icons/fa";
 
+const AddVideo = (props) => {
+  if (props.canAdd) {
+    return (
+      <MenuItem icon={<FaServer/>}>
+        <Link to="/video/upload" >
+          Upload Video
+        </Link>
+      </MenuItem>
+    )
+  }
+  return null
+}
+
 const Nav2 = (props) => {
   let auth = AuthService();
-
   const username = document.cookie.split('user=')[1].split('%20')[0]
+  const role = document.cookie.split('user=')[1].split('%20')[1]
 
   return (
     <>
@@ -63,11 +76,7 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
-            <MenuItem icon={<FaServer/>}>
-              <Link to="/video/upload" >
-                Upload Video
-              </Link>
-            </MenuItem>
+            <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
             <MenuItem icon={<FaTimesCircle />}>
               <Link to="/" onClick={auth.signout}>
                 Sign Out

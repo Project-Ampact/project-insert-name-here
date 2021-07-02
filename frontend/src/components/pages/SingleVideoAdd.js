@@ -86,6 +86,16 @@ const update = async (e) => {
 };
 
 function SingleVideoAdd(props) {
+  const role = document.cookie.split('user=')[1].split('%20')[1]
+
+  if (role.toLowerCase() !== "instructor") {
+    return (
+      <div>
+        <h1>Not allowed to upload videos.</h1>
+      </div>
+    )
+  }
+
   return (
     <PageLayout>
       <div className="body-cus">

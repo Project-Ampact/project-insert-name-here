@@ -34,6 +34,11 @@ app.use(session({
 
 //Send cookie back with signed in user info
 app.use(function(req, res, next){
+    // Don't set cookie if it is a get request
+    if (req.method === 'GET') {
+        next();
+        return;
+    }
     req.user = ('user' in req.session)? req.session.user : null;
     let username = (req.user)? req.user._id : '';
     let role = (req.user)? req.user.role : '';
