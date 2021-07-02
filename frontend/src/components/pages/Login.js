@@ -18,16 +18,18 @@ function Login() {
       let user = await APIAccess.signInUser(username, password);
 
       auth.set(user, () => {
-        console.log('user logged in')
-        history.replace('/profile')
+        const username = document.cookie.split('user=')[1].split('%20')[0]
+        console.log('user logged in', username)
+        history.replace('/profile/' + username)
       });
     } catch(err) {
-      console.log("Error");
+      console.log("Error", err);
     }
   };
 
 	return (
-    <div className="login">
+    <div id="fullpage-wrapper">
+    <div className="login" id="log">
       <form className="login-form">
         <fieldset>
           <header>
@@ -50,6 +52,7 @@ function Login() {
           </footer>
         </fieldset>
       </form>			
+    </div>
     </div>
 	)
 }
