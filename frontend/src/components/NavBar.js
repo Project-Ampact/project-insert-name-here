@@ -60,15 +60,15 @@ const Nav2 = (props) => {
             <MenuItem icon={<FaRegUser />}><Link to= {`/profile/${username}`} >My Profile</Link> </MenuItem>
             <SubMenu title="Search" icon={<FaSistrix />}>
               <MenuItem>
-                <Link to="/">Search Users</Link>
+                <Link to="/profile/search">Search Users</Link>
               </MenuItem>
               <MenuItem>
-                <Link to="/">Search Groups</Link>
+                <Link to="/groupProfile/create">Search Groups</Link>
               </MenuItem>
             </SubMenu>
             <SubMenu title="Groups" icon={<FaRegUserCircle />}>
               <MenuItem>
-                <Link to="/groupProfile/60de1c03e10e7f59d031746f">
+                <Link to="/groupProfile/60de1f43e10e7f59d0317471">
                   My group
                 </Link>
               </MenuItem>

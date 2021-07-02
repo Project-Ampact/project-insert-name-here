@@ -3,20 +3,24 @@ import "./GroupProfileEdit.css";
 import APIAccess from "../../controller.js";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, InputGroup, FormControl, Button, Form, Pagination } from "react-bootstrap";
-import "../groupProfile/Group.css";
-import UserProfileList from "../userProfile/UserProfileList.js"
-import NavigationBar from "../NavigationBar";
-
+import {
+  Container,
+  InputGroup,
+  FormControl,
+  Button,
+  Form,
+  Pagination,
+} from "react-bootstrap";
+import "../groupComponents/groupProfile/Group.css";
+import UserProfileList from "../userProfile/UserProfileList.js";
+import PageLayout from "./DefaultPage";
 
 let mock_data;
 
-
-
 function SearchUserProfiles() {
   const [isLoading, setIsLoading] = useState(true);
-  const [query, setQuery] = useState('')
-  const [groupData, setGroupData] = useState({})
+  const [query, setQuery] = useState("");
+  const [groupData, setGroupData] = useState({});
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -27,16 +31,16 @@ function SearchUserProfiles() {
         return response.json();
       })
       .then((data) => {
-       // console.log(data)
+        // console.log(data)
         mock_data = data;
-        setGroupData(data)
+        setGroupData(data);
         setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
     sendQuery(null);
-  }, [page])
+  }, [page]);
 
   if (isLoading) {
     return (
@@ -47,65 +51,74 @@ function SearchUserProfiles() {
   }
 
   const updateQuery = (x) => {
-    console.log('from updateQuery', x.target.value)
-    setQuery(x.target.value)
-  }
+    console.log("from updateQuery", x.target.value);
+    setQuery(x.target.value);
+  };
 
   async function sendQuery(e) {
-    if (e != null) e.preventDefault()
-    console.log('inside sendQuery', query)
-    if (query !== '') {
-      let returnedData = await APIAccess.searchUserProfile(query, page)
-      setGroupData(returnedData)
+    if (e != null) e.preventDefault();
+    console.log("inside sendQuery", query);
+    if (query !== "") {
+      let returnedData = await APIAccess.searchUserProfile(query, page);
+      setGroupData(returnedData);
     } else {
-      setGroupData(mock_data)
+      setGroupData(mock_data);
     }
   }
 
   async function nextPage() {
-    console.log("Next page: " + page)
+    console.log("Next page: " + page);
     setPage(page + 1);
   }
 
   async function prevPage() {
-    console.log("Prev page: " + page)
+    console.log("Prev page: " + page);
     setPage(page - 1);
   }
 
   async function firstPage() {
-    console.log("First page: " + page)
+    console.log("First page: " + page);
     setPage(1);
   }
 
   return (
-    <div className="logged-in">
-      <NavigationBar/>
+    <PageLayout>
       <Container className="profile container-fluid">
-       
         <div>
           <h1>User Profiles</h1>
           <Form onSubmit={sendQuery} className="search-group">
-            <InputGroup size="lg" onChange={(event) => {updateQuery(event)}} onSubmit={sendQuery}>
+            <InputGroup
+              size="lg"
+              onChange={(event) => {
+                updateQuery(event);
+              }}
+              onSubmit={sendQuery}
+            >
               <InputGroup.Prepend>
-                <InputGroup.Text id="inputGroup-sizing-lg">Search for user profiles</InputGroup.Text>
+                <InputGroup.Text id="inputGroup-sizing-lg">
+                  Search for user profiles
+                </InputGroup.Text>
               </InputGroup.Prepend>
-              <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" />
+              <FormControl
+                aria-label="Large"
+                aria-describedby="inputGroup-sizing-sm"
+              />
               <InputGroup.Append>
                 <Button variant="primary" type="submit">
-                    Search
+                  Search
                 </Button>
               </InputGroup.Append>
             </InputGroup>
           </Form>
           <Pagination>
-            <Pagination.First disabled={page <= 1} onClick={firstPage}/>
-            <Pagination.Prev disabled={page <= 1} onClick={prevPage}/>
-            <Pagination.Next onClick={nextPage}/>
+            <Pagination.First disabled={page <= 1} onClick={firstPage} />
+            <Pagination.Prev disabled={page <= 1} onClick={prevPage} />
+            <Pagination.Next onClick={nextPage} />
           </Pagination>
           <UserProfileList profiles={groupData} />
         </div>
       </Container>
-    </div>
+    </PageLayout>
   );
 }
 

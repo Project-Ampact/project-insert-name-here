@@ -6,7 +6,6 @@ import Landing from './components/pages/Landing'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
-import SingleVideoPage from './components/pages/SingleVideoPage';
 import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'

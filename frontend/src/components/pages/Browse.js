@@ -4,13 +4,13 @@ import {
   Container,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../groupComponents/groupProfile/Group.css";
+
 import { useParams } from "react-router-dom";
 import VideoTagSection from "../videoComponents/VideoTagSection.js";
 import "../videoComponents/VideoTagSection.css";
 import APIAccess from "../../controller.js";
 import PageLayout from "./DefaultPage";
-import "../NavigationBar.css";
+
 import "react-pro-sidebar/dist/css/styles.css";
 
 let mock_data2 = [];
