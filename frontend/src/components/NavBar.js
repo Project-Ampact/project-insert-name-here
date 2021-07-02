@@ -26,10 +26,7 @@ import {
 const Nav2 = (props) => {
   let auth = AuthService();
 
-  const username = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("username="))
-    .split("=")[1];
+  const username = document.cookie.split('user=')[1].split('%20')[0]
 
   return (
     <>
