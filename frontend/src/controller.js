@@ -6,7 +6,8 @@ const APIAccess = {
             return fetch('http://localhost:8000/group/' + group, {
                 method: 'PATCH',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({name: groupName, about: about, picture: picture})
+                body: JSON.stringify({name: groupName, about: about, picture: picture}),
+                credentials: 'include',
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -47,7 +48,7 @@ const APIAccess = {
                     throw jsonRes.message;
                 }
                 // TODO server needs to return back role
-                return {user: username, role: 'partner'};
+                return {user: username, role: document.cookie.split('user=')[1].split('%20')[1]};
             });
         } catch(err){
             throw err;
@@ -59,7 +60,33 @@ const APIAccess = {
             return fetch('http://localhost:8000/group/', {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({name: groupName, about: about, picture: picture})
+                body: JSON.stringify({name: groupName, about: about, picture: picture}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    uploadNewVideo(title, videoLink, picture, tag, description, poster){
+        try{
+            return fetch('http://localhost:8000/video/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({title: title, url: videoLink, picture: picture, tags: tag, description: description, poster: poster}),
+                credentials: 'include',
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -83,7 +110,8 @@ const APIAccess = {
             return fetch('http://localhost:8000/signup', {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({username: username, password: password, role: role})
+                body: JSON.stringify({username: username, password: password, role: role}),
+                credentials: 'include',
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -174,7 +202,8 @@ const APIAccess = {
             return fetch('http://localhost:8000/profile/' + uid, {
                 method: 'PATCH',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({firstName: first_name, lastName: last_name, picture: picture, bio: bio})
+                body: JSON.stringify({firstName: first_name, lastName: last_name, picture: picture, bio: bio}),
+                credentials: 'include',
             }).then(async (response) => {
                 let jsonRes = await response.json();
                

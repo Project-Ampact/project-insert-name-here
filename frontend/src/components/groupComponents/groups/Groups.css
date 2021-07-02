@@ -1,8 +1,9 @@
 
-.cus-img{
-    
-}
-
+.cus-img {
+    height: 50%;
+    width: 100%;
+    max-height: 250px;
+  }
 .cus-title {
     font-size: 200% !important;
     color: #166466;

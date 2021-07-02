@@ -36,10 +36,10 @@ function VideoTagSection(props) {
   }
 
   return (
-    <Container fluid className="mt-3 vid-section profile container-fluid">
+    <Container className="mt-3 vid-section profile container-fluid">
       <Row className="row-section">
-        <h1 className="sec-name"> {props.section} </h1>
-        <Carousel className="custom-carousel">{items}</Carousel>
+          <h1 className="sec-name"> {props.section} </h1>
+          <Carousel className="custom-carousel">{items}</Carousel>
       </Row>
     </Container>
   );
