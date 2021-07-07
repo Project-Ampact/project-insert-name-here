@@ -16,6 +16,10 @@ const postSchema = new mongoose.Schema({
     date: { // when the post was made
         type: Date,
         default: Date.now(),
+    },
+    comments: {
+        type: Array,
+        default: []
     }
 });
 
