@@ -149,9 +149,11 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 const groups = require('./routes/groupRoutes');
 const videos = require('./routes/videoRoutes');
 const search = require('./routes/searchRoutes');
+const comment = require('./routes/commentRoutes');
 app.use('/group', groups);
 app.use('/video', videos);
 app.use('/search', search);
+app.use('/comment', comment);
 
 const profiles = require('./routes/profileRoutes');
 app.use('/profile', profiles);
