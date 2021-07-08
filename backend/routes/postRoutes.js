@@ -3,6 +3,20 @@ const Post = require("../models/post");
 const User = require("../models/user")
 const router = express.Router();
 
+// get posts
+router.get("/", async (req, res) => {
+    let type = req.body.type;
+    let posts;
+
+    if (type == null) {
+        posts = await Post.find({});
+    }
+    else {
+        posts = await Post.find({type: type});
+    }
+    return res.json(posts);
+});
+
 // make a post
 router.post("/", async (req, res) => {
         let user = req.body.user; 
