@@ -17,6 +17,22 @@ router.get("/", async (req, res) => {
     return res.json(posts);
 });
 
+// get one specific post
+router.get("/:postID", async (req, res) => {
+    let postID = req.params.postID;
+    Post.findOne({_id: postID}, (err, post) => {
+        if (err && err.name != 'CastError') return res.status(500).send({
+            success: false,
+            message: err.toString()
+        });
+        if (!post) return res.status(404).send({
+            success: false, 
+            message: "Post not found"
+        });
+        res.json(post);
+    });
+});
+
 // make a post
 router.post("/", async (req, res) => {
         let user = req.body.user; 
