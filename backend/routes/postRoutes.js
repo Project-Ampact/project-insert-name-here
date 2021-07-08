@@ -33,6 +33,22 @@ router.get("/:postID", async (req, res) => {
     });
 });
 
+// delete a post
+router.delete("/:postID", async (req, res) => {
+    let postID = req.params.postID;
+    Post.findOneAndDelete({_id: postID}, (err, post) => {
+        if (err && err.name != 'CastError') return res.status(500).send({
+            success: false,
+            message: err.toString()
+        });
+        if (!post) return res.status(404).send({
+            success: false, 
+            message: "Post not found"
+        });
+        res.status(200).send({success: true});
+    });
+});
+
 // make a post
 router.post("/", async (req, res) => {
         let user = req.body.user; 
