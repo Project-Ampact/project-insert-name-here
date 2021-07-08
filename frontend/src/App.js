@@ -23,6 +23,7 @@ import SearchUserProfiles from './components/pages/SearchUserProfiles';
 import UserProfileEdit from './components/userProfile/UserProfileEdit';
 import SingleVideoPage from './components/pages/SingleVideoPage';
 import SingleVideoAdd from './components/pages/SingleVideoAdd';
+import CalendarPage from './components/pages/CalendarPage';
 
 
 function PrivateRoute({ children, ...rest }) {
@@ -68,7 +69,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Landing}/>
             <Route path="/login" component={Login}/>
-            <Route path="/test" component={<PageLayout></PageLayout>}/>
+            <Route path="/test" component={CalendarPage}/>
             <Route path="/register" component={Registration}/>
             <Route path="/browse" component={Browse}/>
             <Route path="/profile/search" component={SearchUserProfiles}/>
