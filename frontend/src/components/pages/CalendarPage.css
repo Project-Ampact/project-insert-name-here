@@ -1,0 +1,18 @@
+.fc .fc-col-header-cell-cushion { /* needs to be same precedence */
+    padding-top: 5px; /* an override! */
+    padding-bottom: 5px; /* an override! */
+  }
+
+.calendar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.calendar a {
+    color: black;
+}
+
+.add-event {
+    margin-top: 20px;
+    width: 50;
+}
