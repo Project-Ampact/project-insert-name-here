@@ -10,6 +10,10 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
+    conferenceLink: {
+        type: String,
+        required: false
+    },
     start: {
         type: Date,
         required: true
