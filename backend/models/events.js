@@ -10,6 +10,10 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
+    conferenceLink: {
+        type: String,
+        required: false
+    },
     start: {
         type: Date,
         required: true
@@ -18,13 +22,13 @@ const eventSchema = new Schema({
         type: Date,
         required: true
     },
-    isGeneral: {
-        type: Boolean,
+    type: {
+        type: String,
         required: true
     },
     groupId: {
         type: String,
-        required: true
+        required: false
     },
     userId: {
         type: String,
