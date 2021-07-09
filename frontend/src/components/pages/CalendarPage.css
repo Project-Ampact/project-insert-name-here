@@ -16,3 +16,15 @@
     margin-top: 20px;
     width: 50;
 }
+
+.event-header {
+    align-items: center !important;
+}
+
+.event-type {
+    margin-left: 1rem;
+    /* border: 1px solid black; */
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50px;
+}
