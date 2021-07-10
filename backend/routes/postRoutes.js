@@ -7,12 +7,12 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     let type = req.body.type;
     let posts;
-
+    console.log("TYPE: " + type);
     if (type == null) {
-        posts = await Post.find({});
+        posts = await Post.find({}).sort( {date: -1} );
     }
     else {
-        posts = await Post.find({type: type});
+        posts = await Post.find({type: type}).sort( {date: -1} );
     }
     return res.json(posts);
 });
