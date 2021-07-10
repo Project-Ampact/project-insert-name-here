@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import { withRouter } from "react-router";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -37,9 +37,30 @@ const AddVideo = (props) => {
 }
 
 const Nav2 = (props) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [group, setGroup] = useState('')
   let auth = AuthService();
   const username = document.cookie.split('user=')[1].split('%20')[0]
   const role = document.cookie.split('user=')[1].split('%20')[1]
+
+  useEffect(() => {
+    setIsLoading(true)
+    fetch(`http://localhost:8000/group/member/${username}`, {})
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setGroup(data._id);
+        setIsLoading(false);
+      })
+  }, [])
+
+  const myGroup = (group) ? (
+  <MenuItem>
+    <Link to={`/groupProfile/${group}`}>
+      My group
+    </Link>
+  </MenuItem>) : null;
 
   return (
     <>
@@ -67,11 +88,7 @@ const Nav2 = (props) => {
               </MenuItem>
             </SubMenu>
             <SubMenu title="Groups" icon={<FaRegUserCircle />}>
-              <MenuItem>
-                <Link to="/groupProfile/60de1f43e10e7f59d0317471">
-                  My group
-                </Link>
-              </MenuItem>
+              {myGroup}
               <MenuItem>
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
