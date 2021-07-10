@@ -3,6 +3,8 @@ const Post = require("../models/post");
 const User = require("../models/user")
 const router = express.Router();
 
+const COMMENTS_PER_PAGE = 10;
+
 // get posts
 router.get("/", async (req, res) => {
     let type = req.body.type;
@@ -31,6 +33,37 @@ router.get("/:postID", async (req, res) => {
         });
         res.json(post);
     });
+});
+
+// get comments of one specific post
+router.get("/:postID/comments/", async(req, res) => {
+    let postID = req.params.postID;
+
+    let page = req.query.page;
+    (page > 0) ? page = parseInt(page) : page = 1;
+
+    let post;
+
+    try {
+        post = await Post.findById(postID).populate({
+            path: "comments",
+            model: "Comment",
+            options: {
+                skip: (page - 1) * COMMENTS_PER_PAGE,
+                limit: COMMENTS_PER_PAGE
+            }
+        });
+        if (!post) return res.status(404).send({
+            success: false, 
+            message: "Post not found"
+        });
+        return res.json(post);
+    } catch (error) {
+        if (error != 'CastError') return res.status(500).send({
+            success: false,
+            message: error.toString()
+        });
+    }
 });
 
 // make a post
