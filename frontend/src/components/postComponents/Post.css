@@ -1,0 +1,18 @@
+#post-wrapper {
+    margin: 5px 0px;
+}
+
+#post-body {
+    width: 700px;
+    padding: 10px 25px;
+    border-width: 100px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#post-date {
+    text-align: right;
+}
