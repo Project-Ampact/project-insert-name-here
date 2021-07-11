@@ -28,3 +28,7 @@
     padding-right: 10px;
     border-radius: 50px;
 }
+
+.event-exit-area button {
+    margin: 0.25rem;
+}
