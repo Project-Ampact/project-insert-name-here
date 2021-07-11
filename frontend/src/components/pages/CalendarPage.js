@@ -21,10 +21,8 @@ const placeholderData = {
 }
 
 function EventPopup({show, closeWindow, eventData}) {
-  let showGroup = null;
   let typeColor = 'white';
   if (eventData.type === 'group') {
-    showGroup = (<p><b>Group: <a href={`/groupProfile/${eventData.groupId}`}>{eventData.groupId}</a></b></p>)
     typeColor = GROUP_COLOR;
   } else if (eventData.type === 'personal') {
     typeColor = PERSONAL_COLOR
@@ -45,7 +43,6 @@ function EventPopup({show, closeWindow, eventData}) {
         </Modal.Header>
         <Modal.Body>
           <p><b>Created by: <a href={`/profile/${eventData.userId}`}>{eventData.userId}</a></b></p>
-          {showGroup}
           <p><b>Start: </b>{eventData.start.toLocaleDateString()} {eventData.start.toLocaleTimeString()}</p>
           <p><b>End:   </b>{eventData.end.toLocaleDateString()} {eventData.end.toLocaleTimeString()}</p>
           {eventData.description}
@@ -123,7 +120,7 @@ function CalendarPage() {
             initialView="dayGridMonth"
             height={700}
             eventTextColor={"black"}
-            customButtons={{addEvent: {text: "Add Event"}}} // add functionality for button here
+            customButtons={{addEvent: {text: "Add Event"}}} // add functionality for button here: https://fullcalendar.io/docs/customButtons
             headerToolbar={{left: "addEvent", center: "title", right: "today dayGridMonth,timeGridWeek,timeGridDay prev,next"}}
             buttonText={{today: 'Today', month: 'Month', week: 'Week', day: 'Day'}}
             events={loadedEventData.map(x => convertData(x))}
