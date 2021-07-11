@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,35 +10,15 @@ const PERSONAL_COLOR = '#54e0ff';
 const GROUP_COLOR = '#80eb34';
 const GENERAL_COLOR = '#ff5454';
 
-const mock_data = [
-  {
-    title: 'Personal Meeting',
-    description: 'Test desription',
-    start: new Date('July 10, 2021 03:00:00'),
-    end: new Date('July 10, 2021 05:00:00'),
-    type: 'personal',
-    groupId: 'testgroup',
-    userId: 'testuser',
-  },
-  {
-    title: 'Group Meeting',
-    description: 'Test desription',
-    start: new Date('July 15, 2021 03:00:00'),
-    end: new Date('July 15, 2021 05:00:00'),
-    type: 'group',
-    groupId: 'testgroup',
-    userId: 'testuser'
-  },
-  {
-    title: 'General Meeting',
-    description: 'Test desription',
-    start: new Date('July 17, 2021 03:00:00'),
-    end: new Date('July 17, 2021 05:00:00'),
-    type: 'general',
-    groupId: 'testgroup',
-    userId: 'testuser'
-  }
-]
+const placeholderData = {
+  title: 'Personal Meeting',
+  description: 'Test desription',
+  start: new Date('July 10, 2021 03:00:00'),
+  end: new Date('July 10, 2021 05:00:00'),
+  type: 'personal',
+  groupId: 'testgroup',
+  userId: 'testuser',
+}
 
 function EventPopup({show, closeWindow, eventData}) {
   let showGroup = null;
@@ -76,7 +56,21 @@ function EventPopup({show, closeWindow, eventData}) {
 
 function CalendarPage() {
   const [showEvent, setShowEvent] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState(mock_data[0]);
+  const [currentEvent, setCurrentEvent] = useState(placeholderData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedEventData, setLoadedEventData] = useState([])
+  const username = document.cookie.split('user=')[1].split('%20')[0]
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`http://localhost:8000/calendar/${username}`, {})
+    .then(response => response.json())
+    .then(data => {
+      setLoadedEventData(data)
+      setIsLoading(false)
+    })
+  }, [username])
 
   const closeEventWindow = () => setShowEvent(false);
   const showEventWindow = () => setShowEvent(true);
@@ -103,6 +97,14 @@ function CalendarPage() {
     return {...data, color: eventColor}
   }
 
+  if (isLoading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
+
   return (
     <>
       <EventPopup show={showEvent} closeWindow={closeEventWindow} eventData={currentEvent}/>
@@ -116,7 +118,7 @@ function CalendarPage() {
             customButtons={{addEvent: {text: "Add Event"}}} // add functionality for button here
             headerToolbar={{left: "addEvent", center: "title", right: "today dayGridMonth,timeGridWeek,timeGridDay prev,next"}}
             buttonText={{today: 'Today', month: 'Month', week: 'Week', day: 'Day'}}
-            events={mock_data.map(x => convertData(x))}
+            events={loadedEventData.map(x => convertData(x))}
             dayMaxEvents={true}
             eventClick={handleEventClick}
             />
