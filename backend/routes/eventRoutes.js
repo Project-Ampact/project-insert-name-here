@@ -31,7 +31,7 @@ router.get("/:userId", async (req, res) => {
             {groupId: (result === null) ? null : result._id, type: "group"},
             {type: "general"}]}, (err, events) => {
             if (err) return res.status(500).send({success: false, message: err.toString()});
-            if (!events) return res.status(404).send({sucess: false, message: err.toString()});
+            if (!events) return res.status(404).send({sucess: false, message: "User's events not found"});
             return res.json(events);
         })
     })
