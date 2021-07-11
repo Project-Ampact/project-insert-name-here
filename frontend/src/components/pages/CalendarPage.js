@@ -32,12 +32,16 @@ function EventPopup({show, closeWindow, eventData}) {
     typeColor = GENERAL_COLOR
   }
 
+  const joinButton = (eventData.conferenceLink) ? 
+    (<Button variant="primary" href={eventData.conferenceLink} target="_blank">Join Meeting</Button>)
+    : null
+
   return (
     <>
       <Modal show={show} onHide={closeWindow} centered size="lg">
         <Modal.Header closeButton className="event-header">
           <Modal.Title>{eventData.title}</Modal.Title>
-          <div className="event-type" style={{backgroundColor: typeColor}}><b>{eventData.type}</b></div>
+          <div className="event-type" style={{backgroundColor: typeColor}}>{eventData.type}</div>
         </Modal.Header>
         <Modal.Body>
           <p><b>Created by: <a href={`/profile/${eventData.userId}`}>{eventData.userId}</a></b></p>
@@ -46,8 +50,12 @@ function EventPopup({show, closeWindow, eventData}) {
           <p><b>End:   </b>{eventData.end.toLocaleDateString()} {eventData.end.toLocaleTimeString()}</p>
           {eventData.description}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={closeWindow}>Close</Button>
+        <Modal.Footer className="justify-content-between">
+          <Button variant="danger">Delete Event</Button>
+          <div className="event-exit-area">
+            {joinButton}
+            <Button variant="secondary" onClick={closeWindow}>Close</Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>
@@ -121,6 +129,7 @@ function CalendarPage() {
             events={loadedEventData.map(x => convertData(x))}
             dayMaxEvents={true}
             eventClick={handleEventClick}
+            navLinks={true}
             />
         </div>
       </PageLayout>
