@@ -73,7 +73,7 @@ function PostFeed() {
             day = "0" + day;
           }
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if (mock_data_piece.type = "general") {
+          if (mock_data_piece.type == "general") {
           return (
             <Post
               user={mock_data_piece.user}
