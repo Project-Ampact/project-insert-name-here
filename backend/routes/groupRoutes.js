@@ -88,12 +88,18 @@ router.post("/add/:groupID", async (req, res) => {
     let user = await User.findById(userID, (err, use) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
     });
+
+    let userGroup = await Group.findOne({members: userID}, (err, use) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+    })
+    console.log('userGroup', userGroup)
+    if (userGroup) return res.status(400).send({sucess: false, message: `${userID} is already part of a group`})
+
     if (!user) return res.status(404).send({success: false, message: "User with username " + userID + " does not exist"});
     Group.findById(groupID, (err, group) => {
         console.log(group);
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!group) return res.status(404).send({success: false, message: "Group with Id " + groupID + " does not exist"});
-        if (group.members.includes(userID)) return res.status(404).send({success: false, message: "Member is already in group"});
         group.members.push(userID);
         Group.findByIdAndUpdate(groupID, {members: group.members}, (err, group) => {
             if (err) return res.status(500).send({success: false, message: err.toString()});
