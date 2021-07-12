@@ -216,26 +216,26 @@ Tracking on Jira Total Mark: 24 / 24
 ---
 
 ## Sprint Demo (Max 10 marks) 
-  - Attendance (max 2 marks)
-    - 2 marks = full team is present
-    - 1 mark = one member is not present
-    - 0 marks = more than one member is not present
-  
-  - Working software (max 2 marks)
-  Tuesday: 2 features
-  Wednesday/Thursday: 3 features
-  Friday: 4 features
-  
-    - 8 marks = features presented work flawlessly
-    - 1 mark removed for each error or missing records on Jira
+- Attendance (max 2 marks) 2
+  - 2 marks = full team is present
+  - 1 mark = one member is not present
+  - 0 marks = more than one member is not present
+- Working software (max 2 marks)
+- **Tues:** 2 features
+- **Wed/Thurs:** 3 features
+- **Fri:** 4 features
+  - 8 marks = features work flawlessly
+  - 1 mark removed for each error or incomplete records on Jira
 
-  Your Mark: 6 / 10
+Your Mark: 8 /10
 
-Notes: Features were implemented incorrectly/partially.
-Meeting documents did not reflect the reality.
+- edit profile
+- Youtube Video link
+- Search
+- UI improvement (is this a feature?)
 
 ---
 
 ## Total Mark
 
-84 / 89
+86 / 89
