@@ -15,18 +15,11 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 
 let mock_data = [
-  {
-    user: "David Tan",
-    type: "general",
-    content: "Lorem ipsum content is here cool",
-    date: "today lol",
-  },
-  {
-    user: "Christopher Suh",
-    type: "general",
-    content: "Lorem ipsum content is here cool2",
-    date: "today lol2",
-  },
+  {"_id":"60e62079cfcf1323cc3bd6ab","date":"1625694170354","replies":[{"$oid":"60ecc10bc22df22bf4376e49"},{"$oid":"60ecc113c22df22bf4376e4b"},{"$oid":"60ecc116c22df22bf4376e4d"},{"$oid":"60ecc118c22df22bf4376e4f"}],"message":"Comment 2","poster":"Chris","__v":{"$numberInt":"0"}},
+  {"_id":"60e6207ccfcf1323cc3bd6ac","date":"1625694170354","replies":[{"$oid":"60ecc14bc22df22bf4376e51"},{"$oid":"60ecc14dc22df22bf4376e53"},{"$oid":"60ecc14fc22df22bf4376e55"},{"$oid":"60ecc151c22df22bf4376e57"}],"message":"Comment 3","poster":"Chris","__v":{"$numberInt":"0"}},
+  {"_id":"60ecc191c22df22bf4376e5c","date":"1626127173704","replies":[{"$oid":"60ecc1adc22df22bf4376e5d"},{"$oid":"60ecc1afc22df22bf4376e5f"},{"$oid":"60ecc1b1c22df22bf4376e61"},{"$oid":"60ecc1b3c22df22bf4376e63"}],"message":"A new comment of a very moderate length for testing purposes3.","poster":"Chris","__v":{"$numberInt":"0"}},
+  {"_id":"60ecc18fc22df22bf4376e5b","date":"1626127173704","replies":[],"message":"A new comment of a very moderate length for testing purposes2.","poster":"Chris","__v":{"$numberInt":"0"}},
+  {"_id":"60ecc18dc22df22bf4376e5a","date":"1626127173704","replies":[],"message":"A new comment of a very moderate length for testing purposes1.","poster":"Chris","__v":{"$numberInt":"0"}},
 ];
 
 function Expand({ children, eventKey, callback }) {
@@ -66,25 +59,26 @@ function LoadComments() {
     return (
       <Comment 
         className="loaded-comment"
-        user={mock_data_piece.user}
+        user={mock_data_piece.poster}
         type={mock_data_piece.type}
         date={date.getFullYear() + "/" + month + "/" + day}
-        content={mock_data_piece.content}
+        content={mock_data_piece.message}
+        cid={mock_data_piece._id}
       />
     );
   });
 }
 
 function CommentSection(props) {
-  /*const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8000/post/")
+    fetch("http://localhost:8000/post/" + props.pid + "/comments/")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
-        mock_data = data;
+        mock_data = data.comments;
         setIsLoading(false);
       });
   });
@@ -96,7 +90,7 @@ function CommentSection(props) {
         <p>Loading...</p>
       </section>
     );
-  }*/
+  }
   return (
     <Accordion>
       <Card>

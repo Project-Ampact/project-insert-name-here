@@ -19,7 +19,7 @@ function Post(props) {
        </div>
        <p id="post-content">{props.content}</p>
        </div>
-       <CommentSection></CommentSection>
+       <CommentSection pid={props.pid}></CommentSection>
     </div>
   </Container>
   );

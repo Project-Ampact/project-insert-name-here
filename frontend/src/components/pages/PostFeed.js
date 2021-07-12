@@ -70,7 +70,7 @@ function PostFeed() {
 
         console.log(date.getFullYear() + "/" + month + "/" + day);
     return (
-      <Post user={mock_data_piece.user}
+      <Post user={mock_data_piece.user} pid={mock_data_piece._id}
         type={mock_data_piece.type}
         date={date.getFullYear() + "/" + month + "/" + day}
         content={mock_data_piece.content}
