@@ -150,9 +150,12 @@ const groups = require('./routes/groupRoutes');
 const videos = require('./routes/videoRoutes');
 const search = require('./routes/searchRoutes');
 const comment = require('./routes/commentRoutes');
+const post = require('./routes/postRoutes');
+
 app.use('/group', groups);
 app.use('/video', videos);
 app.use('/search', search);
+app.use('/post', post);
 app.use('/comment', comment);
 
 const profiles = require('./routes/profileRoutes');
