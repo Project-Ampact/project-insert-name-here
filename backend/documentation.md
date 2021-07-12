@@ -197,7 +197,7 @@
 
 ### Add user to group
 - Description: Remove a user from a group
-- Request `POST /groups/add/:groupID`
+- Request `POST /group/add/:groupID`
     - params:
         - groupID : the ID group you want to add user to
     - content-type: application/json
@@ -219,10 +219,10 @@
         - body: json object
 	- success: (bool) true
       - Status: 400
-        - indication: user already in group
+        - indication: user already part of a group
         - content-type: application/json
         - body: json object
-            - message: (String) "Member is already in group"
+            - message: (String) ":userID is already part of a group"
             - success: (bool) false
      - Status: 404
         - indication: couldn’t group
