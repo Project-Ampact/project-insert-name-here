@@ -227,7 +227,7 @@ Tracking on Jira Total Mark: 24 / 24
   - 8 marks = features work flawlessly
   - 1 mark removed for each error or incomplete records on Jira
 
-Your Mark: 8 /10
+Your Mark: 10 /10
 
 - edit profile
 - Youtube Video link
@@ -238,4 +238,4 @@ Your Mark: 8 /10
 
 ## Total Mark
 
-86 / 89
+89 / 89
