@@ -57,7 +57,7 @@ router.get("/:postID/comments/", async(req, res) => {
             success: false, 
             message: "Post not found"
         });
-        return res.json(post);
+        return res.json(post.comments);
     } catch (error) {
         if (error != 'CastError') return res.status(500).send({
             success: false,
