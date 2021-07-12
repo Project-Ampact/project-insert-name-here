@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import { withRouter } from "react-router";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -10,8 +10,7 @@ import {
   MenuItem,
   SubMenu,
   SidebarHeader,
-  SidebarContent,
-  SidebarFooter,
+  SidebarContent
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
@@ -21,6 +20,7 @@ import {
   FaSistrix,
   FaTimesCircle,
   FaServer,
+  FaCalendarAlt
 } from "react-icons/fa";
 
 const AddVideo = (props) => {
@@ -37,9 +37,27 @@ const AddVideo = (props) => {
 }
 
 const Nav2 = (props) => {
+  const [group, setGroup] = useState('')
   let auth = AuthService();
   const username = document.cookie.split('user=')[1].split('%20')[0]
   const role = document.cookie.split('user=')[1].split('%20')[1]
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/group/member/${username}`, {})
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setGroup(data._id);
+      })
+  }, [username])
+
+  const myGroup = (group) ? (
+  <MenuItem>
+    <Link to={`/groupProfile/${group}`}>
+      My group
+    </Link>
+  </MenuItem>) : null;
 
   return (
     <>
@@ -67,16 +85,15 @@ const Nav2 = (props) => {
               </MenuItem>
             </SubMenu>
             <SubMenu title="Groups" icon={<FaRegUserCircle />}>
-              <MenuItem>
-                <Link to="/groupProfile/60de1f43e10e7f59d0317471">
-                  My group
-                </Link>
-              </MenuItem>
+              {myGroup}
               <MenuItem>
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
             <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
+            <MenuItem icon={<FaCalendarAlt/>}>
+              <Link to="/calendar">Calendar</Link>
+            </MenuItem>
             <MenuItem icon={<FaTimesCircle />}>
               <Link to="/" onClick={auth.signout}>
                 Sign Out
