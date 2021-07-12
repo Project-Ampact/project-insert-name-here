@@ -50,7 +50,28 @@ function Expand({ children, eventKey, callback }) {
   );
 }
 
-function LoadReplies() {
+function LoadReplies(cid) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedUserData, setLoadedUserData] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8000/comment/" + cid)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        mock_data = data;
+        setIsLoading(false);
+      });
+  });
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   return mock_data.map((mock_data_piece) => {
     let date = new Date(mock_data_piece.date);
     let month = date.getMonth() + 1;
@@ -64,12 +85,12 @@ function LoadReplies() {
 
     console.log(date.getFullYear() + "/" + month + "/" + day);
     return (
-      <Reply 
+      <Reply
         className="loaded-comment"
-        user={mock_data_piece.user}
+        user={mock_data_piece.poster}
         type={mock_data_piece.type}
         date={date.getFullYear() + "/" + month + "/" + day}
-        content={mock_data_piece.content}
+        content={mock_data_piece.message}
       />
     );
   });
@@ -84,7 +105,7 @@ function ReplySection(props) {
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
-              {LoadReplies()}
+            {LoadReplies(props.cid)}
           </Container>
         </Accordion.Collapse>
       </Card>

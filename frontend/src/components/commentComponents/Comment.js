@@ -16,7 +16,7 @@ function Comment(props) {
             </div>
             <p className="text-content">{props.content}</p>
           </Card.Body>
-          <ReplySection></ReplySection>
+          <ReplySection cid={props.cid}></ReplySection>
         </Card>
       </Row>
     </Container>
