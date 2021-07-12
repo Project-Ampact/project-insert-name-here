@@ -14,17 +14,13 @@ import Post from "../postComponents/Post.js";
 let mock_data = [
   {
     user: "David Tan",
-    type: "general",
+    type: "QnA",
     content: "Lorem ipsum content is here cool",
     date: "today lol",
   },
 ];
 
-// let postInfo = mock_data;
-
-
-
-function PostFeed() {
+function PostFeedAnnouncements() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
   useEffect(() => {
@@ -46,8 +42,6 @@ function PostFeed() {
     );
   }
 
-
-
   return (
     <PageLayout>
       <div id="posts">
@@ -61,12 +55,12 @@ function PostFeed() {
           if (day < 10) {
             day = "0" + day;
           }
-          
+
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if (mock_data_piece.type == "general") {
+          if (mock_data_piece.type == "QnA") {
             return (
               <Post
-                user={mock_data_piece.user}  
+                user={mock_data_piece.user}
                 type={mock_data_piece.type}
                 date={date.getFullYear() + "/" + month + "/" + day}
                 content={mock_data_piece.content}
@@ -79,4 +73,4 @@ function PostFeed() {
   );
 }
 
-export default PostFeed;
+export default PostFeedAnnouncements;

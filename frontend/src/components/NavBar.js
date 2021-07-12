@@ -58,9 +58,16 @@ const Nav2 = (props) => {
             <MenuItem icon={<FaBorderAll />}>
               <Link to="/browse">Browse Videos</Link>
             </MenuItem>
-            <MenuItem icon={<FaRegListAlt />}>
-              <Link to="/postFeed">Posts</Link>
+            <SubMenu title="Posts" icon={<FaRegListAlt />}>
+              <MenuItem>
+                <Link to="/postFeedAnnouncements">
+                  Announcements
+                </Link>
+              </MenuItem>
+              <MenuItem>
+              <Link to="/postFeed">General</Link>
             </MenuItem>
+            </SubMenu>
             <MenuItem icon={<FaRegUser />}><Link to= {`/profile/${username}`} >My Profile</Link> </MenuItem>
             <SubMenu title="Search" icon={<FaSistrix />}>
               <MenuItem>
