@@ -65,7 +65,7 @@ const Nav2 = (props) => {
                 </Link>
               </MenuItem>
               <MenuItem>
-              <Link to="/postFeed">General</Link>
+              <Link to="/postFeed">Discussion</Link>
             </MenuItem>
             </SubMenu>
             <MenuItem icon={<FaRegUser />}><Link to= {`/profile/${username}`} >My Profile</Link> </MenuItem>

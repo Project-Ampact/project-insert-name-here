@@ -57,7 +57,7 @@ function PostFeedAnnouncements() {
           }
 
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if (mock_data_piece.type == "QnA") {
+          if (mock_data_piece.type == "announcement") {
             return (
               <Post
                 user={mock_data_piece.user}
