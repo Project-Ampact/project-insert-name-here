@@ -4,6 +4,7 @@ import {
   Container,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CommentSection from "../commentComponents/CommentSection";
 function Post(props) {
   //let postLink = "http://localhost:3000/postFeed/" + props.gid;
 
@@ -18,6 +19,7 @@ function Post(props) {
        </div>
        <p id="post-content">{props.content}</p>
        </div>
+       <CommentSection></CommentSection>
     </div>
   </Container>
   );
