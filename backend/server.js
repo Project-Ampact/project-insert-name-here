@@ -12,6 +12,9 @@ const cookie = require('cookie');
 
 const User = require('./models/user');
 const Profile = require('./models/profile');
+
+const Authentication = require("./authentication");
+
 require('dotenv/config');
 
 app.use(express.json());
@@ -73,7 +76,7 @@ const checkRegistrationInfo = async(req, res, next) => {
 };
 
 //register user into database
-app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
+app.post('/signup', Authentication.isNotAutenticated, checkRegistrationInfo, async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let role = req.body.role;
@@ -106,7 +109,7 @@ app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
 });
 
 //signin
-app.post('/signin', (req, res) => {
+app.post('/signin', Authentication.isNotAutenticated, (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     User.findById(username, (err, user) => {
@@ -124,7 +127,7 @@ app.post('/signin', (req, res) => {
     });
 });
 
-app.get('/signout', (req, res) => {
+app.get('/signout', Authentication.isAutenticated ,(req, res) => {
     req.session.destroy();
     res.setHeader('Set-Cookie', cookie.serialize('user', '', {
         path : '/', 

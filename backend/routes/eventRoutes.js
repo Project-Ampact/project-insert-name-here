@@ -1,7 +1,10 @@
+/*jshint esversion: 10*/
+
 const express = require("express");
 const Event = require("../models/events");
 const Group = require("../models/group");
-const router = express.Router()
+const router = express.Router();
+const Authentication = require("../authentication");
 
 // // Get events for the user (personal, group, general)
 // router.get("/", async (req, res) => {
@@ -18,7 +21,7 @@ const router = express.Router()
 //     })
 // });
 
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", Authentication.isAutenticated, async(req, res) => {
     const userId = req.params.userId;
 
     Group.findOne({members: userId}, (err, result) => {
