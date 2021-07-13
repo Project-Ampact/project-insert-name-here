@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Row, Container, Form, Button } from "react-bootstrap";
+import {
+  Row,
+  Container, 
+  Form,
+  Button,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useParams } from "react-router-dom";
@@ -20,11 +25,9 @@ let mock_data = [
   },
 ];
 
-// let postInfo = mock_data;
-
-function PostFeed() {
+function PostFeedAnnouncements() {
   let auth = AuthService();
-  const username = document.cookie.split("user=")[1].split("%20")[0];
+  const username = document.cookie.split('user=')[1].split('%20')[0]
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
   useEffect(() => {
@@ -46,6 +49,7 @@ function PostFeed() {
     fetchData().then((x) => {
       setLoadedUserData(x._id);
       console.log("USER!: " + x._id);
+      
     });
   }, [username]);
 
@@ -61,7 +65,7 @@ function PostFeed() {
     e.preventDefault();
     try {
       let postDescription = document.getElementById("postCreate").value;
-      let type = "QnA";
+      let type = "announcement";
       let user;
       console.log(postDescription);
       user = loadedUserData;
@@ -77,50 +81,27 @@ function PostFeed() {
   return (
     <PageLayout>
       <div id="posts">
-        <Container>
-          <div class="card" id="post-wrapper">
-            <div class="card-body rounded" id="post-body">
-              <div class="flex-container">
-                <h1 class="card-title">Create Post As: {username}</h1>
-              </div>
-              <Form className="form-cus">
-                <Form.Group controlId="postCreate">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    type="postCreate"
-                    placeholder="Type your post here!"
-                  />
-                </Form.Group>
-                <Button
-                  onClick={update}
-                  id="submit-button"
-                  variant="primary"
-                  type="submit"
-                >
-                  Submit
-                </Button>
-              </Form>
-            </div>
-          </div>
-        </Container>
+      <Container>
+    <div class="card" id="post-wrapper"> 
+      <div class="card-body rounded" id="post-body">
+      <div class="flex-container">
+      <h1 class="card-title">Create Post As:  {username}</h1>
+      </div>
+      <Form className="form-cus">
+                  <Form.Group controlId="postCreate">
+                    <Form.Control as="textarea" rows={4}
+                      type="postCreate"
+                      placeholder="Type your post here!"
+                    />
+                  </Form.Group>
+                  <Button onClick={update} id="submit-button"  variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Form>
+       </div>
+    </div>
+  </Container>
         {mock_data.map((mock_data_piece) => {
-          let profilePic;
-
-          /*async function fetchData() {
-          let data = await APIAccess.getUserProfile(mock_data_piece.user);
-          return data;
-        }
-        fetchData().then((x) => {
-          console.log("X: " + x.picture);
-        profilePic = x.picture;
-        console.log("inside" + profilePic);
-        })
-        
-        console.log("OUTSIDE" + profilePic); */
-
-          // fetchData();
-
           let date = new Date(mock_data_piece.date);
           let month = date.getMonth() + 1;
           let day = date.getDate();
@@ -132,7 +113,7 @@ function PostFeed() {
           }
 
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if (mock_data_piece.type == "QnA") {
+          if (mock_data_piece.type == "announcement") {
             return (
               <Post
                 user={mock_data_piece.user}
@@ -143,10 +124,9 @@ function PostFeed() {
             );
           }
         })}
-        
       </div>
     </PageLayout>
   );
 }
 
-export default PostFeed;
+export default PostFeedAnnouncements;
