@@ -111,7 +111,7 @@ router.post("/", async (req, res) => {
         let type = req.body.type;
         let content = req.body.content;
         let visibility = req.body.visibility;
-
+        let date = Date.now();
         // contains required params 
         if (user == null || type == null || content == null || visibility == null) return res.status(400).json({
             success: false,
@@ -141,7 +141,8 @@ router.post("/", async (req, res) => {
             user: user,
             type: type,
             content: content,
-            visibility: visibility
+            visibility: visibility,
+            date: date
         });
 
         try {
