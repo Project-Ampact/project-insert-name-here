@@ -36,4 +36,15 @@ const profileSchema = new mongoose.Schema({
     collection: 'Profiles'
 });
 
+profileSchema.index({
+    firstName: 'text',
+    lastName: 'text',
+    bio: 'text',
+    },
+    {weights: {
+        firstName: 5,
+        lastName: 4,
+        bio: 3,
+    }});
+
 module.exports = mongoose.model('Profile', profileSchema);

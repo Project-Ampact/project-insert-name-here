@@ -31,6 +31,7 @@
   .group-img {
     height: 50%;
     width: 100%;
+    max-height: 500px;
   }
 
   .group-about {
@@ -113,4 +114,8 @@
 .wrapper-register label {
     margin-top: 5px;
     width: 120px;
+}
+
+.search-group {
+  margin-bottom: 10px;
 }

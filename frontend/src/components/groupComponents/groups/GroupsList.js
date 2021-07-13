@@ -4,8 +4,16 @@ import "./GroupsList.css";
 import "../groupProfile/Group.css";
 
 function GroupsList(props) {
-    return (<div>
-        <h1 className="group-members">Groups</h1>
+    if (props.groups.length === 0) {
+        return (
+            <div className="group-not-found">
+                <h3>No groups found</h3>
+            </div>
+        )
+    }
+
+    return (
+    <div>
         <CardColumns>
             {props.groups.map((group) => {
                 return <Groups key={group._id} name={group.name} about={group.about} picture={group.picture} gid={group._id}/>

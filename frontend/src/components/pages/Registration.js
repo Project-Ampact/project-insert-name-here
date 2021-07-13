@@ -22,10 +22,7 @@ function Registration() {
       console.log("Made it here");
 
       auth.set(user, () => {
-        const username = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('username='))
-        .split('=')[1]
+        const username = document.cookie.split('user=')[1].split('%20')[0]
         console.log('user logged in', username)
         history.replace('/profile/' + username)
       });
@@ -35,6 +32,7 @@ function Registration() {
   };
 
   return (
+    <div id="fullpage-wrapper">
     <div className="register">
       <form id="register-form">
         <fieldset>
@@ -93,6 +91,7 @@ function Registration() {
           </main>
         </fieldset>
       </form>
+    </div>
     </div>
   );
 }

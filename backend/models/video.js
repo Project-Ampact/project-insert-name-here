@@ -21,7 +21,7 @@ const videoSchema = new mongoose.Schema({
     },
     subject: {
         type: String,
-        required: true
+       
     },
     picture: {
         type: String,

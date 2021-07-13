@@ -1,13 +1,32 @@
-import React from "react";
 import "./GroupProfileEdit.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
 import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import PageLayout from "./DefaultPage";
 import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
 function GroupProfileEdit() {
   let { gid } = useParams();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedGroupData, setLoadedGroupData] = useState([]);
+  
+  useEffect(() => {
+    //setIsLoading(true);
+    fetch("http://localhost:8000/group/" + gid)
+      .then((response) => {
+        // console.log( response.json())
+        return response.json();
+        //  setLoadedGroupData(response.json());
+        //  setIsLoading(false)
+      })
+      .then((data) => {
+        setLoadedGroupData(data);
+        setIsLoading(false);
+      });
+  }, [gid]);
+
   const update = async (e) => {
     try {
       let groupName = document.getElementById("groupName").value;
@@ -111,7 +130,7 @@ function GroupProfileEdit() {
                     <Form.Label>Group Name</Form.Label>
                     <Form.Control
                       type="groupName"
-                      placeholder="Enter group name"
+                      defaultValue={loadedGroupData.name}
                     />
                     <Form.Text className="text-muted">
                       This is the name of your group or company.
@@ -121,12 +140,12 @@ function GroupProfileEdit() {
                     <Form.Label>Group Picture</Form.Label>
                     <Form.Control
                       type="picture"
-                      placeholder="https://picsum.photos/200/100"
+                      defaultValue={loadedGroupData.picture}
                     />
                   </Form.Group>
                   <Form.Group controlId="about">
                     <Form.Label>Group Description</Form.Label>
-                    <Form.Control type="about" as="textarea" rows={3} />
+                    <Form.Control type="about" as="textarea" rows={3} defaultValue={loadedGroupData.about}/>
                   </Form.Group>
                   <Button onClick={update} href={goToGroupProfile} variant="primary" type="submit">
                     Update
