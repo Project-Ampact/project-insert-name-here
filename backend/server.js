@@ -32,31 +32,14 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// //Send cookie back with signed in user info
-// app.use(function(req, res, next){
-//     // Don't set cookie if it is a get request
-//     if (req.method === 'GET') {
-//         next();
-//         return;
-//     }
-//     req.user = ('user' in req.session)? req.session.user : null;
-//     let username = (req.user)? req.user._id : '';
-//     let role = (req.user)? req.user.role : '';
-//     let cookieData = username + " " + role;
-//     if (role !== '' && username !== '') cookieData = '';
-//     res.setHeader('Set-Cookie', cookie.serialize('user', cookieData, {
-//         path : '/', 
-//         maxAge: 60 * 60 * 24 * 7
-//     }));
-//     next();
-// });
-
-//Check if user is authenticated user. Necessary to ensure the only people 
-const isAuthenticated = (req, res, next) => {
-    if (!req.user) return res.status(401).end("Access denied");
+//Send cookie back with signed in user info
+app.use(function(req, res, next){
+    req.user = ('user' in req.session)? req.session.user : null;
+    console.log(req.user);
     next();
-};
+});
 
+//allow cross origin requests
 app.use(cors({ 
     origin: 'http://localhost:3000',
     credentials: true
@@ -139,6 +122,15 @@ app.post('/signin', (req, res) => {
         }));
         return res.json({success: true});
     });
+});
+
+app.get('/signout', (req, res) => {
+    req.session.destroy();
+    res.setHeader('Set-Cookie', cookie.serialize('user', '', {
+        path : '/', 
+        maxAge: 60 * 60 * 24 * 7
+    }));
+    return res.json({success: true});
 });
 
 //establish connection to mongodb 
