@@ -98,11 +98,21 @@
     border-radius: 1%;
 }
 
+.floatRight {
+    float: right;
+    padding: 20px;
+}
 
 .h1-cus {
     text-align: center;
     font-size: 400%;
   }
+
+.deadline {
+    color: red;
+    font-weight: bold;
+}
+
   .body {
     background-color: #f2f2f2;
   }
