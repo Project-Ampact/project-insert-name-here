@@ -262,12 +262,12 @@ const APIAccess = {
         }
        // return loadedData;
     },
-    createPost(user, type, description){
+    createPost(user, type, description, role){
         try{
             return fetch('http://localhost:8000/post/', {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({user: user, type: type, content: description}),
+                body: JSON.stringify({user: user, type: type, content: description, visibility: role}),
                 credentials: 'include',
             }).then(async (response) => {
                 let jsonRes = await response.json();
