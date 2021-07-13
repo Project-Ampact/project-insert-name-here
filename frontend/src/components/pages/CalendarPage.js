@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import PageLayout from "./DefaultPage";
 import './CalendarPage.css'
-import { Button, Modal } from "react-bootstrap";
+import { Row, Col, Button, Modal, Form } from "react-bootstrap";
 
 const PERSONAL_COLOR = '#54e0ff';
 const GROUP_COLOR = '#80eb34';
@@ -18,6 +18,46 @@ const placeholderData = {
   type: 'personal',
   groupId: 'testgroup',
   userId: 'testuser',
+}
+
+function AddEventPopup({show, closeWindow, eventData}) {
+  return (
+    <>
+    <Modal show={show} onHide={closeWindow} centered size="lg">
+      <Modal.Header closeButton className="event-header">
+        <Modal.Title>Add Event</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p> <b>Event Title: </b>
+        <Form.Control type="title" placeholder="Title of this new event" /></p>
+        <p><b>Event Type:</b>
+        <Form>
+        <Form.Check inline label="general"  name="general" type="radio" />
+        <Form.Check inline label="personal"  name="personal" type="radio" />
+        <Form.Check inline label="group"  name="group" type="radio" />
+        </Form>
+        </p>
+        <p><Row>
+        <Col md><b>Start Date: </b> <Form.Control type="email" placeholder="YYYY/MM/DD" default="2021/07/10"/></Col>
+        <Col md><b>Start Time: </b> <Form.Control type="email" placeholder="HH:MM" default="03:00"/></Col>
+        </Row></p>
+        <p><Row><Col md><b>End Date: </b> <Form.Control type="email" placeholder="YYYY/MM/DD" default="2021/07/10"/></Col>
+        <Col md><b>End Time: </b> <Form.Control type="email" placeholder="HH:MM" default="03:00"/></Col>
+        </Row></p>
+        <p><b>Event description:</b>
+        <Form.Control type="eventdesc" name="eventdesc"
+          placeholder="Additional Notes about the event..." as="textarea" rows={3} />
+        </p>
+      </Modal.Body>
+      <Modal.Footer className="justify-content-between">
+        <div className="event-exit-area">
+          <Button variant="primary" >Update</Button>
+          <Button variant="secondary" onClick={closeWindow}>Close</Button>
+        </div>
+      </Modal.Footer>
+    </Modal>
+  </>
+  )
 }
 
 function EventPopup({show, closeWindow, eventData}) {
@@ -120,7 +160,7 @@ function CalendarPage() {
             initialView="dayGridMonth"
             height={700}
             eventTextColor={"black"}
-            customButtons={{addEvent: {text: "Add Event"}}} // add functionality for button here: https://fullcalendar.io/docs/customButtons
+            customButtons={{addEvent: {text: "Add Event"}}} //, click:()=>this.AddEventPopup(); add functionality for button here: https://fullcalendar.io/docs/customButtons
             headerToolbar={{left: "addEvent", center: "title", right: "today dayGridMonth,timeGridWeek,timeGridDay prev,next"}}
             buttonText={{today: 'Today', month: 'Month', week: 'Week', day: 'Day'}}
             events={loadedEventData.map(x => convertData(x))}
