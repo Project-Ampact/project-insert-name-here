@@ -76,7 +76,7 @@ const checkRegistrationInfo = async(req, res, next) => {
     if (username.indexOf(' ') >= 0) return res.status(422).send({success: false, message: "bad input: username must have no whitespace"});
     if (validator.isEmpty(username)) return res.status(422).send({success: false, message: "bad input: username must be non-empty"});
     if (validator.isEmpty(password)) return res.status(422).send({success: false, message: "bad input: password must be non-empty"});
-    if (role != "instructor" && role != "partner" && role != " entrepeneur") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner or entrepeneur"});
+    if (role != "instructor" && role != "partner" && role != "entrepreneur" && role != "guest") return res.status(422).send({success: false, message: "bad input: role must be either instructor, partner, entrepeneur or guest"});
     let user = await User.findById(username, (err, user) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
     });
@@ -142,7 +142,15 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 });
 
 const groups = require('./routes/groupRoutes');
+const videos = require('./routes/videoRoutes');
+const search = require('./routes/searchRoutes');
+const events = require('./routes/eventRoutes');
+const profiles = require('./routes/profileRoutes');
 app.use('/group', groups);
+app.use('/video', videos);
+app.use('/search', search);
+app.use('/calendar', events);
+app.use('/profile', profiles);
 
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));
