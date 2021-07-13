@@ -3,12 +3,40 @@ const Comment = require("../models/comment");
 const User = require("../models/user");
 const router = express.Router();
 
+const COMMENTS_PER_PAGE = 10;
 // General note: Both replies and comments are one in the same. The difference lies in relative perspective;
 //               a commment made on a comment is considered a reply, however that reply is also a comment.
 
 // Get replies given commentId
 router.get("/:commentID", async (req, res) => {
   let commentId = req.params.commentID;
+
+  let page = req.query.page;
+  (page > 0) ? page = parseInt(page) : page = 1;
+
+  let comment;
+
+  try {
+      comment = await Comment.findById(commentId).populate({
+          path: "replies",
+          model: "Comment",
+          options: {
+              skip: (page - 1) * COMMENTS_PER_PAGE,
+              limit: COMMENTS_PER_PAGE
+          }
+      }).sort( {date: -1} );
+      if (!comment) return res.status(404).send({
+          success: false, 
+          message: "Comment not found"
+      });
+      return res.json(comment.replies);
+  } catch (error) {
+      if (error != 'CastError') return res.status(500).send({
+          success: false,
+          message: error.toString()
+      });
+  }
+  /*let commentId = req.params.commentID;
 
   // Get the specified comment
   const specifiedComment = await Comment.findById(
@@ -49,7 +77,7 @@ router.get("/:commentID", async (req, res) => {
     allReplies.push(curReply);
   }
 
-  return res.json(allReplies);
+  return res.json(allReplies);*/
 });
 
 //Get all comments given a post id
