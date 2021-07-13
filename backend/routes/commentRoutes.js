@@ -1,5 +1,6 @@
 const express = require("express");
 const Comment = require("../models/comment");
+const Post = require("../models/post");
 const User = require("../models/user");
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const COMMENTS_PER_PAGE = 10;
 
 // Get replies given commentId
 router.get("/:commentID", async (req, res) => {
-  let commentId = req.params.commentID;
+  /*let commentId = req.params.commentID;
 
   let page = req.query.page;
   (page > 0) ? page = parseInt(page) : page = 1;
@@ -35,8 +36,8 @@ router.get("/:commentID", async (req, res) => {
           success: false,
           message: error.toString()
       });
-  }
-  /*let commentId = req.params.commentID;
+  }*/
+  let commentId = req.params.commentID;
 
   // Get the specified comment
   const specifiedComment = await Comment.findById(
@@ -77,24 +78,45 @@ router.get("/:commentID", async (req, res) => {
     allReplies.push(curReply);
   }
 
-  return res.json(allReplies);*/
+  return res.json(allReplies);
 });
 
 //Get all comments given a post id
 
-// Create new comment TODO: Need to ensure commentids are added to post 'postId'
+// Create new comment 
 router.post("/", async (req, res) => {
   let message = req.body.message;
   let poster = req.body.poster;
+  let pid = req.body.pid;
   let comment = new Comment({ message: message, poster: poster });
 
   try {
     const savedComment = await comment.save();
-    // console.log("Group created");
-    res.status(201).json(savedComment); // Successfully created comment, thus return new comment info as json
+
+    Post.findById(pid, (err, post) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ success: false, message: err.toString() });
+      if (!post)
+        return res
+          .status(404)
+          .send({
+            success: false,
+            message: "Post with Id " + pid + " does not exist",
+          });
+      post.comments.push(savedComment._id);
+      Post.findByIdAndUpdate(pid, { comments: post.comments }, (err, post) => {
+        if (err)
+          return res
+            .status(500)
+            .send({ success: false, message: err.toString() });
+        return res.status(201).json(savedComment); // Successfully created comment, thus return new comment info as json
+      });
+    });
   } catch (err) {
     // Error in creating a new comment, thus return error message (bad data)
-    res.status(400).json({ message: err.message });
+    return res.status(400).json({ message: err.message });
   }
 });
 

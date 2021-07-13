@@ -139,6 +139,7 @@ function PostFeed() {
                 type={mock_data_piece.type}
                 date={date.getFullYear() + "/" + month + "/" + day}
                 content={mock_data_piece.content}
+                pid={mock_data_piece._id}
               />
             );
           }

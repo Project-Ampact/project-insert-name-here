@@ -1,4 +1,7 @@
 import "./CommentSection.css";
+import "../videoComponents/VideoTagSection.css";
+import APIAccess from "../../controller.js";
+import { AuthService } from "../../util/authService";
 import React, { useState, useEffect, useContext } from "react";
 import Comment from "./Comment";
 import {
@@ -11,15 +14,66 @@ import {
   useAccordionToggle,
   Card,
   Button,
+  Form,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 let mock_data = [
-  {"_id":"60e62079cfcf1323cc3bd6ab","date":"1625694170354","replies":[{"$oid":"60ecc10bc22df22bf4376e49"},{"$oid":"60ecc113c22df22bf4376e4b"},{"$oid":"60ecc116c22df22bf4376e4d"},{"$oid":"60ecc118c22df22bf4376e4f"}],"message":"Comment 2","poster":"Chris","__v":{"$numberInt":"0"}},
-  {"_id":"60e6207ccfcf1323cc3bd6ac","date":"1625694170354","replies":[{"$oid":"60ecc14bc22df22bf4376e51"},{"$oid":"60ecc14dc22df22bf4376e53"},{"$oid":"60ecc14fc22df22bf4376e55"},{"$oid":"60ecc151c22df22bf4376e57"}],"message":"Comment 3","poster":"Chris","__v":{"$numberInt":"0"}},
-  {"_id":"60ecc191c22df22bf4376e5c","date":"1626127173704","replies":[{"$oid":"60ecc1adc22df22bf4376e5d"},{"$oid":"60ecc1afc22df22bf4376e5f"},{"$oid":"60ecc1b1c22df22bf4376e61"},{"$oid":"60ecc1b3c22df22bf4376e63"}],"message":"A new comment of a very moderate length for testing purposes3.","poster":"Chris","__v":{"$numberInt":"0"}},
-  {"_id":"60ecc18fc22df22bf4376e5b","date":"1626127173704","replies":[],"message":"A new comment of a very moderate length for testing purposes2.","poster":"Chris","__v":{"$numberInt":"0"}},
-  {"_id":"60ecc18dc22df22bf4376e5a","date":"1626127173704","replies":[],"message":"A new comment of a very moderate length for testing purposes1.","poster":"Chris","__v":{"$numberInt":"0"}},
+  {
+    _id: "60e62079cfcf1323cc3bd6ab",
+    date: "1625694170354",
+    replies: [
+      { $oid: "60ecc10bc22df22bf4376e49" },
+      { $oid: "60ecc113c22df22bf4376e4b" },
+      { $oid: "60ecc116c22df22bf4376e4d" },
+      { $oid: "60ecc118c22df22bf4376e4f" },
+    ],
+    message: "Comment 2",
+    poster: "Chris",
+    __v: { $numberInt: "0" },
+  },
+  {
+    _id: "60e6207ccfcf1323cc3bd6ac",
+    date: "1625694170354",
+    replies: [
+      { $oid: "60ecc14bc22df22bf4376e51" },
+      { $oid: "60ecc14dc22df22bf4376e53" },
+      { $oid: "60ecc14fc22df22bf4376e55" },
+      { $oid: "60ecc151c22df22bf4376e57" },
+    ],
+    message: "Comment 3",
+    poster: "Chris",
+    __v: { $numberInt: "0" },
+  },
+  {
+    _id: "60ecc191c22df22bf4376e5c",
+    date: "1626127173704",
+    replies: [
+      { $oid: "60ecc1adc22df22bf4376e5d" },
+      { $oid: "60ecc1afc22df22bf4376e5f" },
+      { $oid: "60ecc1b1c22df22bf4376e61" },
+      { $oid: "60ecc1b3c22df22bf4376e63" },
+    ],
+    message: "A new comment of a very moderate length for testing purposes3.",
+    poster: "Chris",
+    __v: { $numberInt: "0" },
+  },
+  {
+    _id: "60ecc18fc22df22bf4376e5b",
+    date: "1626127173704",
+    replies: [],
+    message: "A new comment of a very moderate length for testing purposes2.",
+    poster: "Chris",
+    __v: { $numberInt: "0" },
+  },
+  {
+    _id: "60ecc18dc22df22bf4376e5a",
+    date: "1626127173704",
+    replies: [],
+    message: "A new comment of a very moderate length for testing purposes1.",
+    poster: "Chris",
+    __v: { $numberInt: "0" },
+  },
 ];
 
 function Expand({ children, eventKey, callback }) {
@@ -57,7 +111,7 @@ function LoadComments() {
 
     console.log(date.getFullYear() + "/" + month + "/" + day);
     return (
-      <Comment 
+      <Comment
         className="loaded-comment"
         user={mock_data_piece.poster}
         type={mock_data_piece.type}
@@ -70,6 +124,22 @@ function LoadComments() {
 }
 
 function CommentSection(props) {
+  let auth = AuthService();
+  const username = document.cookie.split("user=")[1].split("%20")[0];
+  let formid = `message:${props.pid}`;
+
+  const update = async (e) => {
+    e.preventDefault();
+    try {
+      var msg = document.getElementById(formid).value;
+
+      await APIAccess.createComment(username, msg, props.pid);
+      //window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
   useEffect(() => {
@@ -78,11 +148,10 @@ function CommentSection(props) {
         return response.json();
       })
       .then((data) => {
-        mock_data = data.comments;
+        mock_data = data;
         setIsLoading(false);
       });
   });
-
 
   if (isLoading) {
     return (
@@ -99,7 +168,34 @@ function CommentSection(props) {
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
-              {LoadComments()}
+            <Container>
+              <Row className="cus2-row">
+                <Card className="comment-wrapper rounded">
+                  <Card.Body className="comment-body">
+                    <Form className="title-and-date">
+                      <Form.Group className="card-title2" controlId={formid}>
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          type={formid}
+                          placeholder="Write your comment here!"
+                          className="txt-area"
+                        />
+                      </Form.Group>
+                      <Button
+                        className="sub-btn"
+                        onClick={update}
+                        variant="primary"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </Row>
+            </Container>
+            {LoadComments()}
           </Container>
         </Accordion.Collapse>
       </Card>

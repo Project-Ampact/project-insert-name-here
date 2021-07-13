@@ -1,5 +1,7 @@
 import "./CommentSection.css";
 import React, { useState, useEffect, useContext } from "react";
+import APIAccess from "../../controller.js";
+import { AuthService } from "../../util/authService";
 import {
   Row,
   Container,
@@ -10,6 +12,7 @@ import {
   useAccordionToggle,
   Card,
   Button,
+  Form,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Reply from "./Reply";
@@ -97,6 +100,18 @@ function LoadReplies(cid) {
 }
 
 function ReplySection(props) {
+  let auth = AuthService();
+  const username = document.cookie.split("user=")[1].split("%20")[0];
+  let formid = `rmessage:${props.cid}`;
+  const update = async (e) => {
+    e.preventDefault();
+    try {
+      await APIAccess.createReply(username, document.getElementById(formid).value, props.cid);
+      //window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Accordion>
       <Card>
@@ -105,6 +120,33 @@ function ReplySection(props) {
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
+            <Container>
+              <Row className="cus2-row">
+                <Card className="comment-wrapper rounded">
+                  <Card.Body className="comment-body">
+                    <Form className="title-and-date">
+                      <Form.Group className="card-title2" controlId={formid}>
+                        <Form.Control
+                          as="textarea"
+                          rows={1}
+                          type={formid}
+                          placeholder="Write your reply here!"
+                          className="txt-area"
+                        />
+                      </Form.Group>
+                      <Button
+                        className="sub-btn"
+                        onClick={update}
+                        variant="primary"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </Row>
+            </Container>
             {LoadReplies(props.cid)}
           </Container>
         </Accordion.Collapse>
