@@ -43,17 +43,34 @@ router.get("/:postID", async (req, res) => {
 // delete a post
 router.delete("/:postID", async (req, res) => {
     let postID = req.params.postID;
-    Post.findOneAndDelete({_id: postID}, (err, post) => {
-        if (err && err.name != 'CastError') return res.status(500).send({
-            success: false,
-            message: err.toString()
-        });
+    let post;
+    let comment; 
+    try {
+        post = await Post.findOne({_id: postID}).populate({
+           path: "comments",
+           model: "Comment" 
+        }); 
         if (!post) return res.status(404).send({
             success: false, 
             message: "Post not found"
         });
-        res.status(200).send({success: true});
-    });
+        for (let i = 0; i < post.comments.length; i++) {
+            comment = await Comment.findById(post.comments[i]);
+            for (let j = 0; j < comment.replies.length; j++) {
+                await Comment.findByIdAndDelete(comment.replies[j]);
+            }
+           await Comment.findByIdAndDelete(comment._id);
+        }
+
+        await Post.findByIdAndDelete(post._id);
+
+        return res.json(post);
+    } catch (err) {
+        if (err && err.name != 'CastError') return res.status(500).send({
+            success: false,
+            message: err.toString()
+        });
+    }
 });
 
 // get comments of one specific post
