@@ -8,14 +8,19 @@ const COMMENTS_PER_PAGE = 10;
 // get posts
 router.get("/", async (req, res) => {
     let type = req.body.type;
+    let visibility = req.body.visibility; 
     let posts;
-    console.log("TYPE: " + type);
-    if (type == null) {
-        posts = await Post.find({}).sort( {date: -1} );
+
+    let query = {}; 
+
+    if (type != null) {
+        query.type = type;
     }
-    else {
-        posts = await Post.find({type: type}).sort( {date: -1} );
+    if (type != null && visibility != "all") {
+        query.visibility = visibility; 
     }
+
+    posts = await Post.find(query).sort( {date: -1} );
     return res.json(posts);
 });
 
@@ -33,6 +38,39 @@ router.get("/:postID", async (req, res) => {
         });
         res.json(post);
     });
+});
+
+// delete a post
+router.delete("/:postID", async (req, res) => {
+    let postID = req.params.postID;
+    let post;
+    let comment; 
+    try {
+        post = await Post.findOne({_id: postID}).populate({
+           path: "comments",
+           model: "Comment" 
+        }); 
+        if (!post) return res.status(404).send({
+            success: false, 
+            message: "Post not found"
+        });
+        for (let i = 0; i < post.comments.length; i++) {
+            comment = await Comment.findById(post.comments[i]);
+            for (let j = 0; j < comment.replies.length; j++) {
+                await Comment.findByIdAndDelete(comment.replies[j]);
+            }
+           await Comment.findByIdAndDelete(comment._id);
+        }
+
+        await Post.findByIdAndDelete(post._id);
+
+        return res.json(post);
+    } catch (err) {
+        if (err && err.name != 'CastError') return res.status(500).send({
+            success: false,
+            message: err.toString()
+        });
+    }
 });
 
 // get comments of one specific post
@@ -57,7 +95,7 @@ router.get("/:postID/comments/", async(req, res) => {
             success: false, 
             message: "Post not found"
         });
-        return res.json(post);
+        return res.json(post.comments);
     } catch (error) {
         if (error != 'CastError') return res.status(500).send({
             success: false,
@@ -66,22 +104,30 @@ router.get("/:postID/comments/", async(req, res) => {
     }
 });
 
+
 // make a post
 router.post("/", async (req, res) => {
         let user = req.body.user; 
         let type = req.body.type;
         let content = req.body.content;
+        let visibility = req.body.visibility;
 
         // contains required params 
-        if (user == null || type == null || content == null) return res.status(400).json({
+        if (user == null || type == null || content == null || visibility == null) return res.status(400).json({
             success: false,
-            message: "Request body must contain user, type, and content parameters"
+            message: "Request body must contain user, type, visibility, and content parameters"
         });
 
         // check post type is valid
-        if (type != 'QnA' && type != 'general') return res.status(400).json({
+        if (type != 'announcement' && type != 'QnA') return res.status(400).json({
             success: false,
             message: "Type must be QnA or general"
+        });
+
+        // check visibility is valid
+        if (!['all', 'partner', 'entrepreneur'].includes(visibility)) return res.status(400).json({
+            success: false,
+            message: "Visibility must be all, partner, or entrepreneur"
         });
 
         // check user exists
@@ -94,7 +140,8 @@ router.post("/", async (req, res) => {
         let post = new Post({
             user: user,
             type: type,
-            content: content
+            content: content,
+            visibility: visibility
         });
 
         try {
