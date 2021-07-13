@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
         });
 
         // check post type is valid
-        if (type != 'QnA' && type != 'general') return res.status(400).json({
+        if (type != 'announcement' && type != 'QnA') return res.status(400).json({
             success: false,
             message: "Type must be QnA or general"
         });
