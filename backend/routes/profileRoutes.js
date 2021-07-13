@@ -1,10 +1,13 @@
+/*jshint esversion: 10*/
+
 const express = require("express"); 
 const User = require("../models/user");
 const Profile = require('../models/profile');
+const Authentication = require("../authentication");
 const router = express.Router();
 
 // Get all profiles 
-router.get("/", async (req, res) => {
+router.get("/", Authentication.isAutenticated, async (req, res) => {
     Profile.find({}, (err, profiles) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         console.log(profiles)
@@ -14,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get specific profile 
-router.get("/:profileID", async (req, res) => {
+router.get("/:profileID", Authentication.isAutenticated, async (req, res) => {
     let profileId = req.params.profileID;
     Profile.findById(profileId, (err, profiles) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
@@ -25,7 +28,7 @@ router.get("/:profileID", async (req, res) => {
 });
 
 // Update a profile attribute(s) 
-router.patch("/:profileID", async (req, res) => {
+router.patch("/:profileID", Authentication.isAutenticated, async (req, res) => {
     let profileID = req.params.profileID;
     Profile.findById(profileID, async (err, profiles) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
