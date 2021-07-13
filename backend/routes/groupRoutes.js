@@ -54,13 +54,11 @@ router.patch("/:groupID", Authentication.isAutenticated, async (req, res) => {
 
 // Create new group 
 router.post("/", Authentication.isAutenticated, async (req, res) => {
-   // try {
         let name = req.body.name; 
         let about = req.body.about;
         let picture = req.body.picture;
         let group = new Group({name: name, about: about, picture: picture}); 
         
-
        try {
             const savedGroup = await group.save(); 
             console.log("Group created"); 
@@ -131,7 +129,6 @@ router.delete("/delete/:groupID/:userID", Authentication.isAutenticated, async (
 // Delete group 
 router.delete("/delete/:groupID/", Authentication.isAutenticated, async (req, res) => {
     let groupID = req.params.groupID;
-
     Group.findById(groupID, async (err, group) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!group) return res.status(404).send({success: false, message: "Group with Id " + groupID + " does not exist"});

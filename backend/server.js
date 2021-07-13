@@ -1,7 +1,6 @@
 /* jshint esversion: 10*/
 const express = require('express');
 const app = express();
-
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -9,10 +8,8 @@ const cors = require('cors');
 const crypto = require('crypto');
 const validator = require('validator');
 const cookie = require('cookie');
-
 const User = require('./models/user');
 const Profile = require('./models/profile');
-
 const Authentication = require("./authentication");
 
 require('dotenv/config');

@@ -23,12 +23,10 @@ const Authentication = require("../authentication");
 
 router.get("/:userId", Authentication.isAutenticated, async(req, res) => {
     const userId = req.params.userId;
-
     Group.findOne({members: userId}, (err, result) => {
-        console.log(result)
+        console.log(result);
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!result) groupSearch = null;
-
         Event.find({$or: [
             {userId: userId, type: "personal"},
             {groupId: (result === null) ? null : result._id, type: "group"},

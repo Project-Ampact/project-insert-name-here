@@ -79,10 +79,8 @@ router.get("/browse", Authentication.isAutenticated, async(req, res) => {
        // console.log(videos);
         return videos;
     });
-
     // Creates an array of all the unique tags in the videos
     const uniqueTags = [];
-   
     allVideos.map(video => {
         curTag = video.tags.filter((val, i, arr) => arr.indexOf(val) === i);
         video.tags.map(tag => {
@@ -107,7 +105,6 @@ router.get("/browse", Authentication.isAutenticated, async(req, res) => {
 //Get videos matching the given tag
 router.get("/browse/:tag", Authentication.isAutenticated, async(req, res) => {
     let tag = req.params.tag;
-    
     let query = { tags: tag };
     Video.find(query, (err, videos) => {
         if (err) return res.status(500).send();
