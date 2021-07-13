@@ -8,14 +8,19 @@ const COMMENTS_PER_PAGE = 10;
 // get posts
 router.get("/", async (req, res) => {
     let type = req.body.type;
+    let visibility = req.body.visibility; 
     let posts;
-    console.log("TYPE: " + type);
-    if (type == null) {
-        posts = await Post.find({}).sort( {date: -1} );
+
+    let query = {}; 
+
+    if (type != null) {
+        query.type = type;
     }
-    else {
-        posts = await Post.find({type: type}).sort( {date: -1} );
+    if (type != null && visibility != "all") {
+        query.visibility = visibility; 
     }
+
+    posts = await Post.find(query).sort( {date: -1} );
     return res.json(posts);
 });
 
@@ -88,17 +93,24 @@ router.post("/", async (req, res) => {
         let user = req.body.user; 
         let type = req.body.type;
         let content = req.body.content;
+        let visibility = req.body.visibility;
 
         // contains required params 
-        if (user == null || type == null || content == null) return res.status(400).json({
+        if (user == null || type == null || content == null || visibility == null) return res.status(400).json({
             success: false,
-            message: "Request body must contain user, type, and content parameters"
+            message: "Request body must contain user, type, visibility, and content parameters"
         });
 
         // check post type is valid
         if (type != 'announcement' && type != 'QnA') return res.status(400).json({
             success: false,
             message: "Type must be QnA or general"
+        });
+
+        // check visibility is valid
+        if (!['all', 'partner', 'entrepreneur'].includes(visibility)) return res.status(400).json({
+            success: false,
+            message: "Visibility must be all, partner, or entrepreneur"
         });
 
         // check user exists
@@ -111,7 +123,8 @@ router.post("/", async (req, res) => {
         let post = new Post({
             user: user,
             type: type,
-            content: content
+            content: content,
+            visibility: visibility
         });
 
         try {
