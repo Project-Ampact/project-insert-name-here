@@ -7,8 +7,8 @@ const COMMENTS_PER_PAGE = 10;
 
 // get posts
 router.get("/", async (req, res) => {
-    let type = req.body.type;
-    let visibility = req.body.visibility; 
+    let type = req.body.type; // no type = all types 
+    let visibility = req.body.visibility; // no visibility = all visibilities
     let posts;
 
     let query = {}; 
@@ -16,8 +16,9 @@ router.get("/", async (req, res) => {
     if (type != null) {
         query.type = type;
     }
-    if (type != null && visibility != "all") {
-        query.visibility = visibility; 
+    if (visibility != null) {
+        query.$or = [{visibility: visibility}];
+        query.$or.push({visibility: "all"});
     }
 
     posts = await Post.find(query).sort( {date: -1} );
