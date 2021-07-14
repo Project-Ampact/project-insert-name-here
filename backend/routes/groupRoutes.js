@@ -7,7 +7,7 @@ const Authentication = require("../authentication");
 const router = express.Router();
 
 // Get all groups 
-router.get("/", Authentication.isAutenticated, async (req, res) => {
+router.get("/", Authentication.isAuthenticated, async (req, res) => {
     Group.find({}, (err, groups) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         console.log(groups);
@@ -17,7 +17,7 @@ router.get("/", Authentication.isAutenticated, async (req, res) => {
 });
 
 // Get specific group 
-router.get("/:groupID", Authentication.isAutenticated, async (req, res) => {
+router.get("/:groupID", Authentication.isAuthenticated, async (req, res) => {
     let groupId = req.params.groupID;
     Group.findById(groupId, (err, groups) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
@@ -27,7 +27,7 @@ router.get("/:groupID", Authentication.isAutenticated, async (req, res) => {
 });
 
 // Update a group attribute(s) 
-router.patch("/:groupID", Authentication.isAutenticated, async (req, res) => {
+router.patch("/:groupID", Authentication.isAuthenticated, async (req, res) => {
     let groupId = req.params.groupID;
     Group.findById(groupId, async (err, groups) => {
         if (req.body.name != null) {
@@ -53,7 +53,7 @@ router.patch("/:groupID", Authentication.isAutenticated, async (req, res) => {
 });
 
 // Create new group 
-router.post("/", Authentication.isAutenticated, async (req, res) => {
+router.post("/", Authentication.isAuthenticated, async (req, res) => {
         let name = req.body.name; 
         let about = req.body.about;
         let picture = req.body.picture;
@@ -69,7 +69,7 @@ router.post("/", Authentication.isAutenticated, async (req, res) => {
 }); 
 
 // Add new member to group 
-router.post("/add/:groupID", Authentication.isAutenticated, async (req, res) => {
+router.post("/add/:groupID", Authentication.isAuthenticated, async (req, res) => {
     // TODO: check userID is valid 
     let userID = req.body.userID; 
     let groupID = req.params.groupID;
@@ -110,7 +110,7 @@ async function getGroup(req, res, next) {
 }
 
 // Remove member from group 
-router.delete("/delete/:groupID/:userID", Authentication.isAutenticated, async (req, res) => {
+router.delete("/delete/:groupID/:userID", Authentication.isAuthenticated, async (req, res) => {
     let userID = req.params.userID; 
     let groupID = req.params.groupID;
 
@@ -127,7 +127,7 @@ router.delete("/delete/:groupID/:userID", Authentication.isAutenticated, async (
 });
 
 // Delete group 
-router.delete("/delete/:groupID/", Authentication.isAutenticated, async (req, res) => {
+router.delete("/delete/:groupID/", Authentication.isAuthenticated, async (req, res) => {
     let groupID = req.params.groupID;
     Group.findById(groupID, async (err, group) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
