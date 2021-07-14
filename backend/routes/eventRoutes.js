@@ -21,7 +21,7 @@ const Authentication = require("../authentication");
 //     })
 // });
 
-router.get("/:userId", Authentication.isAutenticated, async(req, res) => {
+router.get("/:userId", Authentication.isAuthenticated, async(req, res) => {
     const userId = req.params.userId;
     Group.findOne({members: userId}, (err, result) => {
         console.log(result);

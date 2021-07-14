@@ -11,7 +11,7 @@ const validator = require('validator');
 const validSubjects = [''];
 
 //Get videos matching the query
-router.get("/", Authentication.isAutenticated, async(req, res) => {
+router.get("/", Authentication.isAuthenticated, async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
     if (req.query.author) query.action = req.query.author;
@@ -41,7 +41,7 @@ const checkVideo = (req, res, next) => {
     next();
 };
 // Add video 
-router.post("/", Authentication.isAutenticated , checkVideo,  async(req, res) => {
+router.post("/", Authentication.isAuthenticated , checkVideo,  async(req, res) => {
     let title = req.body.title;
     let url = req.body.url;
     //let subject = req.body.subject.toLowerCase().trim();
@@ -69,7 +69,7 @@ router.post("/", Authentication.isAutenticated , checkVideo,  async(req, res) =>
 });
 
 //Get set of section of videos, grouped by tag
-router.get("/browse", Authentication.isAutenticated, async(req, res) => {
+router.get("/browse", Authentication.isAuthenticated, async(req, res) => {
     let tag = req.params.tag;
     var allTagSections = [];
 
@@ -103,7 +103,7 @@ router.get("/browse", Authentication.isAutenticated, async(req, res) => {
 });
 
 //Get videos matching the given tag
-router.get("/browse/:tag", Authentication.isAutenticated, async(req, res) => {
+router.get("/browse/:tag", Authentication.isAuthenticated, async(req, res) => {
     let tag = req.params.tag;
     let query = { tags: tag };
     Video.find(query, (err, videos) => {

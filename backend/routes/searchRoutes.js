@@ -6,8 +6,7 @@ const Profile = require("../models/profile");
 const Authentication = require("../authentication");
 const router = express.Router();
 
-
-router.get("/group", Authentication.isAutenticated, async (req, res) => {
+router.get("/group", Authentication.isAuthenticated, async (req, res) => {
     let searchString = req.query.searchString; 
     let page = req.query.page;
     if (searchString == null) {
@@ -29,7 +28,7 @@ router.get("/group", Authentication.isAutenticated, async (req, res) => {
     return res.json(group);
 });
 
-router.get("/profile", Authentication.isAutenticated, async (req, res) => {
+router.get("/profile", Authentication.isAuthenticated, async (req, res) => {
     let searchString = req.query.searchString; 
     let page = req.query.page;
     if (searchString == null) {
