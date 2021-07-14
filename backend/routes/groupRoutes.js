@@ -66,7 +66,7 @@ router.post("/", Authentication.isAuthenticated, async (req, res) => {
             console.log("Group created"); 
             res.status(201).json(savedGroup);            // Successfully created group, thus return new group info as json
        } catch (err) {                                   // Error in creating a new group, thus return error message (bad data)
-            res.status(400).json({ message: err.message})
+            res.status(400).json({ message: err.message});
        }
 }); 
 
@@ -80,9 +80,9 @@ router.post("/add/:groupID", Authentication.isAuthenticated, async (req, res) =>
     });
     if (!user) return res.status(404).send({success: false, message: "User with username " + userID + " does not exist"});
     Group.findById(groupID, (err, group) => {
-        console.log(group);
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!group) return res.status(404).send({success: false, message: "Group with Id " + groupID + " does not exist"});
+        if (group.owner != req.user._id) return res.status(401).send({success: false, message: "Members can only be added by group owner"});
         if (group.members.includes(userID)) return res.status(404).send({success: false, message: "Member is already in group"});
         group.members.push(userID);
         Group.findByIdAndUpdate(groupID, {members: group.members}, (err, group) => {
@@ -115,10 +115,10 @@ async function getGroup(req, res, next) {
 router.delete("/delete/:groupID/:userID", Authentication.isAuthenticated, async (req, res) => {
     let userID = req.params.userID; 
     let groupID = req.params.groupID;
-
     Group.findById(groupID, (err, group) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!group) return res.status(404).send({success: false, message: "Group with Id " + groupID + " does not exist"});
+        if (group.owner != req.user._id) return res.status(401).send({success: false, message: "Members can only be kicked by group owner"});
         if (!group.members.includes(userID)) return res.status(404).send({success: false, message: "Member not group"});
         for (i = 0; i < group.members.length; i++) if(group.members[i] == userID) group.members.splice(i, 1);
         Group.findByIdAndUpdate(groupID, {members: group.members}, (err, groups) => {
