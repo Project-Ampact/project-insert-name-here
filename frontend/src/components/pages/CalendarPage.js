@@ -51,14 +51,14 @@ function AddEventPopup({show, closeWindow}) {
         type = document.getElementById("type-personal").value;
       }
       else if (document.getElementById("type-group").checked) {
-        type = "group";
-        console.log("WORKKKKKKKKKKK");
+        type = document.getElementById("type-group").value;
+        groupId = "60de1f43e10e7f59d0317471"; // HARD CODED VALUE CHANGE LATER TO PULL GROUP FROM USER!
       }
 
 
 
       let userId = username;
-      //window.location.reload();
+      window.location.reload();
       await APIAccess.createEvent(title, description, conferenceLink, start, end, type, groupId, userId);
       console.log("Made it here");
     } catch (err) {
