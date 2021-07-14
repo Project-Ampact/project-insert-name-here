@@ -34,6 +34,7 @@ router.patch("/:profileID", Authentication.isAuthenticated, async (req, res) => 
         if (err) return res.status(500).send({success: false, message: err.toString()});
         console.log(profiles);
         if (!profiles) return res.status(404).send({success: false, message: "User not found"});
+        if (profiles._id != req.user._id) return res.status(401).send({success: false, message: "Must be profile owner to edit profile"});
         // If a lastName field is provided in the body of the patch request, then update the profile lastName for the profile 'profileID'
         if (req.body.firstName != null) {
             profiles.firstName = req.body.firstName;

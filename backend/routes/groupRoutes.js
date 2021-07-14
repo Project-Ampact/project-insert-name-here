@@ -10,7 +10,6 @@ const router = express.Router();
 router.get("/", Authentication.isAuthenticated, async (req, res) => {
     Group.find({}, (err, groups) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
-        console.log(groups);
         if (!groups) return res.json([]);
         return res.json(groups);
     });
@@ -30,6 +29,9 @@ router.get("/:groupID", Authentication.isAuthenticated, async (req, res) => {
 router.patch("/:groupID", Authentication.isAuthenticated, async (req, res) => {
     let groupId = req.params.groupID;
     Group.findById(groupId, async (err, groups) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!groups) return res.status(404).send({success: false, message: "Group not found"});
+        if (groups._id != req.user._id) return res.status(401).send({success: false, message: "Must be group owner to edit group"});
         if (req.body.name != null) {
             groups.name = req.body.name;
         }
