@@ -27,7 +27,8 @@ let mock_data = [
 
 function PostFeedAnnouncements() {
   let auth = AuthService();
-  const username = document.cookie.split('user=')[1].split('%20')[0]
+  const username = document.cookie.split('user=')[1].split('%20')[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
   useEffect(() => {
@@ -71,7 +72,8 @@ function PostFeedAnnouncements() {
       user = loadedUserData;
       console.log("USER" + user);
       window.location.reload();
-      await APIAccess.createPost(user, type, postDescription);
+      console.log("Made it here!!");
+      await APIAccess.createPost(user, type, postDescription, role);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
