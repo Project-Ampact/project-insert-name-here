@@ -20,7 +20,7 @@ const placeholderData = {
   userId: 'testuser',
 }
 
-function AddEventPopup({show, closeWindow, eventData}) {
+function AddEventPopup({show, closeWindow}) {
   return (
     <>
     <Modal show={show} onHide={closeWindow} centered size="lg">
@@ -101,6 +101,7 @@ function EventPopup({show, closeWindow, eventData}) {
 
 function CalendarPage() {
   const [showEvent, setShowEvent] = useState(false);
+  const [showAddEvent, setShowAddEvent] = useState(false);
   const [currentEvent, setCurrentEvent] = useState(placeholderData);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedEventData, setLoadedEventData] = useState([])
@@ -119,6 +120,8 @@ function CalendarPage() {
 
   const closeEventWindow = () => setShowEvent(false);
   const showEventWindow = () => setShowEvent(true);
+  const closeAddEventWindow = () => setShowAddEvent(false);
+  const showAddEventWindow = () => setShowAddEvent(true);
   const handleEventClick = (info) => {
     const showData = {
       title: info.event.title,
@@ -153,6 +156,7 @@ function CalendarPage() {
   return (
     <>
       <EventPopup show={showEvent} closeWindow={closeEventWindow} eventData={currentEvent}/>
+      <AddEventPopup show={showAddEvent} closeWindow={closeAddEventWindow}/>
       <PageLayout>
         <div className="container-xl mt-5 card calendar">
           <FullCalendar
@@ -160,7 +164,7 @@ function CalendarPage() {
             initialView="dayGridMonth"
             height={700}
             eventTextColor={"black"}
-            customButtons={{addEvent: {text: "Add Event"}}} //, click:()=>this.AddEventPopup(); add functionality for button here: https://fullcalendar.io/docs/customButtons
+            customButtons={{addEvent: {text: "Add Event", click:()=>showAddEventWindow()}}} //add functionality for button here: https://fullcalendar.io/docs/customButtons
             headerToolbar={{left: "addEvent", center: "title", right: "today dayGridMonth,timeGridWeek,timeGridDay prev,next"}}
             buttonText={{today: 'Today', month: 'Month', week: 'Week', day: 'Day'}}
             events={loadedEventData.map(x => convertData(x))}
