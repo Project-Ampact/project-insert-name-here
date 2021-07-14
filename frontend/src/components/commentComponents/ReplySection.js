@@ -106,8 +106,8 @@ function ReplySection(props) {
   const update = async (e) => {
     e.preventDefault();
     try {
+      window.location.reload();
       await APIAccess.createReply(username, document.getElementById(formid).value, props.cid);
-      //window.location.reload();
     } catch (err) {
       console.log(err);
     }

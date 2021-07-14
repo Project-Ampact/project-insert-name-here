@@ -132,9 +132,10 @@ function CommentSection(props) {
     e.preventDefault();
     try {
       var msg = document.getElementById(formid).value;
-
+      
+      window.location.reload();
       await APIAccess.createComment(username, msg, props.pid);
-      //window.location.reload();
+      
     } catch (err) {
       console.log(err);
     }
