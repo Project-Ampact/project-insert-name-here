@@ -143,7 +143,6 @@ function CommentSection(props) {
   };
 
   const [isLoading, setIsLoading] = useState(true);
-  const [loadedUserData, setLoadedUserData] = useState([]);
 
   const deletePostButton = (props.user === username || role === "instructor") ?
     (<Button variant="danger" onClick={() => {props.delete(props.pid)}}>Delete Post</Button>) : null;
