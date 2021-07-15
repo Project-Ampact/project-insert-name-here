@@ -126,7 +126,7 @@ router.post("/", async (req, res) => {
         });
 
         // check visibility is valid
-        if (!['all', 'partner', 'entrepreneur'].includes(visibility)) return res.status(400).json({
+        if (!['all', 'partner', 'entrepreneur','instructor'].includes(visibility)) return res.status(400).json({
             success: false,
             message: "Visibility must be all, partner, or entrepreneur"
         });
