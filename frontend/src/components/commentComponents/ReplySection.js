@@ -56,6 +56,7 @@ function Expand({ children, eventKey, callback }) {
 function LoadReplies(cid) {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
+  const [loadedCommentData, setLoadedCommentData] = useState(mock_data);
   useEffect(() => {
     fetch("http://localhost:8000/comment/" + cid)
       .then((response) => {
@@ -63,9 +64,10 @@ function LoadReplies(cid) {
       })
       .then((data) => {
         mock_data = data;
+        setLoadedCommentData(mock_data)
         setIsLoading(false);
       });
-  });
+  }, []);
 
   if (isLoading) {
     return (
@@ -102,7 +104,12 @@ function LoadReplies(cid) {
 function ReplySection(props) {
   let auth = AuthService();
   const username = document.cookie.split("user=")[1].split("%20")[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
   let formid = `rmessage:${props.cid}`;
+
+  const deleteCommentButton = (props.user === username || role === "instructor") ?
+    (<Button variant="danger" onClick={() => {props.delete(props.cid)}}>Delete</Button>) : null;
+
   const update = async (e) => {
     e.preventDefault();
     try {
@@ -116,7 +123,10 @@ function ReplySection(props) {
     <Accordion>
       <Card>
         <Card.Header>
-          <Expand eventKey="0">Replies</Expand>
+          <div className="d-flex justify-content-between">
+            <Expand eventKey="0">Replies</Expand>
+            <div>{deleteCommentButton}</div>
+          </div>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
