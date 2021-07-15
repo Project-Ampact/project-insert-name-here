@@ -260,6 +260,20 @@ const APIAccess = {
             throw err;
         }
        // return loadedData;
+    },
+    deleteEvent(eventId){
+        try{
+            return fetch('http://localhost:8000/calendar/' + eventId, {
+                method: 'DELETE'
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return jsonRes
+            });
+        } catch(err) {
+            throw err;
+        }
     }
 };
 
