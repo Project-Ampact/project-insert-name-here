@@ -34,7 +34,7 @@ function Post(props) {
   return (
     <Container>
     <div class="card" id="post-wrapper"> 
-      <div class="card-body rounded" id="post-body">
+      <div class="card-body rounded" id="post-body" style={{border: props.user == props.currentUser ?  "1.5px solid #1290ff": "1.5px solid #e0e0e0"}}>
       <div class="flex-container">
       <img id="profile-picture" src={loadedUserData} alt="Profile picture"></img>
       <h3 class="card-title" id="post-user">{props.user}</h3>
@@ -43,6 +43,7 @@ function Post(props) {
       <h6 className="text-secondary" id="post-type">Type: {props.type}</h6>
        <h6 className="text-secondary" id="post-date">{props.date}</h6>
        </div>
+       <h6 className="text-secondary text-right" id="post-type">Visible to: {props.visibility}</h6>
        <p id="post-content">{props.content}</p>
        </div>
     </div>
