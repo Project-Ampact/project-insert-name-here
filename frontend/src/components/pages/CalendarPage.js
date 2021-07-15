@@ -5,6 +5,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import PageLayout from "./DefaultPage";
 import './CalendarPage.css'
 import { Row, Col, Button, Modal, Form } from "react-bootstrap";
+import APIAccess from "../../controller";
+import { toast } from "react-toastify";
 
 const PERSONAL_COLOR = '#54e0ff';
 const GROUP_COLOR = '#80eb34';
@@ -60,7 +62,10 @@ function AddEventPopup({show, closeWindow}) {
   )
 }
 
-function EventPopup({show, closeWindow, eventData}) {
+function EventPopup({show, closeWindow, eventData, deleteLocal}) {
+  const username = document.cookie.split('user=')[1].split('%20')[0]
+
+  console.log(eventData)
   let typeColor = 'white';
   if (eventData.type === 'group') {
     typeColor = GROUP_COLOR;
@@ -70,9 +75,24 @@ function EventPopup({show, closeWindow, eventData}) {
     typeColor = GENERAL_COLOR
   }
 
+  const deleteEvent = async () => {
+    const result = await APIAccess.deleteEvent(eventData.id)
+    console.log(result)
+    if (result.success) {
+      toast.success('Event has been removed')
+      deleteLocal(eventData.id)
+      closeWindow()
+    } else {
+      toast.error('Unable to delete event')
+    }
+  }
+
   const joinButton = (eventData.conferenceLink) ? 
     (<Button variant="primary" href={eventData.conferenceLink} target="_blank">Join Meeting</Button>)
     : null
+
+  const deleteButton = (eventData.userId === username) ? 
+    (<Button variant="danger" onClick={deleteEvent}>Delete Event</Button>) : null
 
   return (
     <>
@@ -88,7 +108,9 @@ function EventPopup({show, closeWindow, eventData}) {
           {eventData.description}
         </Modal.Body>
         <Modal.Footer className="justify-content-between">
-          <Button variant="danger">Delete Event</Button>
+          <div>
+            {deleteButton}
+          </div>
           <div className="event-exit-area">
             {joinButton}
             <Button variant="secondary" onClick={closeWindow}>Close</Button>
@@ -131,7 +153,8 @@ function CalendarPage() {
       end: info.event.end,
       type: info.event.extendedProps.type,
       groupId: info.event.groupId,
-      userId: info.event.extendedProps.userId
+      userId: info.event.extendedProps.userId,
+      id: info.event.extendedProps._id
     }
     setCurrentEvent(showData)
     showEventWindow()
@@ -145,6 +168,12 @@ function CalendarPage() {
     return {...data, color: eventColor}
   }
 
+  const deleteEventLocal = (eventId) => {
+    const newEventData = loadedEventData.filter(x => {
+      return x._id !== eventId})
+    setLoadedEventData(newEventData)
+  }
+
   if (isLoading) {
     return (
       <div>
@@ -153,9 +182,9 @@ function CalendarPage() {
     )
   }
 
-  return (
+  return (console.log('render calendar', loadedEventData),
     <>
-      <EventPopup show={showEvent} closeWindow={closeEventWindow} eventData={currentEvent}/>
+      <EventPopup show={showEvent} closeWindow={closeEventWindow} eventData={currentEvent} deleteLocal={deleteEventLocal}/>
       <AddEventPopup show={showAddEvent} closeWindow={closeAddEventWindow}/>
       <PageLayout>
         <div className="container-xl mt-5 card calendar">
