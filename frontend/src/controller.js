@@ -306,8 +306,23 @@ const APIAccess = {
         } catch(err){
             throw err;
         }
-    }
+    },
 
+    getGroupIdFromUserId(userId) {
+        try{
+            return fetch('http://localhost:8000/group/member/' + userId,  {
+                method: 'GET',
+                credentials: 'include',
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json()
+                return jsonRes
+            })
+        } catch(err) {
+            throw err;
+        }
+    
+    }
     
 };
 
