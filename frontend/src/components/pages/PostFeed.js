@@ -30,6 +30,7 @@ function PostFeed() {
   console.log("Role: " + role);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
+  let emptyError = "";
   useEffect(() => {
     fetch("http://localhost:8000/post/")
       .then((response) => {
@@ -62,8 +63,10 @@ function PostFeed() {
 
   const update = async (e) => {
     e.preventDefault();
+    let postDescription = document.getElementById("postCreate").value;
+    if (postDescription != "") {
     try {
-      let postDescription = document.getElementById("postCreate").value;
+     
       let type = "QnA";
       let user;
       console.log(postDescription);
@@ -71,12 +74,18 @@ function PostFeed() {
       console.log("USER" + user);
       console.log("WORK" );
       console.log("RRRROLE: " + role);
+      let visibility = document.getElementById("visibility").value;
       window.location.reload();
-      await APIAccess.createPost(user, type, postDescription, role);
+      await APIAccess.createPost(user, type, postDescription, visibility);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
     }
+  }
+  else {
+    emptyError = "ERROR";
+    console.log("ERROR");
+  }
   };
 
   return (
@@ -97,6 +106,15 @@ function PostFeed() {
                     placeholder="Type your post here!"
                   />
                 </Form.Group>
+
+                <label for="visibility">Set visibility:</label>
+                <select class="form-control" id="visibility" aria-label=".form-select-lg">
+                  <option value="all">All</option>
+                  <option style={{display: role == "instructor" || role == "partner" ? 'block': 'none'}} value="entrepreneur">Entrepreneur</option>
+                  <option  value="partner">Partner</option>
+                  <option style={{display: role == "entrepreneur"? 'block': 'none'}} value="instructor">Instructor</option>
+                </select>
+
                 <Button
                   onClick={update}
                   id="submit-button"
@@ -105,6 +123,7 @@ function PostFeed() {
                 >
                   Submit
                 </Button>
+                  <p>{emptyError}</p>
               </Form>
             </div>
           </div>
@@ -137,11 +156,13 @@ function PostFeed() {
           }
 
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if (mock_data_piece.type == "QnA") {
+          if ((mock_data_piece.type == "QnA") && (role == mock_data_piece.visibility || mock_data_piece.visibility == "all" || mock_data_piece.user == username)) {
             return (
-              <Post
+              <Post 
                 user={mock_data_piece.user}
                 type={mock_data_piece.type}
+                visibility={mock_data_piece.visibility}
+                currentUser={username}
                 date={date.getFullYear() + "/" + month + "/" + day}
                 content={mock_data_piece.content}
                 pid={mock_data_piece._id}

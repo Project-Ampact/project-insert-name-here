@@ -611,3 +611,154 @@
         - body: json object
             - message: (String) Error while searching
             - success: (bool) false
+
+## Posts
+
+### Get Posts
+- Description: Get all posts
+- Request `GET /post/`
+    - params: 
+        - type: (Optional) String that indicates type of posts to get. If not specified, returns posts of all types 
+        - visibility: (Optional) String that indicates what visibility of posts to view. If not specified, returns posts of all visibilities
+    - example:
+    ```
+        fetch('localhost:8000/post/', {
+            method: 'GET',
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Getting posts successful
+        - content-type: application/json
+        - body: Array of post objects ordered by date 
+    - Status: 500
+        - indication: Server side error occured when searching posts
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error while searching
+            - success: (bool) false
+
+### Get one post
+- Description: Get one post
+- Request `GET /post/:postID`
+    - params: 
+        - postID: String indicating post id
+    - example:
+    ```
+        fetch('localhost:8000/post/60c14851b1c530483cc32685', {
+            method: 'GET',
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Successfully retrieved post
+        - content-type: application/json
+        - body: Post object from id 
+    - Status: 404
+        - indication: Could not find post
+        - content-type: application/json
+        - body: json object
+            - message: (String) Post not found
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when searching posts
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error while searching
+            - success: (bool) false
+
+### Get post comments
+- Description: Get post comments
+- Request `GET /post/:postID/comments`
+    - params: 
+        - postID: String indicating post id
+        - page: Page of comments to view
+    - example:
+    ```
+        fetch('localhost:8000/post/60c14851b1c530483cc32685/comments', {
+            method: 'GET',
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Successfully retrieved post
+        - content-type: application/json
+        - body: Post object from id 
+    - Status: 404
+        - indication: Could not find post
+        - content-type: application/json
+        - body: json object
+            - message: (String) Post not found
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when searching posts
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error while searching
+            - success: (bool) false
+
+### Delete a post
+- Description: Delete one post
+- Request `DELETE /post/:postID`
+    - params: 
+        - postID: String indicating post id
+    - example:
+    ```
+        fetch('localhost:8000/post/60c14851b1c530483cc32685', {
+            method: 'DELETE',
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Successfully deleted post
+    - Status: 404
+        - indication: Could not find post
+        - content-type: application/json
+        - body: json object
+            - message: (String) Post not found
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when searching posts
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error while searching
+            - success: (bool) false
+
+### Make Posts
+- Description: Make a post
+- Request `POST /post/`
+    - body: 
+        - user: String indicating poster id
+        - type: String indicating post type
+        - content: String indicating post content
+        - visibility: String indicating post visibility 
+    - example:
+    ```
+        fetch('localhost:8000/post', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                user: "exampleuser"
+                content: "This is a post",
+                type: "general",
+                visibility: "all"
+            }),
+        })
+    ```
+- Responses:
+    - Status: 201 
+        - indication: Post is successful
+        - content-type: application/json
+        - body: json object representing post that was just created
+    - Status: 400 
+        - indication: Request made missing content or type
+        - content-type: application/json
+        - body: json object
+            - message: (String) Missing required fields
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when making post profiles
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error making post
+            - success: (bool) false
