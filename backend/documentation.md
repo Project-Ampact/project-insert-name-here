@@ -689,3 +689,34 @@
         - body: json object
             - message: (String) Error while searching
             - success: (bool) false
+
+### Delete calendar event
+- Description: Delete a calendar event by id
+- Request `DELETE /calendar/:eventId`
+    - params:
+        - eventId: (String) the id of the calendar event
+    - example:
+    ```
+        fetch('localhost:8000/calendar/60ef26e8388bd80a70065ddd', {
+            method: 'DELETE',
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: User's events retrieved
+        - content-type: application/json
+        - body:
+            - message: (String) Event has been deleted
+            - success: (bool) true
+    - Status: 404 
+        - indication: the event does not exist on the database
+        - content-type: application/json
+        - body: json object
+            - message: (String) Event not found
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when searching groups
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error generated from error
+            - success: (bool) false
