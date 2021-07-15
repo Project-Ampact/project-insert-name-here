@@ -146,9 +146,11 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
     console.log("connected to DB");
 });
 
+const events = require('./routes/eventRoutes');
 const groups = require('./routes/groupRoutes');
 const videos = require('./routes/videoRoutes');
 const search = require('./routes/searchRoutes');
+const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
 
@@ -157,8 +159,7 @@ app.use('/video', videos);
 app.use('/search', search);
 app.use('/post', post);
 app.use('/comment', comment);
-
-const profiles = require('./routes/profileRoutes');
+app.use('/calendar', events);
 app.use('/profile', profiles);
 
 const port = 8000;
