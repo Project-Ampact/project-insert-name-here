@@ -20,7 +20,9 @@ import {
   FaSistrix,
   FaTimesCircle,
   FaServer,
-  FaCalendarAlt
+  FaRegListAlt,
+  FaCalendarAlt,
+
 } from "react-icons/fa";
 
 const AddVideo = (props) => {
@@ -73,8 +75,18 @@ const Nav2 = (props) => {
         <SidebarContent>
           <Menu iconShape="square">
             <MenuItem icon={<FaBorderAll />}>
-              <Link to="/browse">Browse</Link>
+              <Link to="/browse">Browse Videos</Link>
             </MenuItem>
+            <SubMenu title="Posts" icon={<FaRegListAlt />}>
+              <MenuItem>
+                <Link to="/postFeedAnnouncements">
+                  Announcements
+                </Link>
+              </MenuItem>
+              <MenuItem>
+              <Link to="/postFeed">Discussion</Link>
+            </MenuItem>
+            </SubMenu>
             <MenuItem icon={<FaRegUser />}><Link to= {`/profile/${username}`} >My Profile</Link> </MenuItem>
             <SubMenu title="Search" icon={<FaSistrix />}>
               <MenuItem>
