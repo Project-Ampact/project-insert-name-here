@@ -1,0 +1,34 @@
+.fc .fc-col-header-cell-cushion { /* needs to be same precedence */
+    padding-top: 5px; /* an override! */
+    padding-bottom: 5px; /* an override! */
+  }
+
+.calendar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.calendar a {
+    color: black;
+}
+
+.add-event {
+    margin-top: 20px;
+    width: 50;
+}
+
+.event-header {
+    align-items: center !important;
+}
+
+.event-type {
+    margin-left: 1rem;
+    /* border: 1px solid black; */
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50px;
+}
+
+.event-exit-area button {
+    margin: 0.25rem;
+}

@@ -133,7 +133,7 @@ const APIAccess = {
 
     addMember(group, member) {
         try{
-            fetch('http://localhost:8000/group/add/' + group, {
+            return fetch('http://localhost:8000/group/add/' + group, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -144,7 +144,7 @@ const APIAccess = {
             .then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
-                return "Success";
+                return jsonRes;
             });
         } catch(err) {
             throw err;
@@ -246,7 +246,6 @@ const APIAccess = {
         }
     },
     getVideoSections() {
-        var loadedData = [];
         try{
             fetch("http://localhost:8000/video/browse/")
                 .then(async (response) => {
