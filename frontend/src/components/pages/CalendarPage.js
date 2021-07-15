@@ -27,10 +27,20 @@ function CalendarPage() {
   const [currentEvent, setCurrentEvent] = useState(placeholderData);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedEventData, setLoadedEventData] = useState([])
+  const [loadedGroupData, setLoadedGroupData] = useState([])
   const username = document.cookie.split('user=')[1].split('%20')[0]
 
 
- 
+  useEffect(() => {
+    async function fetchData() {
+      let data = await APIAccess.getGroupIdFromUserId(username);
+      return data;
+    }
+    fetchData().then((x) => {
+      setLoadedGroupData(x._id);
+      console.log("GROUP: " + x._id);
+    });
+  }, [username]);
 
   
 function AddEventPopup({show, closeWindow}) {
@@ -42,6 +52,9 @@ function AddEventPopup({show, closeWindow}) {
       let conferenceLink = document.getElementById("conference-link").value;
       let start = document.getElementById("start").value;
       let end = document.getElementById("end").value;
+      console.log("TITLE:" + title);
+   
+
       let groupId = null;
       let type = "";
       if (document.getElementById("type-general").checked) {
@@ -52,10 +65,19 @@ function AddEventPopup({show, closeWindow}) {
       }
       else if (document.getElementById("type-group").checked) {
         type = document.getElementById("type-group").value;
-        groupId = "60de1f43e10e7f59d0317471"; // HARD CODED VALUE CHANGE LATER TO PULL GROUP FROM USER!
+        if (groupId != "undefined") {
+          groupId = loadedGroupData;
+        }
+
       }
 
+      console.log(type);
 
+      if (start == end || title == "" || description == "" || type == "") {
+        console.log("NOT ALLOWED");
+        document.getElementById("add-event-missing").innerHTML = "Please make sure title, event type, and description is not blank and start/end date aren't the same*";
+        return;
+      }
 
       let userId = username;
       window.location.reload();
@@ -74,13 +96,13 @@ function AddEventPopup({show, closeWindow}) {
       </Modal.Header>
       <Modal.Body>
         <p> <b>Event Title: </b>
-        <Form.Control type="text" id="title" placeholder="Title of this new event" /></p>
+        <Form.Control required type="text" id="title" placeholder="Title of this new event" /></p>
         <p><b>Event Type:</b>
         <Form>
         <div id="type">
         <Form.Check inline label="general" id="type-general" value="general"  name="type" type="radio" />
         <Form.Check inline label="personal" id="type-personal"  value="personal" name="type" type="radio" />
-        <Form.Check inline label="group" id="type-group" value="group" name="type" type="radio" />
+        <Form.Check style={{display: loadedGroupData != null ? 'inline-block': 'none'}}inline label="group" id="type-group" value="group" name="type" type="radio" />
         </div>
         </Form>
         </p>
@@ -104,6 +126,7 @@ function AddEventPopup({show, closeWindow}) {
         <div className="event-exit-area">
           <Button variant="primary" onClick={update} >Update</Button>
           <Button variant="secondary" onClick={closeWindow}>Close</Button>
+          <p id="add-event-missing"></p>
         </div>
       </Modal.Footer>
     </Modal>
