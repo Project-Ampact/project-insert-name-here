@@ -43,7 +43,7 @@ router.get("/:userId", async (req, res) => {
         if (!events)
           return res
             .status(404)
-            .send({ sucess: false, message: "User's events not found" });
+            .send({ success: false, message: "User's events not found" });
         return res.json(events);
       }
     );
@@ -109,5 +109,24 @@ router.post("/", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+// delete event by id
+router.delete("/:eventId", async (req, res) => {
+  const eventId = req.params.eventId;
+
+  Event.deleteOne({_id: eventId}, (err, events) => {
+    console.log(err, events)
+
+    if (err)
+      return res
+        .status(500)
+        .send({ success: false, message: err.toString() });
+    if (events.deletedCount === 0)
+      return res
+        .status(404)
+        .send({ sucess: false, message: "Event not found" });
+    return res.json({sucess: true, message: "Event has been deleted"});
+  })
+})
 
 module.exports = router;
