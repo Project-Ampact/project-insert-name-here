@@ -164,8 +164,9 @@ function CommentSection(props) {
   return (
     <Accordion>
       <Card>
-        <Card.Header>
+        <Card.Header className="d-flex justify-content-between">
           <Expand eventKey="0">Comments</Expand>
+          <Button variant="danger" onClick={() => {props.delete(props.pid)}}>Delete Post</Button>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">

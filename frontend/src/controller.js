@@ -286,6 +286,19 @@ const APIAccess = {
             throw err;
         }
     },
+    deletePost(id) {
+        try {
+            return fetch(`http://localhost:8000/post/${id}`, {
+                method: 'DELETE'
+            }).then(async (result) => {
+                let jsonRes = await result.json();
+                console.log(result)
+                return jsonRes
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
     createComment(user, msg, pid){
         try{
             return fetch('http://localhost:8000/comment/', {
