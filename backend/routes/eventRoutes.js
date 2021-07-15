@@ -1,7 +1,9 @@
 const express = require("express");
 const Event = require("../models/events");
 const Group = require("../models/group");
+const User = require("../models/user");
 const router = express.Router();
+
 
 // // Get events for the user (personal, group, general)
 // router.get("/", async (req, res) => {
@@ -74,7 +76,7 @@ router.post("/", async (req, res) => {
       message: "Request body must contain title, description, start, end, type and userId filled",
     });
  // Make sure that the user creating it actually exists
-  let userExists = await User.exists({ _id: user });
+  let userExists = await User.exists({ _id:userId});
   if (!userExists) return res.status(404).json({
       success: false,
       message: "User could not be found"
