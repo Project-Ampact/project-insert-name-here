@@ -126,6 +126,7 @@ function LoadComments() {
 function CommentSection(props) {
   let auth = AuthService();
   const username = document.cookie.split("user=")[1].split("%20")[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
   let formid = `message:${props.pid}`;
 
   const update = async (e) => {
@@ -143,6 +144,10 @@ function CommentSection(props) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
+
+  const deletePostButton = (props.user === username || role === "instructor") ?
+    (<Button variant="danger" onClick={() => {props.delete(props.pid)}}>Delete Post</Button>) : null;
+
   useEffect(() => {
     fetch("http://localhost:8000/post/" + props.pid + "/comments/")
       .then((response) => {
@@ -166,7 +171,9 @@ function CommentSection(props) {
       <Card>
         <Card.Header className="d-flex justify-content-between">
           <Expand eventKey="0">Comments</Expand>
-          <Button variant="danger" onClick={() => {props.delete(props.pid)}}>Delete Post</Button>
+          <div>
+            {deletePostButton}
+          </div>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
