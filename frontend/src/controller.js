@@ -260,6 +260,81 @@ const APIAccess = {
             throw err;
         }
        // return loadedData;
+    },
+    createPost(user, type, description, visibility){
+        try{
+            return fetch('http://localhost:8000/post/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({user: user, type: type, content: description, visibility: visibility}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    createComment(user, msg, pid){
+        try{
+            return fetch('http://localhost:8000/comment/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({poster: user, message: msg, pid: pid}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return null;
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    createReply(user, msg, cid){
+        try{
+            return fetch('http://localhost:8000/comment/add/' + cid, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({poster: user, message: msg, cid: cid}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return null;
+            });
+        } catch(err){
+            throw err;
+        }
     }
 };
 
