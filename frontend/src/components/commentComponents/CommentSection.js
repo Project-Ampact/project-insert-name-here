@@ -97,7 +97,7 @@ function Expand({ children, eventKey, callback }) {
   );
 }
 
-function LoadComments() {
+function LoadComments(deleteFunc) {
   return mock_data.map((mock_data_piece) => {
     let date = new Date(mock_data_piece.date);
     let month = date.getMonth() + 1;
@@ -118,6 +118,7 @@ function LoadComments() {
         date={date.getFullYear() + "/" + month + "/" + day}
         content={mock_data_piece.message}
         cid={mock_data_piece._id}
+        delete={deleteFunc}
       />
     );
   });
@@ -128,6 +129,7 @@ function CommentSection(props) {
   const username = document.cookie.split("user=")[1].split("%20")[0];
   const role = document.cookie.split('user=')[1].split('%20')[1];
   let formid = `message:${props.pid}`;
+  const [loadedCommentData, setLoadedCommentData] = useState(mock_data)
 
   const update = async (e) => {
     e.preventDefault();
@@ -154,9 +156,15 @@ function CommentSection(props) {
       })
       .then((data) => {
         mock_data = data;
+        setLoadedCommentData(mock_data)
         setIsLoading(false);
       });
-  });
+  }, [props.pid]);
+
+  const deleteLocalComment = (id) => {
+    mock_data = mock_data.filter(comment => id !== comment._id)
+    setLoadedCommentData(mock_data)
+  }
 
   if (isLoading) {
     return (
@@ -203,7 +211,7 @@ function CommentSection(props) {
                 </Card>
               </Row>
             </Container>
-            {LoadComments()}
+            {LoadComments(deleteLocalComment)}
           </Container>
         </Accordion.Collapse>
       </Card>
