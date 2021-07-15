@@ -272,9 +272,43 @@ const APIAccess = {
                 return jsonRes
             });
         } catch(err) {
+
+    createEvent(title, description, conferenceLink, start, end, type, groupId, userId){
+        try{
+            return fetch('http://localhost:8000/calendar/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({
+                    title: title,
+                    description: description,
+                    conferenceLink: conferenceLink,
+                    start: start,
+                    end: end,
+                    type: type,
+                    groupId: groupId,
+                    userId: userId
+                }),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
             throw err;
         }
     }
+
+    
 };
 
 export default APIAccess;
