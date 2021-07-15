@@ -272,6 +272,9 @@ const APIAccess = {
                 return jsonRes
             });
         } catch(err) {
+            throw err;
+    }
+},
 
     createEvent(title, description, conferenceLink, start, end, type, groupId, userId){
         try{
