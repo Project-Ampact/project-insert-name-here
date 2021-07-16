@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import ReplySection from "./ReplySection";
 import APIAccess from "../../controller.js";
+import {toast} from 'react-toastify';
 
 
 function Comment(props) {
@@ -22,6 +23,18 @@ function Comment(props) {
       setIsLoading(false);
     });
   }, [props.user]);
+
+  const deleteComment = async (commentId, postId) => {
+    console.log('delete comment', commentId, postId)
+    let result = await APIAccess.deleteComment(commentId, postId)
+    if (result.success) {
+      // props.delete(commentId)
+      window.location.reload()
+      // toast.success('Comment has been deleted')
+    } else {
+      toast.error(result.message)
+    }
+  }
 
   if (isLoading) {
     return (
@@ -43,7 +56,7 @@ function Comment(props) {
             </div>
             <p className="text-content">{props.content}</p>
           </Card.Body>
-          <ReplySection cid={props.cid}></ReplySection>
+          <ReplySection cid={props.cid} pid={props.pid} delete={deleteComment}></ReplySection>
         </Card>
       </Row>
     </Container>
