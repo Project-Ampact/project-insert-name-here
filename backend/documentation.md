@@ -873,3 +873,153 @@
         - body: json object
             - message: (String) Error while searching
             - success: (bool) false
+
+## Comment
+
+### Get Comment Replies
+- Description: Get replies to a comment
+- Request `GET /comment/:commentID`
+    - params:
+        - commentID: Comment to get replies of
+    - example:
+    ```
+        fetch('localhost:8000/comment/' + commentID, {
+            method: 'GET'
+        })
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Getting replies of comment successful
+        - content-type: application/json
+        - body: Array of reply objects in chronological order 
+    - Status: 404 
+        - indication: Comment or replies do not exist
+        - content-type: application/json
+        - body: json object
+            - message: (String) Comment not found OR Reply not found
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when searching replies / comments
+        - content-type: application/json
+        - body: json object
+            - message: (String) Backend server error
+            - success: (bool) false
+
+### Create New Comment
+- Description: Create a new comment
+- Request `POST /comment/`
+    - body:
+        - message: Text content of the comment
+        - poster: User id of the account posting the comment
+        - pid: Post id to post comment to
+    - example:
+    ```
+        fetch('http://localhost:8000/', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                message: "Hello!",
+                poster: "user",
+                pid: processID}),
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 201 
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: Comment just created in json 
+    - Status: 400 
+        - indication: Missing required parameters
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 404 
+        - indication: Could not find post to post comment to
+        - content-type: application/json
+        - body: json object
+            - message: (String) Post with Id pid does not exist
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+### Create Comment Reply
+- Description: Create a new comment
+- Request `POST /comment/add/:commentID/`
+    - params:
+        - commentID: Comment id to post reply to
+    - body:
+        - poster: User id of the account posting the reply
+        - message: Text content of the reply
+    - example:
+    ```
+        fetch('http://localhost:8000/', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                message: "Hello!",
+                poster: "user",
+                pid: processID}),
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Reply created successfully
+        - content-type: application/json
+        - body: json object:
+            - sucess: (bool) true 
+    - Status: 400 
+        - indication: Error in creating new comment due to bad data
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 404 
+        - indication: Could not find comment to post reply to
+        - content-type: application/json
+        - body: json object
+            - message: (String) Comment with Id commentID does not exist
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when adding reply to comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+### Delete Comment
+- Description: Delete a comment
+- Request `POST /comment/delete/:commentID/`
+    - params:
+        - commentID: Comment id to delete
+    - example:
+    ```
+        fetch('http://localhost:8000/comment/delete/' + commentID, {
+            method: 'DELETE',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment and replies successfully delete
+        - content-type: application/json
+        - body: json object:
+            - sucess: (bool) true 
+    - Status: 404 
+        - indication: Could not find comment to delete
+        - content-type: application/json
+        - body: json object
+            - message: (String) Comment with Id commentID does not exist
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when deleting comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false

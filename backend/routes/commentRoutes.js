@@ -10,33 +10,6 @@ const COMMENTS_PER_PAGE = 10;
 
 // Get replies given commentId
 router.get("/:commentID", async (req, res) => {
-  /*let commentId = req.params.commentID;
-
-  let page = req.query.page;
-  (page > 0) ? page = parseInt(page) : page = 1;
-
-  let comment;
-
-  try {
-      comment = await Comment.findById(commentId).populate({
-          path: "replies",
-          model: "Comment",
-          options: {
-              skip: (page - 1) * COMMENTS_PER_PAGE,
-              limit: COMMENTS_PER_PAGE
-          }
-      }).sort( {date: -1} );
-      if (!comment) return res.status(404).send({
-          success: false, 
-          message: "Comment not found"
-      });
-      return res.json(comment.replies);
-  } catch (error) {
-      if (error != 'CastError') return res.status(500).send({
-          success: false,
-          message: error.toString()
-      });
-  }*/
   let commentId = req.params.commentID;
 
   // Get the specified comment
@@ -161,9 +134,12 @@ router.post("/add/:commentID", async (req, res) => {
   });
 });
 
-// Delete comment TODO: needs more work to make it delete all of its replies
-router.delete("/delete/:commentID/", async (req, res) => {
+// Delete comment 
+router.delete("/delete/:commentID/:postId", async (req, res) => {
   let commentID = req.params.commentID;
+  let pid = req.params.postId;
+
+  //Delete the comment and replies
 
   Comment.findById(commentID, async (err, comment) => {
     if (err)
@@ -180,9 +156,93 @@ router.delete("/delete/:commentID/", async (req, res) => {
     }
     //Delete the comment itself
     Comment.findByIdAndDelete(comment, (err, delObj) => {
-      return res.json({ success: true });
+    });
+  });
+
+  //Remove comment id from the posts comments array
+  Post.findById(pid, (err, post) => {
+    if (err)
+      return res
+        .status(500)
+        .send({ success: false, message: err.toString() });
+    if (!post)
+      return res
+        .status(404)
+        .send({
+          success: false,
+          message: "Post with Id " + pid + " does not exist",
+        });
+    
+    try {
+      post.comments.pull(commentID);
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ success: false, message: err.toString() });
+    }
+   
+    Post.findByIdAndUpdate(pid, { comments: post.comments }, (err, post) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ success: false, message: err.toString() });
+        return res.json({ success: true }); //Succesfully deleted the comment, all of its replies and the comment id from the posts' list of comments.
     });
   });
 });
+
+// Delete reply 
+router.delete("/delete/reply/:replyID/:commentID", async (req, res) => {
+  let replyID = req.params.replyID;
+  let commentID = req.params.commentID;
+
+  //Delete the comment and replies
+
+  Comment.findById(replyID, async (err, comment) => {
+    if (err)
+      return res.status(500).send({ success: false, message: err.toString() });
+    if (!comment)
+      return res.status(404).send({
+        success: false,
+        message: "Reply with Id " + replyID + " does not exist",
+      });
+
+    //Delete the comment itself
+    Comment.findByIdAndDelete(comment, (err, delObj) => {
+    });
+  });
+
+  //Remove reply id from the comment replies array
+  Comment.findById(commentID, (err, comment2) => {
+    if (err)
+      return res
+        .status(500)
+        .send({ success: false, message: err.toString() });
+    if (!comment2)
+      return res
+        .status(404)
+        .send({
+          success: false,
+          message: "Comment with Id " + commentID + " does not exist",
+        });
+    
+        try {
+          comment2.replies.pull(replyID);
+        } catch (err) {
+          return res
+            .status(500)
+            .send({ success: false, message: err.toString() });
+        }
+
+    Comment.findByIdAndUpdate(commentID, { replies: comment2.replies }, (err, post) => {
+      if (err)
+        return res
+          .status(500)
+          .send({ success: false, message: err.toString() });
+        return res.json({ success: true }); //Succesfully deleted the reply and the reply id from the comments list of replies.
+    });
+  });
+});
+
 
 module.exports = router;
