@@ -288,12 +288,7 @@ const APIAccess = {
                 end: end,
                 type: type,
                 groupId: groupId,
-                userId: userId}).then(async (response) => {
-                    let jsonRes = await response.json();
-                    console.log(jsonRes)
-                    return jsonRes;
-                })
-        }).then(async (response) => {
+                userId: userId})}).then(async (response) => {
             const jsonRes = await response.json();
             console.log(jsonRes)
             return jsonRes;

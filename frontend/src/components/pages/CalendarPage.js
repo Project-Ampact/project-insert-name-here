@@ -45,6 +45,7 @@ function CalendarPage() {
 
   
 function AddEventPopup({show, closeWindow}) {
+  const role = document.cookie.split('user=')[1].split('%20')[1];
   const update = async (e) => {
     e.preventDefault();
     try {
@@ -101,7 +102,7 @@ function AddEventPopup({show, closeWindow}) {
         <p><b>Event Type:</b>
         <Form>
         <div id="type">
-        <Form.Check inline label="general" id="type-general" value="general"  name="type" type="radio" />
+        {(role === 'instructor') ? (<Form.Check inline label="general" id="type-general" value="general"  name="type" type="radio" />) : null}
         <Form.Check inline label="personal" id="type-personal"  value="personal" name="type" type="radio" />
         <Form.Check style={{display: loadedGroupData != null ? 'inline-block': 'none'}}inline label="group" id="type-group" value="group" name="type" type="radio" />
         </div>
