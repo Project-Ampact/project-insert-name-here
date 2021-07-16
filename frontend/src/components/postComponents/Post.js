@@ -7,6 +7,8 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CommentSection from "../commentComponents/CommentSection";
+import {toast} from "react-toastify";
+
 function Post(props) {
   //let postLink = "http://localhost:3000/postFeed/" + props.gid;
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +26,17 @@ function Post(props) {
     });
   }, [props.user]);
 
+  const deletePost = async (id) => {
+    console.log('delete post', id)
+    const result = await APIAccess.deletePost(id)
+    if (result.content) {
+      props.deleteLocal(id)
+      toast.success('Post has been deleted')
+    } else {
+      toast.error(result.message)
+    }
+  }
+
   if (isLoading) {
     return (
       <section>
@@ -35,7 +48,7 @@ function Post(props) {
   return (
     <Container>
     <div class="card" id="post-wrapper"> 
-      <div class="card-body rounded" id="post-body" style={{border: props.user == props.currentUser ?  "1.5px solid #1290ff": "1.5px solid #e0e0e0"}}>
+      <div class="card-body rounded" id="post-body" style={{border: props.user === props.currentUser ?  "1.5px solid #1290ff": "1.5px solid #e0e0e0"}}>
       <div class="flex-container">
       <img id="profile-picture" src={loadedUserData} alt="Profile picture"></img>
       <h3 class="card-title" id="post-user">{props.user}</h3>
@@ -47,7 +60,7 @@ function Post(props) {
        <h6 className="text-secondary text-right" id="post-type">Visible to: {props.visibility}</h6>
        <p id="post-content">{props.content}</p>
        </div>
-       <CommentSection pid={props.pid}></CommentSection>
+       <CommentSection pid={props.pid} delete={deletePost} user={props.user}></CommentSection>
     </div>
   </Container>
   );
