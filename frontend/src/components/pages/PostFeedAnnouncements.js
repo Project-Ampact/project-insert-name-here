@@ -7,8 +7,6 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { useParams } from "react-router-dom";
-import VideoTagSection from "../videoComponents/VideoTagSection.js";
 import "../videoComponents/VideoTagSection.css";
 import APIAccess from "../../controller.js";
 import PageLayout from "./DefaultPage";
@@ -33,6 +31,7 @@ function PostFeedAnnouncements() {
   console.log("Role: " + role);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
+  const [loadedPostData, setLoadedPostData] = useState(mock_data);
   let emptyError = "";
   useEffect(() => {
     fetch("http://localhost:8000/post/")
@@ -41,9 +40,10 @@ function PostFeedAnnouncements() {
       })
       .then((data) => {
         mock_data = data;
+        setLoadedPostData(mock_data);
         setIsLoading(false);
       });
-  });
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -91,6 +91,13 @@ function PostFeedAnnouncements() {
   }
   };
 
+  const deleteLocalPost = (postId) => {
+    console.log('length is ', mock_data.length)
+    const newData = mock_data.filter(post => post._id !== postId)
+    console.log('now length is ', mock_data.length)
+    setLoadedPostData(newData)
+  }
+
   return (
     <PageLayout>
       <div id="posts">
@@ -131,7 +138,7 @@ function PostFeedAnnouncements() {
             </div>
           </div>
         </Container>
-        {mock_data.map((mock_data_piece) => {
+        {loadedPostData.map((mock_data_piece) => {
           let profilePic;
 
           /*async function fetchData() {
@@ -169,6 +176,7 @@ function PostFeedAnnouncements() {
                 date={date.getFullYear() + "/" + month + "/" + day}
                 content={mock_data_piece.content}
                 pid={mock_data_piece._id}
+                deleteLocal={deleteLocalPost}
               />
             );
           }

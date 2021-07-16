@@ -1,6 +1,7 @@
 const express = require("express"); 
 const Post = require("../models/post");
 const User = require("../models/user")
+const Comments = require("../models/comment")
 const router = express.Router();
 
 const COMMENTS_PER_PAGE = 10;
@@ -56,17 +57,18 @@ router.delete("/:postID", async (req, res) => {
             message: "Post not found"
         });
         for (let i = 0; i < post.comments.length; i++) {
-            comment = await Comment.findById(post.comments[i]);
+            comment = await Comments.findById(post.comments[i]);
             for (let j = 0; j < comment.replies.length; j++) {
-                await Comment.findByIdAndDelete(comment.replies[j]);
+                await Comments.findByIdAndDelete(comment.replies[j]);
             }
-           await Comment.findByIdAndDelete(comment._id);
+           await Comments.findByIdAndDelete(comment._id);
         }
 
         await Post.findByIdAndDelete(post._id);
 
         return res.json(post);
     } catch (err) {
+        console.log(err.stack)
         if (err && err.name != 'CastError') return res.status(500).send({
             success: false,
             message: err.toString()

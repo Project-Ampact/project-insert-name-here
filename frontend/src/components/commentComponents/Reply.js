@@ -1,6 +1,6 @@
 import "./Reply.css";
 import React, { useState, useEffect, useContext } from "react";
-import { Row, Container, Card } from "react-bootstrap";
+import { Row, Container, Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import APIAccess from "../../controller.js";
 
@@ -40,6 +40,9 @@ function Reply(props) {
             </div>
             <p className="text-content2">{props.content}</p>
           </Card.Body>
+          <Card.Footer className="d-flex justify-content-end">
+            <Button variant="danger" onClick={() => {props.delete(props.replyId, props.commentId)}}>Delete</Button>
+          </Card.Footer>
         </Card>
       </Row>
     </Container>

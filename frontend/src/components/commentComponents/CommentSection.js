@@ -97,7 +97,7 @@ function Expand({ children, eventKey, callback }) {
   );
 }
 
-function LoadComments() {
+function LoadComments(deleteFunc, pid) {
   return mock_data.map((mock_data_piece) => {
     let date = new Date(mock_data_piece.date);
     let month = date.getMonth() + 1;
@@ -118,6 +118,8 @@ function LoadComments() {
         date={date.getFullYear() + "/" + month + "/" + day}
         content={mock_data_piece.message}
         cid={mock_data_piece._id}
+        pid={pid}
+        delete={deleteFunc}
       />
     );
   });
@@ -126,7 +128,9 @@ function LoadComments() {
 function CommentSection(props) {
   let auth = AuthService();
   const username = document.cookie.split("user=")[1].split("%20")[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
   let formid = `message:${props.pid}`;
+  const [loadedCommentData, setLoadedCommentData] = useState(mock_data)
 
   const update = async (e) => {
     e.preventDefault();
@@ -142,7 +146,10 @@ function CommentSection(props) {
   };
 
   const [isLoading, setIsLoading] = useState(true);
-  const [loadedUserData, setLoadedUserData] = useState([]);
+
+  const deletePostButton = (props.user === username || role === "instructor") ?
+    (<Button variant="danger" onClick={() => {props.delete(props.pid)}}>Delete Post</Button>) : null;
+
   useEffect(() => {
     fetch("http://localhost:8000/post/" + props.pid + "/comments/")
       .then((response) => {
@@ -150,9 +157,15 @@ function CommentSection(props) {
       })
       .then((data) => {
         mock_data = data;
+        setLoadedCommentData(mock_data)
         setIsLoading(false);
       });
-  });
+  }, [props.pid]);
+
+  const deleteLocalComment = (id) => {
+    mock_data = mock_data.filter(comment => id !== comment._id)
+    setLoadedCommentData(mock_data)
+  }
 
   if (isLoading) {
     return (
@@ -164,8 +177,11 @@ function CommentSection(props) {
   return (
     <Accordion>
       <Card>
-        <Card.Header>
+        <Card.Header className="d-flex justify-content-between">
           <Expand eventKey="0">Comments</Expand>
+          <div>
+            {deletePostButton}
+          </div>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
@@ -196,7 +212,7 @@ function CommentSection(props) {
                 </Card>
               </Row>
             </Container>
-            {LoadComments()}
+            {LoadComments(deleteLocalComment, props.pid)}
           </Container>
         </Accordion.Collapse>
       </Card>
