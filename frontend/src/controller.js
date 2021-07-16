@@ -276,20 +276,31 @@ const APIAccess = {
       }
     },
     createEvent(title, description, conferenceLink, start, end, type, groupId, userId){
-        try{
+        try {
             return fetch('http://localhost:8000/calendar/', {
-                method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({
-                    title: title,
-                    description: description,
-                    conferenceLink: conferenceLink,
-                    start: start,
-                    end: end,
-                    type: type,
-                    groupId: groupId,
-                    userId: userId
-     }),
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                conferenceLink: conferenceLink,
+                start: start,
+                end: end,
+                type: type,
+                groupId: groupId,
+                userId: userId}).then(async (response) => {
+                    let jsonRes = await response.json();
+                    console.log(jsonRes)
+                    return jsonRes;
+                })
+        }).then(async (response) => {
+            const jsonRes = await response.json();
+            console.log(jsonRes)
+            return jsonRes;
+        }) } catch (err) {
+            throw err;
+        }
+    },
     createPost(user, type, description, visibility){
         try{
             return fetch('http://localhost:8000/post/', {
@@ -365,7 +376,7 @@ const APIAccess = {
             })
         } catch(err) {
             throw err;
-        },
+        }},
     deleteComment(commentId, postId) {
         try {
             return fetch(`http://localhost:8000/comment/delete/${commentId}/${postId}`, {
