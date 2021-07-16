@@ -122,7 +122,7 @@ function ReplySection(props) {
   let formid = `rmessage:${props.cid}`;
 
   const deleteCommentButton = (props.user === username || role === "instructor") ?
-    (<Button variant="danger" onClick={() => {props.delete(props.cid)}}>Delete</Button>) : null;
+    (<Button variant="danger" onClick={() => {props.delete(props.cid, props.pid)}}>Delete</Button>) : null;
 
   const update = async (e) => {
     e.preventDefault();

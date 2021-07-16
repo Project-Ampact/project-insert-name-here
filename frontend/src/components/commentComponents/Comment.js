@@ -25,10 +25,12 @@ function Comment(props) {
   }, [props.user]);
 
   const deleteComment = async (commentId, postId) => {
+    console.log('delete comment', commentId, postId)
     let result = await APIAccess.deleteComment(commentId, postId)
     if (result.success) {
-      props.delete(commentId)
-      toast.success('Comment has been deleted')
+      // props.delete(commentId)
+      window.location.reload()
+      // toast.success('Comment has been deleted')
     } else {
       toast.error(result.message)
     }
@@ -54,7 +56,7 @@ function Comment(props) {
             </div>
             <p className="text-content">{props.content}</p>
           </Card.Body>
-          <ReplySection cid={props.cid} delete={deleteComment}></ReplySection>
+          <ReplySection cid={props.cid} pid={props.pid} delete={deleteComment}></ReplySection>
         </Card>
       </Row>
     </Container>
