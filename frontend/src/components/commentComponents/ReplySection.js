@@ -16,6 +16,7 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Reply from "./Reply";
+import { toast } from "react-toastify";
 
 let mock_data = [
   {
@@ -56,7 +57,7 @@ function Expand({ children, eventKey, callback }) {
 function LoadReplies(cid) {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
-  const [loadedCommentData, setLoadedCommentData] = useState(mock_data);
+  const [loadedReplyData, setLoadedReplyData] = useState(mock_data);
   useEffect(() => {
     fetch("http://localhost:8000/comment/" + cid)
       .then((response) => {
@@ -64,10 +65,20 @@ function LoadReplies(cid) {
       })
       .then((data) => {
         mock_data = data;
-        setLoadedCommentData(mock_data)
+        console.log(data)
+        setLoadedReplyData(mock_data)
         setIsLoading(false);
       });
   }, []);
+
+  const deleteReply = async (replyId, commentId) => {
+    const result = await APIAccess.deleteReply(replyId, commentId)
+    if (result.success) {
+      toast.success('Reply deleted')
+    } else {
+      toast.error(result.message)
+    }
+  }
 
   if (isLoading) {
     return (
@@ -96,6 +107,9 @@ function LoadReplies(cid) {
         type={mock_data_piece.type}
         date={date.getFullYear() + "/" + month + "/" + day}
         content={mock_data_piece.message}
+        replyId={mock_data_piece._id}
+        commentId={cid}
+        delete={deleteReply}
       />
     );
   });

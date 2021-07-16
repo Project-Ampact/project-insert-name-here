@@ -97,7 +97,7 @@ function Expand({ children, eventKey, callback }) {
   );
 }
 
-function LoadComments(deleteFunc) {
+function LoadComments(deleteFunc, pid) {
   return mock_data.map((mock_data_piece) => {
     let date = new Date(mock_data_piece.date);
     let month = date.getMonth() + 1;
@@ -118,6 +118,7 @@ function LoadComments(deleteFunc) {
         date={date.getFullYear() + "/" + month + "/" + day}
         content={mock_data_piece.message}
         cid={mock_data_piece._id}
+        pid={pid}
         delete={deleteFunc}
       />
     );
@@ -211,7 +212,7 @@ function CommentSection(props) {
                 </Card>
               </Row>
             </Container>
-            {LoadComments(deleteLocalComment)}
+            {LoadComments(deleteLocalComment, props.pid)}
           </Container>
         </Accordion.Collapse>
       </Card>
