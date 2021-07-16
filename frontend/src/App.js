@@ -23,7 +23,10 @@ import SearchUserProfiles from './components/pages/SearchUserProfiles';
 import UserProfileEdit from './components/userProfile/UserProfileEdit';
 import SingleVideoPage from './components/pages/SingleVideoPage';
 import SingleVideoAdd from './components/pages/SingleVideoAdd';
+import PostFeed from './components/pages/PostFeed';
+import PostFeedAnnouncements from './components/pages/PostFeedAnnouncements';
 import CalendarPage from './components/pages/CalendarPage';
+
 
 
 function PrivateRoute({ children, ...rest }) {
@@ -72,6 +75,8 @@ function App() {
             <Route path="/test" component={CalendarPage}/>
             <Route path="/register" component={Registration}/>
             <Route path="/browse" component={Browse}/>
+            <Route path="/postFeed" component={PostFeed}/>
+            <Route path="/postFeedAnnouncements" component={PostFeedAnnouncements}/>
             <Route path="/profile/search" component={SearchUserProfiles}/>
             <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
             <Route exact path="/video/:vid" children={<SingleVideoPage/>}/>
