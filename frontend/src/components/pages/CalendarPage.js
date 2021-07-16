@@ -102,7 +102,7 @@ function AddEventPopup({show, closeWindow}) {
         <p><b>Event Type:</b>
         <Form>
         <div id="type">
-        {(role === 'instructor') ? (<Form.Check inline label="general" id="type-general" value="general"  name="type" type="radio" />) : null}
+        <Form.Check style={{display: role == "instructor" ? 'inline-block': 'none'}}inline label="general" id="type-general" value="general"  name="type" type="radio" />
         <Form.Check inline label="personal" id="type-personal"  value="personal" name="type" type="radio" />
         <Form.Check style={{display: loadedGroupData != null ? 'inline-block': 'none'}}inline label="group" id="type-group" value="group" name="type" type="radio" />
         </div>
