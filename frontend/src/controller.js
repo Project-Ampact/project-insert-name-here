@@ -324,9 +324,9 @@ const APIAccess = {
             throw err;
         }
     },
-    deleteComment(id) {
+    deleteComment(commentId, postId) {
         try {
-            return fetch(`http://localhost:8000/comment/delete/${id}`, {
+            return fetch(`http://localhost:8000/comment/delete/${commentId}/${postId}`, {
                 method: 'DELETE'
             }).then(async (response) => {
                 let jsonRes = await response.json();
@@ -359,6 +359,19 @@ const APIAccess = {
                 return null;
             });
         } catch(err){
+            throw err;
+        }
+    },
+    deleteReply(replyId, commentId) {
+        try {
+            return fetch(`http://localhost:8000/comment/delete/reply/${replyId}/${commentId}`, {
+                method: 'DELETE'
+            }).then( async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return jsonRes;
+            })
+        } catch (err){
             throw err;
         }
     }

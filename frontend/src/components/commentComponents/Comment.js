@@ -24,10 +24,10 @@ function Comment(props) {
     });
   }, [props.user]);
 
-  const deleteComment = async (id) => {
-    let result = await APIAccess.deleteComment(id)
+  const deleteComment = async (commentId, postId) => {
+    let result = await APIAccess.deleteComment(commentId, postId)
     if (result.success) {
-      props.delete(id)
+      props.delete(commentId)
       toast.success('Comment has been deleted')
     } else {
       toast.error(result.message)
