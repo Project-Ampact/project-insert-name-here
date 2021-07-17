@@ -59,7 +59,10 @@ function LoadReplies(cid) {
   const [loadedUserData, setLoadedUserData] = useState([]);
   const [loadedReplyData, setLoadedReplyData] = useState(mock_data);
   useEffect(() => {
-    fetch("http://localhost:8000/comment/" + cid)
+    fetch("http://localhost:8000/comment/" + cid, 
+    {
+      credentials: 'include'
+    })
       .then((response) => {
         return response.json();
       })

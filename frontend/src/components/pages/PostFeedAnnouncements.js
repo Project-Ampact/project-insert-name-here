@@ -34,7 +34,9 @@ function PostFeedAnnouncements() {
   const [loadedPostData, setLoadedPostData] = useState(mock_data);
   let emptyError = "";
   useEffect(() => {
-    fetch("http://localhost:8000/post/")
+    fetch("http://localhost:8000/post/", {
+      credentials: 'include'
+    })
       .then((response) => {
         return response.json();
       })

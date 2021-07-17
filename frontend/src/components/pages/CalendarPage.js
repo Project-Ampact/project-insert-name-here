@@ -197,7 +197,9 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:8000/calendar/${username}`, {})
+    fetch(`http://localhost:8000/calendar/${username}`, {
+      credentials: 'include'
+    })
     .then(response => response.json())
     .then(data => {
       setLoadedEventData(data)
