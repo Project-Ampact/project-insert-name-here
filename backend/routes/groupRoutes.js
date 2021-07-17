@@ -136,11 +136,20 @@ router.delete("/delete/:groupID/", Authentication.isAuthenticated, async (req, r
         if (!group) return res.status(404).send({success: false, message: "Group with Id " + groupID + " does not exist"});
         Group.findByIdAndDelete(group, (err,  delObj) => {
             return res.json({success: true});
-        })
+        });
         //Group.deleteById(groupID);
-        
     });
 });
 
+// get group by a member id
+router.get("/member/:userID", Authentication.isAuthenticated, async (req, res) => {
+    let userId = req.params.userID;
+    Group.findOne({members: userId}, (err, result) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!result) return res.status(404).send({success: false, message: "User is not part of any group"});
+        console.log(result)
+        return res.json(result);
+    }); 
+});
 
 module.exports = router; 

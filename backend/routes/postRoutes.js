@@ -4,14 +4,15 @@ const express = require("express");
 const Post = require("../models/post");
 const User = require("../models/user");
 const Authentication = require('../authentication');
+const Comments = require("../models/comment");
 const router = express.Router();
 
 const COMMENTS_PER_PAGE = 10;
 
 // get posts
 router.get("/", Authentication.isAuthenticated, async (req, res) => {
-    let type = req.body.type;
-    let visibility = req.body.visibility; 
+    let type = req.body.type; // no type = all types 
+    let visibility = req.body.visibility; // no visibility = all visibilities
     let posts;
 
     let query = {}; 
@@ -19,8 +20,9 @@ router.get("/", Authentication.isAuthenticated, async (req, res) => {
     if (type != null) {
         query.type = type;
     }
-    if (type != null && visibility != "all") {
-        query.visibility = visibility; 
+    if (visibility != null) {
+        query.$or = [{visibility: visibility}];
+        query.$or.push({visibility: "all"});
     }
 
     posts = await Post.find(query).sort( {date: -1} );
@@ -57,25 +59,23 @@ router.delete("/:postID", Authentication.isAuthenticated, async (req, res) => {
             success: false, 
             message: "Post not found"
         });
+        if (post.user != req.user._id && req.user.role != "instructor") return res.status(401).send({
+            success: false, 
+            message: "Can not delete other users post unless you are instructor"
+        });
         for (let i = 0; i < post.comments.length; i++) {
-            comment = await Comment.findById(post.comments[i]);
+            comment = await Comments.findById(post.comments[i]);
             for (let j = 0; j < comment.replies.length; j++) {
-                await Comment.findByIdAndDelete(comment.replies[j]);
+                await Comments.findByIdAndDelete(comment.replies[j]);
             }
-           await Comment.findByIdAndDelete(comment._id);
+           await Comments.findByIdAndDelete(comment._id);
         }
 
-        Post.findById(postId, (err, post) => {
-            if (err) return res.status(500).send({success: false, message: err.toString()});
-            if (!post) return res.status(404).send({success: false, message: "Post not found"});
-            if (post.user != req.user && !Authentication.isInstructor) return res.status(401).send({success: false, message: "Posts can only be deleted by the original poster or instructors"});
-            Post.findByIdAndDelete(postId, (err, pst) => {
-                if (err) return res.status(500).send({success: false, message: err.toString()});
-                return res.json({success: true});
-            });
-        });
+        await Post.findByIdAndDelete(post._id);
+
         return res.json(post);
     } catch (err) {
+        console.log(err.stack)
         if (err && err.name != 'CastError') return res.status(500).send({
             success: false,
             message: err.toString()
@@ -117,50 +117,51 @@ router.get("/:postID/comments/", Authentication.isAuthenticated, async(req, res)
 
 // make a post
 router.post("/", Authentication.isAuthenticated, async (req, res) => {
-    let user = req.body.user; 
-    let type = req.body.type;
-    let content = req.body.content;
-    let visibility = req.body.visibility;
+        let user = req.body.user; 
+        let type = req.body.type;
+        let content = req.body.content;
+        let visibility = req.body.visibility;
+        let date = Date.now();
+        // contains required params 
+        if (user == null || type == null || content == null || visibility == null) return res.status(400).json({
+            success: false,
+            message: "Request body must contain user, type, visibility, and content parameters"
+        });
 
-    // contains required params 
-    if (user == null || type == null || content == null || visibility == null) return res.status(400).json({
-        success: false,
-        message: "Request body must contain user, type, visibility, and content parameters"
-    });
+        // check post type is valid
+        if (type != 'announcement' && type != 'QnA') return res.status(400).json({
+            success: false,
+            message: "Type must be QnA or general"
+        });
 
-    // check post type is valid
-    if (type != 'announcement' && type != 'QnA') return res.status(400).json({
-        success: false,
-        message: "Type must be QnA or general"
-    });
+        // check visibility is valid
+        if (!['all', 'partner', 'entrepreneur','instructor'].includes(visibility)) return res.status(400).json({
+            success: false,
+            message: "Visibility must be all, partner, or entrepreneur"
+        });
 
-    // check visibility is valid
-    if (!['all', 'partner', 'entrepreneur'].includes(visibility)) return res.status(400).json({
-        success: false,
-        message: "Visibility must be all, partner, or entrepreneur"
-    });
+        // check user exists
+        let userExists = await User.exists({_id: user});
+        if (!userExists) return res.status(404).json({
+            success: false,
+            message: "User could not be found"
+        });
 
-    // check user exists
-    let userExists = await User.exists({_id: user});
-    if (!userExists) return res.status(404).json({
-        success: false,
-        message: "User could not be found"
-    });
+        let post = new Post({
+            user: user,
+            type: type,
+            content: content,
+            visibility: visibility,
+            date: date
+        });
 
-    let post = new Post({
-        user: user,
-        type: type,
-        content: content,
-        visibility: visibility
-    });
-
-    try {
-            const savedPost = await post.save(); 
-            return res.status(201).json(savedPost);            // Successfully created post; return new post info as json
-    } catch (err) {                                   // Error in creating a new group; return error message
-            return res.status(400).json({message: err.message})
-    }
+        try {
+             const savedPost = await post.save(); 
+             return res.status(201).json(savedPost);            // Successfully created post; return new post info as json
+        } catch (err) {                                   // Error in creating a new group; return error message
+             return res.status(400).json({message: err.message})
+        }
  }); 
  
- module.exports = router; 
+ module.exports = router;
  
