@@ -1,15 +1,16 @@
+/*jshint esversion: 10*/
 const express = require("express");
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 const User = require("../models/user");
 const router = express.Router();
-
+const Authentication = require('../authentication');
 const COMMENTS_PER_PAGE = 10;
 // General note: Both replies and comments are one in the same. The difference lies in relative perspective;
 //               a commment made on a comment is considered a reply, however that reply is also a comment.
 
 // Get replies given commentId
-router.get("/:commentID", async (req, res) => {
+router.get("/:commentID", Authentication.isAuthenticated, async (req, res) => {
   let commentId = req.params.commentID;
 
   // Get the specified comment
@@ -57,7 +58,7 @@ router.get("/:commentID", async (req, res) => {
 //Get all comments given a post id
 
 // Create new comment 
-router.post("/", async (req, res) => {
+router.post("/", Authentication.isAuthenticated, async (req, res) => {
   let message = req.body.message;
   let poster = req.body.poster;
   let pid = req.body.pid;
@@ -94,7 +95,7 @@ router.post("/", async (req, res) => {
 });
 
 // Add new reply to comment
-router.post("/add/:commentID", async (req, res) => {
+router.post("/add/:commentID", Authentication.isAuthenticated,  async (req, res) => {
   let commentID = req.params.commentID;
   let message = req.body.message;
   let poster = req.body.poster;
@@ -135,7 +136,7 @@ router.post("/add/:commentID", async (req, res) => {
 });
 
 // Delete comment 
-router.delete("/delete/:commentID/:postId", async (req, res) => {
+router.delete("/delete/:commentID/:postId", Authentication.isAuthenticated, async (req, res) => {
   let commentID = req.params.commentID;
   let pid = req.params.postId;
 
@@ -149,7 +150,11 @@ router.delete("/delete/:commentID/:postId", async (req, res) => {
         success: false,
         message: "Comment with Id " + commentID + " does not exist",
       });
-
+    if (comment.poster != req.user._id && req.user.role != "instructor")
+      return res.status(401).send({
+        success: false,
+        message: "Cannot delete another users comment unless you are an instructor",
+      });
     //Delete all the replies of a comment Note: Does not delete replies of replies
     for (let i = 0; i < comment.replies.length; i++) {
       Comment.findByIdAndDelete(comment.replies[i], (err, delObj) => {});
@@ -192,7 +197,7 @@ router.delete("/delete/:commentID/:postId", async (req, res) => {
 });
 
 // Delete reply 
-router.delete("/delete/reply/:replyID/:commentID", async (req, res) => {
+router.delete("/delete/reply/:replyID/:commentID", Authentication.isAuthenticated, async (req, res) => {
   let replyID = req.params.replyID;
   let commentID = req.params.commentID;
 
@@ -206,7 +211,11 @@ router.delete("/delete/reply/:replyID/:commentID", async (req, res) => {
         success: false,
         message: "Reply with Id " + replyID + " does not exist",
       });
-
+    if (comment.poster != req.user._id && req.user.role != "instructor")
+      return res.status(401).send({
+        success: false,
+        message: "Cannot delete another users comment unless you are an instructor",
+      });
     //Delete the comment itself
     Comment.findByIdAndDelete(comment, (err, delObj) => {
     });
@@ -243,6 +252,5 @@ router.delete("/delete/reply/:replyID/:commentID", async (req, res) => {
     });
   });
 });
-
 
 module.exports = router;

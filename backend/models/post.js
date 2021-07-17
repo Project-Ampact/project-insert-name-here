@@ -1,3 +1,5 @@
+/*jshint esversion: 10*/
+
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
