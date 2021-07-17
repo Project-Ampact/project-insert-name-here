@@ -4,8 +4,10 @@ const express = require("express");
 const Event = require("../models/events");
 const Group = require("../models/group");
 const User = require("../models/user");
+
 const Authentication = require('../authentication');
 const router = express.Router();
+
 
 // // Get events for the user (personal, group, general)
 // router.get("/", async (req, res) => {
@@ -55,6 +57,7 @@ router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
 });
 
 router.post("/", Authentication.isAuthenticated, async (req, res) => {
+
   let title = req.body.title;
   let description = req.body.description;
   let conferenceLink = req.body.conferenceLink;
@@ -114,7 +117,7 @@ router.post("/", Authentication.isAuthenticated, async (req, res) => {
   }
 });
 
-// delete event by id
+
 router.delete("/:eventId", Authentication.isAuthenticated, async (req, res) => {
   const eventId = req.params.eventId;
 

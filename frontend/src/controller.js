@@ -260,6 +260,168 @@ const APIAccess = {
             throw err;
         }
        // return loadedData;
+    },
+    deleteEvent(eventId){
+        try{
+            return fetch('http://localhost:8000/calendar/' + eventId, {
+                method: 'DELETE'
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return jsonRes
+            });
+        } catch(err) {
+            throw err;
+      }
+    },
+    createEvent(title, description, conferenceLink, start, end, type, groupId, userId){
+        try {
+            return fetch('http://localhost:8000/calendar/', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                title: title,
+                description: description,
+                conferenceLink: conferenceLink,
+                start: start,
+                end: end,
+                type: type,
+                groupId: groupId,
+                userId: userId})}).then(async (response) => {
+            const jsonRes = await response.json();
+            console.log(jsonRes)
+            return jsonRes;
+        }) } catch (err) {
+            throw err;
+        }
+    },
+    createPost(user, type, description, visibility){
+        try{
+            return fetch('http://localhost:8000/post/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({user: user, type: type, content: description, visibility: visibility}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    deletePost(id) {
+        try {
+            return fetch(`http://localhost:8000/post/${id}`, {
+                method: 'DELETE'
+            }).then(async (result) => {
+                let jsonRes = await result.json();
+                console.log(result)
+                return jsonRes
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
+    createComment(user, msg, pid){
+        try{
+            return fetch('http://localhost:8000/comment/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({poster: user, message: msg, pid: pid}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    getGroupIdFromUserId(userId) {
+        try{
+            return fetch('http://localhost:8000/group/member/' + userId,  {
+                method: 'GET',
+                credentials: 'include',
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json()
+                return jsonRes
+            })
+        } catch(err) {
+            throw err;
+        }},
+    deleteComment(commentId, postId) {
+        try {
+            return fetch(`http://localhost:8000/comment/delete/${commentId}/${postId}`, {
+                method: 'DELETE'
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes)
+                return jsonRes;
+            })
+        } catch (err) {
+            throw err;
+        }
+    },
+    createReply(user, msg, cid){
+        try{
+            return fetch('http://localhost:8000/comment/add/' + cid, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({poster: user, message: msg, cid: cid}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return null;
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    deleteReply(replyId, commentId) {
+        try {
+            return fetch(`http://localhost:8000/comment/delete/reply/${replyId}/${commentId}`, {
+                method: 'DELETE'
+            }).then( async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                return jsonRes;
+            })
+        } catch (err){
+            throw err;
+        }
     }
 };
 
