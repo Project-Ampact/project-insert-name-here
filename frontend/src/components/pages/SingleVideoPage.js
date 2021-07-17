@@ -29,7 +29,9 @@ function SingleVideoPage() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/video/?id=" + vid, {})
+    fetch("http://localhost:8000/video/?id=" + vid, {
+      credentials: 'include'
+    })
       .then((response) => {
         return response.json();
       })

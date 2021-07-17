@@ -1,8 +1,7 @@
+/*jshint esversion: 10*/
+
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Container,
-} from "react-bootstrap";
+import {Row, Container,} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useParams } from "react-router-dom";
@@ -21,7 +20,10 @@ function Browse() {
 
   useEffect(() => {
     //setIsLoading(true);
-    fetch("http://localhost:8000/video/browse/")
+    fetch("http://localhost:8000/video/browse/", 
+    {
+      credentials: 'include'
+    })
       .then((response) => {
         // console.log( response.json())
         return response.json();
