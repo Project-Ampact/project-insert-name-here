@@ -35,6 +35,7 @@ app.use(session({
 //Send cookie back with signed in user info
 app.use(function(req, res, next){
     req.user = ('user' in req.session)? req.session.user : null;
+    next();
 });
 
 //allow cross origin requests
