@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", Authentication.isAuthenticated, async (req, res) => {
     Profile.find({}, (err, profiles) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
-        console.log(profiles)
+        console.log(profiles);
         if (!profiles) return res.json([]);
         return res.json(profiles);
     });
