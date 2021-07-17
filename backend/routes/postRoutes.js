@@ -9,7 +9,6 @@ const router = express.Router();
 
 const COMMENTS_PER_PAGE = 10;
 
-// get posts
 router.get("/", Authentication.isAuthenticated, async (req, res) => {
     let type = req.body.type; // no type = all types 
     let visibility = req.body.visibility; // no visibility = all visibilities
@@ -29,7 +28,6 @@ router.get("/", Authentication.isAuthenticated, async (req, res) => {
     return res.json(posts);
 });
 
-// get one specific post
 router.get("/:postID", Authentication.isAuthenticated, async (req, res) => {
     let postID = req.params.postID;
     Post.findOne({_id: postID}, (err, post) => {
