@@ -3,19 +3,15 @@
 const express = require("express"); 
 const Video = require("../models/video");
 const router = express.Router();
+const Authentication = require("../authentication");
 const { query } = require("express");
 
 //insert valid subjects here
 const validator = require('validator');
 const validSubjects = [''];
 
-const isAuthenticated = (req, res, next) => {
-   // if(!req.user || req.user === "") return res.status(403).send({success: false, message: "Not authenticated"});
-    next();
-};
-
 //Get videos matching the query
-router.get("/", async(req, res) => {
+router.get("/", Authentication.isAuthenticated, async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
     if (req.query.author) query.action = req.query.author;
@@ -45,7 +41,7 @@ const checkVideo = (req, res, next) => {
     next();
 };
 // Add video 
-router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
+router.post("/", Authentication.isAuthenticated , checkVideo,  async(req, res) => {
     let title = req.body.title;
     let url = req.body.url;
     //let subject = req.body.subject.toLowerCase().trim();
@@ -73,7 +69,7 @@ router.post("/", isAuthenticated, checkVideo,  async(req, res) => {
 });
 
 //Get set of section of videos, grouped by tag
-router.get("/browse", async(req, res) => {
+router.get("/browse", Authentication.isAuthenticated, async(req, res) => {
     let tag = req.params.tag;
     var allTagSections = [];
 
@@ -83,10 +79,8 @@ router.get("/browse", async(req, res) => {
        // console.log(videos);
         return videos;
     });
-
     // Creates an array of all the unique tags in the videos
     const uniqueTags = [];
-   
     allVideos.map(video => {
         curTag = video.tags.filter((val, i, arr) => arr.indexOf(val) === i);
         video.tags.map(tag => {
@@ -109,9 +103,8 @@ router.get("/browse", async(req, res) => {
 });
 
 //Get videos matching the given tag
-router.get("/browse/:tag", async(req, res) => {
+router.get("/browse/:tag", Authentication.isAuthenticated, async(req, res) => {
     let tag = req.params.tag;
-    
     let query = { tags: tag };
     Video.find(query, (err, videos) => {
         if (err) return res.status(500).send();
