@@ -1,8 +1,7 @@
+/*jshint esversion: 10*/
+
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Container,
-} from "react-bootstrap";
+import {Row, Container,} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useParams } from "react-router-dom";

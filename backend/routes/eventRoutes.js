@@ -1,7 +1,11 @@
+/*jshint esversion: 10*/
+
 const express = require("express");
 const Event = require("../models/events");
 const Group = require("../models/group");
 const User = require("../models/user");
+
+const Authentication = require('../authentication');
 const router = express.Router();
 
 
@@ -20,7 +24,7 @@ const router = express.Router();
 //     })
 // });
 
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
   const userId = req.params.userId;
 
   Group.findOne({ members: userId }, (err, result) => {
@@ -52,7 +56,8 @@ router.get("/:userId", async (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", Authentication.isAuthenticated, async (req, res) => {
+
   let title = req.body.title;
   let description = req.body.description;
   let conferenceLink = req.body.conferenceLink;
@@ -112,8 +117,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-// delete event by id
-router.delete("/:eventId", async (req, res) => {
+
+router.delete("/:eventId", Authentication.isAuthenticated, async (req, res) => {
   const eventId = req.params.eventId;
 
   Event.deleteOne({_id: eventId}, (err, events) => {

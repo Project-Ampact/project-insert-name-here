@@ -1,13 +1,15 @@
+/*jshint esversion: 10*/
+
 const express = require("express"); 
 const Post = require("../models/post");
-const User = require("../models/user")
-const Comments = require("../models/comment")
+const User = require("../models/user");
+const Authentication = require('../authentication');
+const Comments = require("../models/comment");
 const router = express.Router();
 
 const COMMENTS_PER_PAGE = 10;
 
-// get posts
-router.get("/", async (req, res) => {
+router.get("/", Authentication.isAuthenticated, async (req, res) => {
     let type = req.body.type; // no type = all types 
     let visibility = req.body.visibility; // no visibility = all visibilities
     let posts;
@@ -26,8 +28,7 @@ router.get("/", async (req, res) => {
     return res.json(posts);
 });
 
-// get one specific post
-router.get("/:postID", async (req, res) => {
+router.get("/:postID", Authentication.isAuthenticated, async (req, res) => {
     let postID = req.params.postID;
     Post.findOne({_id: postID}, (err, post) => {
         if (err && err.name != 'CastError') return res.status(500).send({
@@ -43,7 +44,7 @@ router.get("/:postID", async (req, res) => {
 });
 
 // delete a post
-router.delete("/:postID", async (req, res) => {
+router.delete("/:postID", Authentication.isAuthenticated, async (req, res) => {
     let postID = req.params.postID;
     let post;
     let comment; 
@@ -55,6 +56,10 @@ router.delete("/:postID", async (req, res) => {
         if (!post) return res.status(404).send({
             success: false, 
             message: "Post not found"
+        });
+        if (post.user != req.user._id && req.user.role != "instructor") return res.status(401).send({
+            success: false, 
+            message: "Can not delete other users post unless you are instructor"
         });
         for (let i = 0; i < post.comments.length; i++) {
             comment = await Comments.findById(post.comments[i]);
@@ -77,7 +82,7 @@ router.delete("/:postID", async (req, res) => {
 });
 
 // get comments of one specific post
-router.get("/:postID/comments/", async(req, res) => {
+router.get("/:postID/comments/", Authentication.isAuthenticated, async(req, res) => {
     let postID = req.params.postID;
 
     let page = req.query.page;
@@ -109,7 +114,7 @@ router.get("/:postID/comments/", async(req, res) => {
 
 
 // make a post
-router.post("/", async (req, res) => {
+router.post("/", Authentication.isAuthenticated, async (req, res) => {
         let user = req.body.user; 
         let type = req.body.type;
         let content = req.body.content;
@@ -156,5 +161,5 @@ router.post("/", async (req, res) => {
         }
  }); 
  
- module.exports = router; 
+ module.exports = router;
  

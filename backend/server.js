@@ -1,7 +1,6 @@
 /* jshint esversion: 10*/
 const express = require('express');
 const app = express();
-
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -9,9 +8,10 @@ const cors = require('cors');
 const crypto = require('crypto');
 const validator = require('validator');
 const cookie = require('cookie');
-
 const User = require('./models/user');
 const Profile = require('./models/profile');
+const Authentication = require("./authentication");
+
 require('dotenv/config');
 
 app.use(express.json());
@@ -32,31 +32,12 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// //Send cookie back with signed in user info
-// app.use(function(req, res, next){
-//     // Don't set cookie if it is a get request
-//     if (req.method === 'GET') {
-//         next();
-//         return;
-//     }
-//     req.user = ('user' in req.session)? req.session.user : null;
-//     let username = (req.user)? req.user._id : '';
-//     let role = (req.user)? req.user.role : '';
-//     let cookieData = username + " " + role;
-//     if (role !== '' && username !== '') cookieData = '';
-//     res.setHeader('Set-Cookie', cookie.serialize('user', cookieData, {
-//         path : '/', 
-//         maxAge: 60 * 60 * 24 * 7
-//     }));
-//     next();
-// });
+//Send cookie back with signed in user info
+app.use(function(req, res, next){
+    req.user = ('user' in req.session)? req.session.user : null;
+});
 
-//Check if user is authenticated user. Necessary to ensure the only people 
-const isAuthenticated = (req, res, next) => {
-    if (!req.user) return res.status(401).end("Access denied");
-    next();
-};
-
+//allow cross origin requests
 app.use(cors({ 
     origin: 'http://localhost:3000',
     credentials: true
@@ -90,7 +71,7 @@ const checkRegistrationInfo = async(req, res, next) => {
 };
 
 //register user into database
-app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
+app.post('/signup', Authentication.isNotAuthenticated, checkRegistrationInfo, async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let role = req.body.role;
@@ -123,7 +104,7 @@ app.post('/signup', checkRegistrationInfo, async(req, res, next) => {
 });
 
 //signin
-app.post('/signin', (req, res) => {
+app.post('/signin', Authentication.isNotAuthenticated, (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     User.findById(username, (err, user) => {
@@ -139,6 +120,15 @@ app.post('/signin', (req, res) => {
         }));
         return res.json({success: true});
     });
+});
+
+app.get('/signout', Authentication.isAuthenticated ,(req, res) => {
+    req.session.destroy();
+    res.setHeader('Set-Cookie', cookie.serialize('user', '', {
+        path : '/', 
+        maxAge: 60 * 60 * 24 * 7
+    }));
+    return res.json({success: true});
 });
 
 //establish connection to mongodb 
