@@ -1,0 +1,14 @@
+﻿## Product Backlog
+
+**Note: Here, "user" means entrepreneurs, instructors and partners**
+
+| User Stories | Criteria of Satisfaction |
+|---|---|
+| As an entrepreneur, I should be able to join an existing video conference so I can participate in live workshops and sessions | * From the calendar, the user can select the event and join the video conference using Zoom<br>* Zoom links can also be posted through the discussion board |
+| As a entrepreneur, I should be able to submit online assignments/deliverables and see when they are due so that I can submit deliverables on time for feedback and evaluation | * Assignments can be submitted at all times of day as long as due date has not passed<br> * Late submission should be prevented or marked late <br> * Entrepreneurs should be able to submit any file as long as it matches the requirements specified by the instructor |
+| As an instructor, I should be able to set up online assignments/deliverables for entrepreneurs to submit with deadlines so that they can submit deliverables for feedback | * Instructors can set submission time of deliverables <br> * The instructor can change the submission time or remove the submission altogether |
+| As an instructor, I should be able to return feedback and grades for submission of deliverables so that entrepreneurs can learn from my assessment | * Instructors can edit submissions to add comments and other forms of feedback |
+| As an instructor, I should be able to view submitted deliverables so that I can judge their work and give helpful feedback | * Instructors can consistently download or open the submissions for viewing |
+| As a entrepreneur, I should be able to view feedback and grades on submissions written by the instructor so that I can improve in the future | * Entrepreneurs can see comments for submissions returned by instructor |
+| As a user, I should be able to privately message another user so I can keep in contact with other users on the platform. | * The user must be properly prompted that they have unread messages from someone <br> * The user should know what type of user is messaging them, whether that be the instructors, entrepreneurs, or partners. <br> * Typing must be responsive on both mobile and desktop platform <br> * A user should be able to block or report misconduct in the messenger. |
+| As a user, I want to specify what kind of content I'm interested in so that relevant videos are recommended to me  | * Users can select one or more subjects that they are interested in learning more about during registration. <br> * In the video browser page they are shown custom curated content based on their selected subjects.  |
