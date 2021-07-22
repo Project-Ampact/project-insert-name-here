@@ -84,7 +84,7 @@ function AddEventPopup({show, closeWindow}) {
 
       console.log(typeof conferenceLink)
 
-      if (conferenceLink !== '' && (!conferenceLink.includes('zoom.us') && !conferenceLink.includes('meet.google.com'))) {
+      if (conferenceLink !== '' && (!conferenceLink.startsWith('https://') || (!conferenceLink.includes('zoom.us') && !conferenceLink.includes('meet.google.com')))) {
         toast.error('Conference link not valid')
         return
       }
