@@ -264,7 +264,8 @@ const APIAccess = {
     deleteEvent(eventId){
         try{
             return fetch('http://localhost:8000/calendar/' + eventId, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json();
@@ -288,7 +289,8 @@ const APIAccess = {
                 end: end,
                 type: type,
                 groupId: groupId,
-                userId: userId})}).then(async (response) => {
+                userId: userId}),
+            credentials: "include"}).then(async (response) => {
             const jsonRes = await response.json();
             console.log(jsonRes)
             return jsonRes;
@@ -324,7 +326,8 @@ const APIAccess = {
     deletePost(id) {
         try {
             return fetch(`http://localhost:8000/post/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then(async (result) => {
                 let jsonRes = await result.json();
                 console.log(result)
