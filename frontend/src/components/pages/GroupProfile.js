@@ -57,7 +57,10 @@ function GroupProfile() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/group/" + gid)
+    fetch("http://localhost:8000/group/" + gid, 
+    {
+      credentials: 'include'
+    })
       .then((response) => {
         // console.log( response.json())
         return response.json();
