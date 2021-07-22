@@ -20,7 +20,10 @@ function Browse() {
 
   useEffect(() => {
     //setIsLoading(true);
-    fetch("http://localhost:8000/video/browse/")
+    fetch("http://localhost:8000/video/browse/", 
+    {
+      credentials: 'include'
+    })
       .then((response) => {
         // console.log( response.json())
         return response.json();
