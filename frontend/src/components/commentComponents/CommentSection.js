@@ -151,7 +151,10 @@ function CommentSection(props) {
     (<Button variant="danger" onClick={() => {props.delete(props.pid)}}>Delete Post</Button>) : null;
 
   useEffect(() => {
-    fetch("http://localhost:8000/post/" + props.pid + "/comments/")
+    fetch("http://localhost:8000/post/" + props.pid + "/comments/", 
+    {
+      credentials: 'include'
+    })
       .then((response) => {
         return response.json();
       })
