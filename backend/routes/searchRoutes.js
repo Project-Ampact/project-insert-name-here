@@ -1,10 +1,12 @@
+/*jshint esversion: 10*/
+
 const express = require("express"); 
 const Group = require("../models/group");
 const Profile = require("../models/profile");
+const Authentication = require("../authentication");
 const router = express.Router();
 
-
-router.get("/group", async (req, res) => {
+router.get("/group", Authentication.isAuthenticated, async (req, res) => {
     let searchString = req.query.searchString; 
     let page = req.query.page;
     if (searchString == null) {
@@ -26,7 +28,7 @@ router.get("/group", async (req, res) => {
     return res.json(group);
 });
 
-router.get("/profile", async (req, res) => {
+router.get("/profile", Authentication.isAuthenticated, async (req, res) => {
     let searchString = req.query.searchString; 
     let page = req.query.page;
     if (searchString == null) {

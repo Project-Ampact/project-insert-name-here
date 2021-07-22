@@ -25,7 +25,9 @@ function SearchUserProfiles() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/profile/")
+    fetch("http://localhost:8000/profile/", {
+      credentials: 'include'
+    })
       .then((response) => {
         //console.log(response.json())
         return response.json();
