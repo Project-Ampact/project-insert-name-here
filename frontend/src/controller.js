@@ -324,7 +324,8 @@ const APIAccess = {
     deletePost(id) {
         try {
             return fetch(`http://localhost:8000/post/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then(async (result) => {
                 let jsonRes = await result.json();
                 console.log(result)
@@ -375,7 +376,8 @@ const APIAccess = {
     deleteComment(commentId, postId) {
         try {
             return fetch(`http://localhost:8000/comment/delete/${commentId}/${postId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes)
@@ -413,7 +415,8 @@ const APIAccess = {
     deleteReply(replyId, commentId) {
         try {
             return fetch(`http://localhost:8000/comment/delete/reply/${replyId}/${commentId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                redentials: 'include'
             }).then( async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
