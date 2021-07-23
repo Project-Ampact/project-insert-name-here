@@ -6,6 +6,8 @@ import Landing from './components/pages/Landing'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
+import Dlbs from './components/dlbsComponents/Dlbs';
+import DlbsSubmit from './components/dlbsComponents/DlbsSubmit';
 import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
@@ -82,6 +84,8 @@ function App() {
             <Route path="/profile/search" component={SearchUserProfiles}/>
             <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
             <Route exact path="/video/:vid" children={<SingleVideoPage/>}/>
+            <Route exact path="/Dlbs" children={<Dlbs/>}/>
+            <Route exact path="/Dlbs/submit" children={<DlbsSubmit/>}/>
             <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
             <PrivateRoute exact path="/profile/:uid/edit" children={<UserProfileEdit/>}/>
             <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
