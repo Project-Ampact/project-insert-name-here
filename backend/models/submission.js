@@ -7,21 +7,29 @@ const submissionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    submission: {
-        type: String,
-        default: ""
+    file: {
+        type: Object,
+        required: true
     },
     assignment: {
         type: String,
         required: true
     },
-    date: {
+    grade: {
+        type: Number,
+        default: null
+    },
+    feedback: {
+        type: String,
+        default: ""
+    },
+    submissionTime: {
         type: Date,
         default: Date.now(),
     }
 },
 {
-    collection: 'Submission'
+    collection: 'Submissions'
 });
 
 module.exports = mongoose.model('Submission', submissionSchema);

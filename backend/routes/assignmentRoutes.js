@@ -3,10 +3,13 @@
 const express = require("express"); 
 const Deliverable = require("../models/deliverable");
 const Submission = require("../models/submission");
+const Authentication = require("../authentication");
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
 
 // Add assignment
-router.post("/", async(req, res) => {
+router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, async(req, res, next) => {
     let title = req.body.title;
     let description = req.body.description;
     let newAssignment = new Deliverable({
@@ -24,12 +27,12 @@ router.post("/", async(req, res) => {
 });
 
 // Add submission for a given assignment
-router.post("/submission",  async(req, res) => {
-    let submission = req.body.submission;
+router.post("/submission", Authentication.isAuthenticated, upload.single('file') , async(req, res) => {
     let assignment = req.body.assignment;
+    console.log(assignment);
     let newAssignment = new Submission({
         user: req.user._id,
-        submission: submission,
+        file: req.file,
         assignment: assignment
     });
     try{
