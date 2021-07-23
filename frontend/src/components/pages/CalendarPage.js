@@ -46,6 +46,9 @@ function CalendarPage() {
   
 function AddEventPopup({show, closeWindow}) {
   const role = document.cookie.split('user=')[1].split('%20')[1];
+
+  const isValidConferenceLink = (link) => link !== '' && (link.contains('zoom.us') || link.contains('meet.google.com'))
+
   const update = async (e) => {
     e.preventDefault();
     try {
@@ -67,18 +70,24 @@ function AddEventPopup({show, closeWindow}) {
       }
       else if (document.getElementById("type-group").checked) {
         type = document.getElementById("type-group").value;
-        if (groupId != "undefined") {
+        if (groupId !== "undefined") {
           groupId = loadedGroupData;
         }
 
       }
 
-      console.log(type);
-
-      if (start == end || title == "" || description == "" || type == "") {
+      if (start === end || title === "" || description === "" || type === "") {
         console.log("NOT ALLOWED");
         document.getElementById("add-event-missing").innerHTML = "Please make sure title, event type, and description is not blank and start/end date aren't the same*";
         return;
+      }
+
+      console.log(typeof conferenceLink)
+
+      if (conferenceLink !== '' && (!conferenceLink.startsWith('https://') || (!conferenceLink.includes('zoom.us') 
+        && !conferenceLink.includes('meet.google.com') & !conferenceLink.includes('teams.microsoft.com')))) {
+        toast.error('Conference link not valid')
+        return
       }
 
       let userId = username;
@@ -102,7 +111,7 @@ function AddEventPopup({show, closeWindow}) {
         <p><b>Event Type:</b>
         <Form>
         <div id="type">
-        <Form.Check style={{display: role == "instructor" ? 'inline-block': 'none'}}inline label="general" id="type-general" value="general"  name="type" type="radio" />
+        <Form.Check style={{display: role === "instructor" ? 'inline-block': 'none'}}inline label="general" id="type-general" value="general"  name="type" type="radio" />
         <Form.Check inline label="personal" id="type-personal"  value="personal" name="type" type="radio" />
         <Form.Check style={{display: loadedGroupData != null ? 'inline-block': 'none'}}inline label="group" id="type-group" value="group" name="type" type="radio" />
         </div>
@@ -126,7 +135,7 @@ function AddEventPopup({show, closeWindow}) {
       </Modal.Body>
       <Modal.Footer className="justify-content-between">
         <div className="event-exit-area">
-          <Button variant="primary" onClick={update} >Update</Button>
+          <Button variant="primary" onClick={update}>Add Event</Button>
           <Button variant="secondary" onClick={closeWindow}>Close</Button>
           <p id="add-event-missing"></p>
         </div>
