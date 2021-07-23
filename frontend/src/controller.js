@@ -292,7 +292,8 @@ const APIAccess = {
                 end: end,
                 type: type,
                 groupId: groupId,
-                userId: userId})}).then(async (response) => {
+                userId: userId}),
+            credentials: "include"}).then(async (response) => {
             const jsonRes = await response.json();
             console.log(jsonRes)
             return jsonRes;
