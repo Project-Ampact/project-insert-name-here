@@ -49,18 +49,15 @@ function Deliverable(props) {
     <Container>
     <div class="card" id="post-wrapper"> 
       <div class="card-body rounded" id="post-body" style={{border: props.user === props.currentUser ?  "1.5px solid #1290ff": "1.5px solid #e0e0e0"}}>
-      <div class="flex-container">
-      <img id="profile-picture" src={loadedUserData} alt="Profile picture"></img>
-      <h3 class="card-title" id="post-user">{props.user}</h3>
+        <div class="flex-container">
+          <h3 class="card-title" id="post-user">{props.user}</h3>
+          <h6 className="deliverable-date"> Date Created: {props.date}</h6>
+        </div>
+        <div class="flex-container">
+          <h6 className="due-date"> Due: {props.date}</h6>
+        </div>
       </div>
-      <div class="grid-container">
-      <h6 className="text-secondary" id="post-type">Type: {props.type}</h6>
-       <h6 className="text-secondary" id="post-date">{props.date}</h6>
-       </div>
-       <h6 className="text-secondary text-right" id="post-type">Visible to: {props.visibility}</h6>
-       <p id="post-content">{props.content}</p>
-       </div>
-       <SubmissionSection pid={props.pid} delete={deletePost} user={props.user}></SubmissionSection>
+      <SubmissionSection pid={props.pid} delete={deletePost} user={props.user}></SubmissionSection>
     </div>
   </Container>
   );

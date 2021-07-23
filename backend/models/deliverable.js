@@ -11,6 +11,10 @@ const deliverableSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    dueDate: {
+        type: Date,
+        default: null
+    },
     instructor: {
         type: String,
         required: true

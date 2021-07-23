@@ -3,11 +3,9 @@ import { Row, Container, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useParams } from "react-router-dom";
-import VideoTagSection from "../videoComponents/VideoTagSection.js";
-import "../videoComponents/VideoTagSection.css";
 import APIAccess from "../../controller.js";
 import PageLayout from "./DefaultPage";
-import "./PostFeed.css";
+
 import "react-pro-sidebar/dist/css/styles.css";
 import Deliverable from "../submissionComponents/Deliverable.js";
 import { AuthService } from "../../util/authService";
@@ -25,7 +23,7 @@ let mock_data = [
 function DeliverableFeed() {
   let auth = AuthService();
   const username = document.cookie.split("user=")[1].split("%20")[0];
-  const role = document.cookie.split('user=')[1].split('%20')[1];
+  const role = document.cookie.split("user=")[1].split("%20")[1];
   console.log("Username: " + username);
   console.log("Role: " + role);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,16 +31,15 @@ function DeliverableFeed() {
   const [loadedPostData, setLoadedPostData] = useState(mock_data);
   let emptyError = "";
   useEffect(() => {
-    fetch("http://localhost:8000/post/", 
-    {
-      credentials: 'include'
+    fetch("http://localhost:8000/post/", {
+      credentials: "include",
     })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         mock_data = data;
-        setLoadedPostData(mock_data)
+        setLoadedPostData(mock_data);
         setIsLoading(false);
       });
   }, []);
@@ -70,35 +67,33 @@ function DeliverableFeed() {
     e.preventDefault();
     let postDescription = document.getElementById("postCreate").value;
     if (postDescription != "") {
-    try {
-     
-      let type = "QnA";
-      let user;
-      console.log(postDescription);
-      user = loadedUserData;
-      console.log("USER" + user);
-      console.log("WORK" );
-      console.log("RRRROLE: " + role);
-      let visibility = document.getElementById("visibility").value;
-      window.location.reload();
-      await APIAccess.createPost(user, type, postDescription, visibility);
-      console.log("Made it here");
-    } catch (err) {
-      console.log(err);
+      try {
+        let type = "QnA";
+        let user;
+        console.log(postDescription);
+        user = loadedUserData;
+        console.log("USER" + user);
+        console.log("WORK");
+        console.log("RRRROLE: " + role);
+        let visibility = document.getElementById("visibility").value;
+        window.location.reload();
+        await APIAccess.createPost(user, type, postDescription, visibility);
+        console.log("Made it here");
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      emptyError = "ERROR";
+      console.log("ERROR");
     }
-  }
-  else {
-    emptyError = "ERROR";
-    console.log("ERROR");
-  }
   };
 
   const deleteLocalPost = (postId) => {
-    console.log('length is ', mock_data.length)
-    const newData = mock_data.filter(post => post._id !== postId)
-    console.log('now length is ', mock_data.length)
-    setLoadedPostData(newData)
-  }
+    console.log("length is ", mock_data.length);
+    const newData = mock_data.filter((post) => post._id !== postId);
+    console.log("now length is ", mock_data.length);
+    setLoadedPostData(newData);
+  };
 
   return (
     <PageLayout>
@@ -120,11 +115,32 @@ function DeliverableFeed() {
                 </Form.Group>
 
                 <label for="visibility">Set visibility:</label>
-                <select class="form-control" id="visibility" aria-label=".form-select-lg">
+                <select
+                  class="form-control"
+                  id="visibility"
+                  aria-label=".form-select-lg"
+                >
                   <option value="all">All</option>
-                  <option style={{display: role == "instructor" || role == "partner" ? 'block': 'none'}} value="entrepreneur">Entrepreneur</option>
-                  <option  value="partner">Partner</option>
-                  <option style={{display: role == "entrepreneur"? 'block': 'none'}} value="instructor">Instructor</option>
+                  <option
+                    style={{
+                      display:
+                        role == "instructor" || role == "partner"
+                          ? "block"
+                          : "none",
+                    }}
+                    value="entrepreneur"
+                  >
+                    Entrepreneur
+                  </option>
+                  <option value="partner">Partner</option>
+                  <option
+                    style={{
+                      display: role == "entrepreneur" ? "block" : "none",
+                    }}
+                    value="instructor"
+                  >
+                    Instructor
+                  </option>
                 </select>
 
                 <Button
@@ -135,7 +151,7 @@ function DeliverableFeed() {
                 >
                   Submit
                 </Button>
-                  <p>{emptyError}</p>
+                <p>{emptyError}</p>
               </Form>
             </div>
           </div>
@@ -168,9 +184,14 @@ function DeliverableFeed() {
           }
 
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if ((mock_data_piece.type == "QnA") && (role == mock_data_piece.visibility || mock_data_piece.visibility == "all" || mock_data_piece.user == username)) {
+          if (
+            mock_data_piece.type == "QnA" &&
+            (role == mock_data_piece.visibility ||
+              mock_data_piece.visibility == "all" ||
+              mock_data_piece.user == username)
+          ) {
             return (
-              <Deliverable 
+              <Deliverable
                 user={mock_data_piece.user}
                 type={mock_data_piece.type}
                 visibility={mock_data_piece.visibility}
@@ -183,7 +204,6 @@ function DeliverableFeed() {
             );
           }
         })}
-        
       </div>
     </PageLayout>
   );
