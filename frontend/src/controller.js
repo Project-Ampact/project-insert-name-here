@@ -200,7 +200,8 @@ const APIAccess = {
     searchGroup(query, page) {
         try {
             return fetch(`http://localhost:8000/search/group?searchString=${query}&page=${page}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
@@ -214,7 +215,8 @@ const APIAccess = {
     searchUserProfile(query, page) {
         try {
             return fetch(`http://localhost:8000/search/profile?searchString=${query}&page=${page}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
@@ -247,7 +249,7 @@ const APIAccess = {
     },
     getVideoSections() {
         try{
-            fetch("http://localhost:8000/video/browse/")
+            fetch("http://localhost:8000/video/browse/", {credentials: "include"})
                 .then(async (response) => {
                    return  await response.json();
                 })
@@ -264,7 +266,8 @@ const APIAccess = {
     deleteEvent(eventId){
         try{
             return fetch('http://localhost:8000/calendar/' + eventId, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json();
@@ -279,6 +282,7 @@ const APIAccess = {
         try {
             return fetch('http://localhost:8000/calendar/', {
             method: 'POST',
+            credentials: 'include',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 title: title,
