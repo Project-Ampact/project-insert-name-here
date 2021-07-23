@@ -393,7 +393,7 @@ const APIAccess = {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({poster: user, message: msg, cid: cid}),
-                credentials: 'include',
+                credentials: 'include'
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -416,7 +416,7 @@ const APIAccess = {
         try {
             return fetch(`http://localhost:8000/comment/delete/reply/${replyId}/${commentId}`, {
                 method: 'DELETE',
-                redentials: 'include'
+                credentials: 'include'
             }).then( async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
