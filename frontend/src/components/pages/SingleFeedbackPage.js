@@ -10,10 +10,9 @@ import Feedback from "../feedbackComponents/feedback.js";
 let mock_data = [
   {
     title: "one",
-    poster: "david",
-    subject: "bootstrap",
-    description: "Lorem ipsum",
-    videoUrl: "https://www.youtube.com/embed/Ih2N_vPI9FY",
+    user: "david",
+    grade: "20",
+    totalGrade: "30",
   },
 ];
 
