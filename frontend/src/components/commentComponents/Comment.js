@@ -56,7 +56,7 @@ function Comment(props) {
             </div>
             <p className="text-content">{props.content}</p>
           </Card.Body>
-          <ReplySection cid={props.cid} pid={props.pid} delete={deleteComment}></ReplySection>
+          <ReplySection cid={props.cid} pid={props.pid} delete={deleteComment} user={props.user}/>
         </Card>
       </Row>
     </Container>
