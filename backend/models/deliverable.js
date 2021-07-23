@@ -21,7 +21,7 @@ const deliverableSchema = new mongoose.Schema({
     }
 },
 {
-    collection: 'Deliverable'
+    collection: 'Deliverables'
 });
 
 module.exports = mongoose.model('Deliverable', deliverableSchema);

@@ -12,6 +12,9 @@ const User = require('./models/user');
 const Profile = require('./models/profile');
 const Authentication = require("./authentication");
 
+const multer = require('multer');
+var upload = multer({dest: 'uploads/'});
+
 require('dotenv/config');
 
 app.use(express.json());
@@ -144,8 +147,10 @@ const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
+const assignment = require('./routes/assignmentRoutes');
 
 app.use('/group', groups);
+app.use('/assignment', assignment);
 app.use('/video', videos);
 app.use('/search', search);
 app.use('/post', post);
