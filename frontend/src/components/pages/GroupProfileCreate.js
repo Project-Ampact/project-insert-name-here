@@ -28,7 +28,9 @@ function GroupProfileCreate() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/group/")
+    fetch("http://localhost:8000/group/", {
+      credentials: 'include'
+    })
       .then((response) => {
         //console.log(response.json())
         return response.json();

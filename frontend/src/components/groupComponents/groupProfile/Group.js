@@ -4,6 +4,7 @@ import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import "./Group.css";
 import "../groups/Groups.css";
 import APIAccess from "../../../controller.js";
+import { toast } from "react-toastify";
 
 /*function GroupProfileContent() {
     return (
@@ -29,8 +30,11 @@ function Group(props) {
     try {
       let _id = document.getElementById("_id").value;
       console.log(_id);
-      await APIAccess.addMember(props.gid, _id);
-      console.log("Made it here");
+      let result = await APIAccess.addMember(props.gid, _id);
+      if (result.success)
+        toast.success("Added user to group", {});
+      else
+        toast.error(result.message, {});
     } catch (err) {
       console.log(err);
     }
