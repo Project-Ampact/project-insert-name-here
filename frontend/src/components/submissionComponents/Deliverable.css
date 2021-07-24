@@ -42,9 +42,13 @@
 .deliverable-date {
     font-size: 100%;
     width:100%;
-    margin-left:50%;
+    margin-left:40%;
     text-align: right;
     
+}
+.deliverable-title {
+    font-size: 200%;
+    width:100%;
 }
 
 .due-date {
