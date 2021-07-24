@@ -5,6 +5,8 @@ const Deliverable = require("../models/deliverable");
 const Submission = require("../models/submission");
 const Authentication = require("../authentication");
 const router = express.Router();
+
+//Important for file upload
 const multer = require('multer');
 const path = require("path");
 const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
