@@ -5,40 +5,52 @@ import ChatBubble from "../messageComponents/ChatBubble";
 
 const mock_data = [
   {
-    message: 'Hello good sir'
+    message: 'Hello good sir',
+    type: 'self'
   },
   {
-    message: 'How are you'
+    message: 'How are you',
+    type: 'recieve'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'recieve'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob'
+    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    type: 'self'
   },
 ]
 
@@ -50,7 +62,7 @@ function MessageSection() {
           <h1>Kevin Didi</h1>
       </header>
       <div className="message-log">
-        {mock_data.map(x => <ChatBubble msg={x.message}/>)}
+        {mock_data.map(x => <ChatBubble msg={x}/>)}
       </div>
       <InputGroup className="send-message">
         <FormControl style={{resize: 'none'}} as="textarea"/>
