@@ -37,6 +37,8 @@ router.post("/submission", Authentication.isAuthenticated, upload.single('file')
     Deliverable.findById(assignmentId, async(err, assignment) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!assignment) return res.status(404).send({success: false, message: "Can not find assignment"});
+        let submissionTime = Date.now();
+        if (assignment.dueDate < submissionTime) return res.status(401).send({success: false, message: "Due date has passed"});
         let fileEnding = req.file.originalname.split(".").pop();
         if (!assignment.fileTypes.includes(fileEnding)) return res.status(404).send({success: false, message: "Invalid file type"});
         let newAssignment = new Submission({
