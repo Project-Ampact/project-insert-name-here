@@ -22,17 +22,7 @@ function Submission(props) {
     });
   }, [props.user]);
 
-  const deleteComment = async (commentId, postId) => {
-    console.log('delete comment', commentId, postId)
-    let result = await APIAccess.deleteComment(commentId, postId)
-    if (result.success) {
-      // props.delete(commentId)
-      window.location.reload()
-      // toast.success('Comment has been deleted')
-    } else {
-      toast.error(result.message)
-    }
-  }
+  
 
   if (isLoading) {
     return (
@@ -50,9 +40,12 @@ function Submission(props) {
             <div className="title-and-date">
               <img id="profile-picture" src={loadedUserData} alt="Profile picture"></img>
               <h3 className="card-title2">{props.user}</h3>
-              <h6 className="text-date comment-date">{props.date}</h6>
+              <div className="date-and-grade">
+              <h6 className="text-date2 ">Submission date: {props.date}</h6>
+                <p className="text-content2">Grade: {props.grade} / total</p>
+               
+              </div>
             </div>
-            <p className="text-content">{props.content}</p>
           </Card.Body>
         </Card>
       </Row>

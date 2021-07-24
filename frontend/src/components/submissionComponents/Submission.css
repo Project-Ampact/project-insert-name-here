@@ -20,16 +20,18 @@
     margin-bottom: 5%;
 }
 
-.text-content{
-    margin-top: 2%;
+.text-content2 {
     font-size: 100%;
+    width: 100%;
+    text-align: right;
+    color: black;
 }
 
-.text-date {
-    font-size: 85%;
-    width:25%;
-    margin-left:50%;
-    color: grey;
+.text-date2 {
+    font-size: 100%;
+    width: 100%;
+    text-align: right;
+    color: black;
 }
 
 .card-title2 {
@@ -40,4 +42,10 @@
 
 .title-and-date {
     display: flex;
+}
+
+.date-and-grade {
+    
+    width:100%;
+   
 }
