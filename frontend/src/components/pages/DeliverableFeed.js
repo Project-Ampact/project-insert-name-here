@@ -31,7 +31,7 @@ function DeliverableFeed() {
   const [loadedPostData, setLoadedPostData] = useState(mock_data);
   let emptyError = "";
   useEffect(() => {
-    fetch("http://localhost:8000/post/", {
+    fetch("http://localhost:8000/assignment/", {
       credentials: "include",
     })
       .then((response) => {
@@ -98,81 +98,8 @@ function DeliverableFeed() {
   return (
     <PageLayout>
       <div id="posts">
-        <Container>
-          <div class="card" id="post-wrapper">
-            <div class="card-body rounded" id="post-body">
-              <div class="flex-container">
-                <h1 class="card-title">Create Post As: {username}</h1>
-              </div>
-              <Form className="form-cus">
-                <Form.Group controlId="postCreate">
-                  <Form.Control
-                    as="textarea"
-                    rows={4}
-                    type="postCreate"
-                    placeholder="Type your post here!"
-                  />
-                </Form.Group>
-
-                <label for="visibility">Set visibility:</label>
-                <select
-                  class="form-control"
-                  id="visibility"
-                  aria-label=".form-select-lg"
-                >
-                  <option value="all">All</option>
-                  <option
-                    style={{
-                      display:
-                        role == "instructor" || role == "partner"
-                          ? "block"
-                          : "none",
-                    }}
-                    value="entrepreneur"
-                  >
-                    Entrepreneur
-                  </option>
-                  <option value="partner">Partner</option>
-                  <option
-                    style={{
-                      display: role == "entrepreneur" ? "block" : "none",
-                    }}
-                    value="instructor"
-                  >
-                    Instructor
-                  </option>
-                </select>
-
-                <Button
-                  onClick={update}
-                  id="submit-button"
-                  variant="primary"
-                  type="submit"
-                >
-                  Submit
-                </Button>
-                <p>{emptyError}</p>
-              </Form>
-            </div>
-          </div>
-        </Container>
         {loadedPostData.map((mock_data_piece) => {
-          let profilePic;
-
-          /*async function fetchData() {
-          let data = await APIAccess.getUserProfile(mock_data_piece.user);
-          return data;
-        }
-        fetchData().then((x) => {
-          console.log("X: " + x.picture);
-        profilePic = x.picture;
-        console.log("inside" + profilePic);
-        })
-        
-        console.log("OUTSIDE" + profilePic); */
-
-          // fetchData();
-
+          
           let date = new Date(mock_data_piece.date);
           let month = date.getMonth() + 1;
           let day = date.getDate();
@@ -184,25 +111,16 @@ function DeliverableFeed() {
           }
 
           console.log(date.getFullYear() + "/" + month + "/" + day);
-          if (
-            mock_data_piece.type == "QnA" &&
-            (role == mock_data_piece.visibility ||
-              mock_data_piece.visibility == "all" ||
-              mock_data_piece.user == username)
-          ) {
-            return (
-              <Deliverable
-                user={mock_data_piece.user}
-                type={mock_data_piece.type}
-                visibility={mock_data_piece.visibility}
-                currentUser={username}
-                date={date.getFullYear() + "/" + month + "/" + day}
-                content={mock_data_piece.content}
-                pid={mock_data_piece._id}
-                deleteLocal={deleteLocalPost}
-              />
-            );
-          }
+
+          <Deliverable
+            user={mock_data_piece.instructor}
+            currentUser={username}
+            date={date.getFullYear() + "/" + month + "/" + day}
+            dueDate={mock_data_piece.dueDate}
+            title={mock_data_piece.title}
+            id={mock_data_piece._id}
+            deleteLocal={deleteLocalPost}
+          />;
         })}
       </div>
     </PageLayout>

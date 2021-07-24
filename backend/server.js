@@ -150,7 +150,7 @@ const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
-const assignment = require('./routes/assignmentRoutes');
+
 
 app.use('/group', groups);
 app.use('/assignment', assignment);
