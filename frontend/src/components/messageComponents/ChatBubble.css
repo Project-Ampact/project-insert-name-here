@@ -1,0 +1,29 @@
+.chat-bubble {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /* background-color: #007bff; */
+    background-color: lightgray;
+    color: black;
+    max-width: 350px;
+    overflow-y: auto;
+    width: fit-content;
+    border-radius: 25px;
+    margin-left: 5px;
+}
+
+.sender {
+    background-color: lightgray;
+    color: black;
+}
+
+.recipient {
+    background-color: #007bff;
+    color: white
+}
+
+
+.chat-bubble p {
+    vertical-align: text-top;
+    padding: 5px 15px;
+    margin: 0px;
+}

@@ -1,0 +1,26 @@
+.message-page {
+    max-width: 720px;
+    margin: 0 auto;
+    background-color: aquamarine;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-header {
+    height: 60px;
+    background-color: azure;
+}
+
+.message-log {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-end;
+    overflow-y: scroll;
+    max-height: 100%;
+}
+
+.send-message button {
+    font-size: larger;
+}
