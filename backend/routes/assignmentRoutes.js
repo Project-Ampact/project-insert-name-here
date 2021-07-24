@@ -83,7 +83,7 @@ router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, re
     if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
-        return res.sendFile(path.join(__dirname, ".." , submission.file.path));
+        return res.sendFile(path.join(submission.file.path));
     });
 });
 
