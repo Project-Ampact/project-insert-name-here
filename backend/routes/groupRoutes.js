@@ -45,7 +45,7 @@ router.patch("/:groupID", Authentication.isAuthenticated, async (req, res) => {
         }
         try {
             const updatedGroup = await groups.save();
-            res.json(updatedGroup) // Successfully updatedGroup, thus return updated group
+            res.json(updatedGroup); // Successfully updatedGroup, thus return updated group
         } catch(error) { //Post request had invalid arguments
             res.status(400).json({ message: error.message });
         }
@@ -147,7 +147,7 @@ router.get("/member/:userID", Authentication.isAuthenticated, async (req, res) =
     Group.findOne({members: userId}, (err, result) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!result) return res.status(404).send({success: false, message: "User is not part of any group"});
-        console.log(result)
+        console.log(result);
         return res.json(result);
     }); 
 });
