@@ -11,8 +11,9 @@ const isNotAuthenticated = (req, res, next) => {
     next();
 };
 
-const isInstructor = () => {
-    return req.user.role == "instructor";
+const isInstructor = (req, res, next) => {
+    if (req.user.role !== "instructor") return res.status(401).send({success: false, message: "Unauthorized"});
+    next();
 };
 
 const isGroupOwner = (name, groupId) => {
