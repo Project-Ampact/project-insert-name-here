@@ -11,10 +11,6 @@ const cookie = require('cookie');
 const User = require('./models/user');
 const Profile = require('./models/profile');
 const Authentication = require("./authentication");
-
-const multer = require('multer');
-var upload = multer({dest: 'uploads/'});
-
 require('dotenv/config');
 
 app.use(express.json());
