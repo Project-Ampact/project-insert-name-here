@@ -12,7 +12,7 @@ const isNotAuthenticated = (req, res, next) => {
 };
 
 const isInstructor = (req, res, next) => {
-    if (req.user.role !== "instructor") return res.status(401).send({success: false, message: "Unauthorized"});
+    if (req.user.role != "instructor") return res.status(401).send({success: false, message: "Unauthorized"});
     next();
 };
 
