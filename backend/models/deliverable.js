@@ -15,6 +15,14 @@ const deliverableSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    fileTypes: {
+        type: Array,
+        default: []
+    },
+    dueDate: {
+        type: Date,
+        default: null
+    },
     date: {
         type: Date,
         default: Date.now(),
