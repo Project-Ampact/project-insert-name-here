@@ -77,7 +77,7 @@ const checkRegistrationInfo = async(req, res, next) => {
 };
 
 //register user into database
-app.post('/signup', Authentication.isNotAuthenticated, checkRegistrationInfo, async(req, res, next) => {
+app.post('/signup',  checkRegistrationInfo, async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let role = req.body.role;
@@ -110,7 +110,7 @@ app.post('/signup', Authentication.isNotAuthenticated, checkRegistrationInfo, as
 });
 
 //signin
-app.post('/signin', Authentication.isNotAuthenticated, (req, res) => {
+app.post('/signin',  (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     User.findById(username, (err, user) => {
