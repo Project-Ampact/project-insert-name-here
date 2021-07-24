@@ -87,4 +87,25 @@ router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, re
     });
 });
 
+//update submission grade
+router.patch("/submission/:id", Authentication.isAuthenticated, Authentication.isInstructor, (req, res) => {
+    let updateQuery = {};
+    let grade = req.body.grade;
+    if (grade !== undefined){
+        if (grade < 0 || grade > 100) return res.status(401).send({success: false, message: "Grade must be between 0 and 100"});
+        updateQuery.grade = grade;
+    }
+    let feedback = req.body.feedback;
+    if (feedback !== undefined) updateQuery.feedback = feedback;
+    if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
+    Submission.findById(req.params.id, (err, submission) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!submission) return res.status(404).send({success: false, message: "Can't find submission"});
+        Submission.findByIdAndUpdate(req.params.id, updateQuery, (err, updatedSubmission) => {
+            if (err) return res.status(500).send({success: false, message: err.toString()});
+            return res.json(updatedSubmission);
+        });
+    });
+});
+
 module.exports = router; 
