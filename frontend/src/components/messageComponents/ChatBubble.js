@@ -3,8 +3,8 @@ import './ChatBubble.css'
 
 function ChatBubble({msg}) {
   return (
-    <div className="chat-bubble">
-        <p>{msg}</p>
+    <div className={`chat-bubble ${msg.type}`}>
+        <p>{msg.message}</p>
     </div>
   )
 }

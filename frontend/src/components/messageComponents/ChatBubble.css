@@ -1,9 +1,6 @@
 .chat-bubble {
     margin-top: 5px;
     margin-bottom: 5px;
-    /* background-color: #007bff; */
-    background-color: lightgray;
-    color: black;
     max-width: 350px;
     overflow-y: auto;
     width: fit-content;
@@ -11,14 +8,15 @@
     margin-left: 5px;
 }
 
-.sender {
+.recieve {
     background-color: lightgray;
     color: black;
 }
 
-.recipient {
+.self {
     background-color: #007bff;
-    color: white
+    color: white;
+    align-self: end;
 }
 
 
