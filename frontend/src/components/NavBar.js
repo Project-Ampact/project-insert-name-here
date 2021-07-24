@@ -46,7 +46,7 @@ const Nav2 = (props) => {
   const role = document.cookie.split('user=')[1].split('%20')[1]
 
   useEffect(() => {
-    fetch(`http://localhost:8000/group/member/${username}`, {})
+    fetch(`http://localhost:8000/group/member/${username}`, {credentials: 'include'})
       .then((response) => {
         return response.json();
       })

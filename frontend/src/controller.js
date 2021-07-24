@@ -200,7 +200,8 @@ const APIAccess = {
     searchGroup(query, page) {
         try {
             return fetch(`http://localhost:8000/search/group?searchString=${query}&page=${page}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
@@ -214,7 +215,8 @@ const APIAccess = {
     searchUserProfile(query, page) {
         try {
             return fetch(`http://localhost:8000/search/profile?searchString=${query}&page=${page}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
@@ -247,7 +249,7 @@ const APIAccess = {
     },
     getVideoSections() {
         try{
-            fetch("http://localhost:8000/video/browse/")
+            fetch("http://localhost:8000/video/browse/", {credentials: "include"})
                 .then(async (response) => {
                    return  await response.json();
                 })
@@ -264,7 +266,8 @@ const APIAccess = {
     deleteEvent(eventId){
         try{
             return fetch('http://localhost:8000/calendar/' + eventId, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json();
@@ -279,6 +282,7 @@ const APIAccess = {
         try {
             return fetch('http://localhost:8000/calendar/', {
             method: 'POST',
+            credentials: 'include',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 title: title,
@@ -288,7 +292,8 @@ const APIAccess = {
                 end: end,
                 type: type,
                 groupId: groupId,
-                userId: userId})}).then(async (response) => {
+                userId: userId}),
+            credentials: "include"}).then(async (response) => {
             const jsonRes = await response.json();
             console.log(jsonRes)
             return jsonRes;
@@ -393,7 +398,7 @@ const APIAccess = {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({poster: user, message: msg, cid: cid}),
-                credentials: 'include',
+                credentials: 'include'
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -416,7 +421,7 @@ const APIAccess = {
         try {
             return fetch(`http://localhost:8000/comment/delete/reply/${replyId}/${commentId}`, {
                 method: 'DELETE',
-                redentials: 'include'
+                credentials: 'include'
             }).then( async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
