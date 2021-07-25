@@ -9,13 +9,25 @@ import APIAccess from "../../controller.js";
 
 function Dlbs(props) {
 
-
-  let submitDlbs = "http://localhost:3000/Dlbs/submit/"; //+ props.id;
+  let toDlbsPage = "http://localhost:3000/Dlbs/detail/"; //+ props.id;
+  let DlbsCreate = "http://localhost:3000/Dlbs/create/"; 
 
   return (
     <PageLayout>
        <h1 className="h1-cus"> Assignemnts Available</h1>
     <Container className="mt-3 profile container-fluid">
+      <Row><Col>
+      <div className="register del-button">
+      <Button
+        type="submit"
+        className="submitbutton"
+        variant="primary"
+        href={DlbsCreate}
+        >
+        Create New Assignment
+      </Button>
+    </div>
+      </Col></Row>
       <Row className="row2 container-fluid">
         <Col>
           <Card className="mb-3 groupProfile">
@@ -25,7 +37,7 @@ function Dlbs(props) {
               </Card.Title>
               <Card.Text>
               <div className="deadline"> Deadlines: 2021/07/11 </div> </Card.Text>
-              <Button className="floatRight" href={submitDlbs} variant="primary" type="submit">
+              <Button className="floatRight" href={toDlbsPage} variant="primary" type="submit">
               Details
               </Button>
             </Card.Body>
@@ -42,7 +54,7 @@ function Dlbs(props) {
               </Card.Title>
               <Card.Text>
               <div className="deadline"> Deadlines: 2021/07/18 </div> </Card.Text>
-              <Button className="floatRight" href={submitDlbs} variant="primary" type="submit">
+              <Button className="floatRight" href={toDlbsPage} variant="primary" type="submit">
               Details
               </Button>
             </Card.Body>
@@ -59,7 +71,7 @@ function Dlbs(props) {
               </Card.Title>
               <Card.Text>
               <div className="deadline"> Deadlines: 2021/07/28 </div> </Card.Text>
-              <Button className="floatRight" href={submitDlbs} variant="primary" type="submit">
+              <Button className="floatRight" href={toDlbsPage} variant="primary" type="submit">
               Details
               </Button>
             </Card.Body>

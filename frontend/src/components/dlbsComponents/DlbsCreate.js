@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
-function DlbsSubmit() {
+function DlbsCreate() {
   let backtoDlbs = "http://localhost:3000/Dlbs";  
 
 
@@ -14,7 +14,7 @@ function DlbsSubmit() {
     <PageLayout>
       <div className="body-cus">
         <div className="form-section">
-          <h1 className="h1-cus"> Submission Detail</h1>
+          <h1 className="h1-cus"> New Assignment</h1>
           <Container fluid className="form-section-inner">
             <Row>
               <Col>
@@ -23,35 +23,29 @@ function DlbsSubmit() {
                     <Form.Label>Assignment Title: </Form.Label>
                     <Form.Control
                       type="title"
-                      defaultValue="Sample Assignment #1" readOnly />
+                      defaultValue="" />
                     <Form.Text className="text-muted">
-                      This is the name of your assignment you are currently submiting.
+                      This is the name of the new assignment you are going to create.
                     </Form.Text>
-                    <Button href={backtoDlbs} variant="primary" type="submit">
-                    change
-                  </Button>
                   </Form.Group>
 
-                  <Form.Group controlId="details">
-                    <Form.Control type="details" as="textarea" 
-                    defaultValue="This is the first sample assignment. You will respected to ...
-                    etc..."
-                    rows={2} plaintext readOnly />
-                  </Form.Group>
 
                   <Form.Group className="deadline" controlId="dlbsddl">
                     <Form.Label>Assignment Deadline: </Form.Label>
-                    <Form.Control
-                      type="deadline"
-                      defaultValue="07/11/2021" readOnly />
+                    <Form.Control type="datetime-local" id="deadline" />
+                    
+
                   </Form.Group>
                   <Form.Group controlId="inputfile">
                     <Form.Label>Select the file to upload:</Form.Label>
-                    <Form.File id="inputfile" label="Please upload your own work." />
+                    <Form.File id="inputfile" label="(optional)" />
                   </Form.Group>
-                  <Form.Group controlId="about">
-                    <Form.Label>Submission Note:</Form.Label>
-                    <Form.Control type="about" as="textarea" rows={3} />
+
+                  <Form.Group controlId="details">
+                  <Form.Label>Assignment Description:</Form.Label>
+                    <Form.Control type="details" as="textarea" 
+                    placeholder="Enter the submission requirements for the assignment..."
+                    rows={2} />
                   </Form.Group>
 
                 </Form>
@@ -75,4 +69,4 @@ function DlbsSubmit() {
   );
 }
 
-export default DlbsSubmit;
+export default DlbsCreate;
