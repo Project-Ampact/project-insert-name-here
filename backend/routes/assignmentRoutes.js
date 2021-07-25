@@ -38,7 +38,7 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
             description: description,
             start: startDate,
             end: dueDate,
-            type: 'general',
+            type: 'assignment',
             userId: req.user._id
         })
         let savedEvent = await newEvent.save();
