@@ -1,24 +1,42 @@
 .message-page {
-    max-width: 720px;
+    max-width: 830px;
     margin: 0 auto;
-    background-color: aquamarine;
-    min-height: 100vh;
+    /* background-color: aquamarine; */
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
+    margin-top: 30px;
+    border: 1px solid black;
+    border-radius: 0.25rem;
 }
 
 .message-header {
     height: 60px;
-    background-color: azure;
+    padding: 5px;
+    border-bottom: 1px solid black;
 }
 
 .message-log {
     flex-grow: 1;
     overflow-y: scroll;
     max-height: 100%;
+    border-bottom: 1px solid black;
 }
 
-.send-message button {
-    font-size: larger;
+.message-log::-webkit-scrollbar {
+    width: 0.5rem;
+}
+  
+.message-log::-webkit-scrollbar-track {
+background: white;
+}
+
+.message-log::-webkit-scrollbar-thumb {
+background: gray;
+border-radius: 25px;
+}
+
+.send-message {
+    margin: 5px;
+    width: 99% !important;
 }

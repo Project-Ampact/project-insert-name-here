@@ -1,7 +1,7 @@
 .chat-bubble {
     margin-top: 5px;
     margin-bottom: 5px;
-    max-width: 350px;
+    max-width: 45%;
     overflow-y: auto;
     width: fit-content;
     border-radius: 25px;
