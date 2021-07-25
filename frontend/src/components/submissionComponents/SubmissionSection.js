@@ -15,7 +15,6 @@ import {
   Card,
   Button,
   Form,
-  Col,
   InputGroup,
   FormControl,
 } from "react-bootstrap";
@@ -84,11 +83,11 @@ function SubmissionSection(props) {
   const username = document.cookie.split("user=")[1].split("%20")[0];
   const role = document.cookie.split("user=")[1].split("%20")[1];
   let formid = `message:${props.pid}`;
-  const [loadedCommentData, setLoadedCommentData] = useState(mock_data);
+  const [loadedSubmissionData, setLoadedSubmissionData] = useState(mock_data);
   const [query, setQuery] = useState("");
 
   function LoadSubmissions(total2) {
-    return loadedCommentData.map((mock_data_piece) => {
+    return loadedSubmissionData.map((mock_data_piece) => {
       let date = new Date(mock_data_piece.submissionTime);
       let month = date.getMonth() + 1;
       let day = date.getDate();
@@ -114,12 +113,13 @@ function SubmissionSection(props) {
     });
   }
 
-
+  // Updates the query parameter as it is changed realtime
   const updateQuery = (x) => {
     console.log("from updateQuery", x.target.value);
     setQuery(x.target.value);
   };
 
+  // Sends the query to set loaded deliverable data by the query
   async function sendQuery(e) {
     if (e != null) e.preventDefault();
     console.log("inside sendQuery", query);
@@ -128,9 +128,9 @@ function SubmissionSection(props) {
         console.log("Query= ",query);
         return submission.user.toLowerCase().startsWith(query.slice(0, Math.max(submission.user.length - 1, 1)));
       });
-      setLoadedCommentData(returnedData);
+      setLoadedSubmissionData(returnedData);
     } else {
-      setLoadedCommentData(mock_data);
+      setLoadedSubmissionData(mock_data);
     }
   }
 
@@ -149,7 +149,7 @@ function SubmissionSection(props) {
       })
       .then((data) => {
         mock_data = data;
-        setLoadedCommentData(mock_data);
+        setLoadedSubmissionData(mock_data);
         setIsLoading(false);
       });
   }, [props.id]);
