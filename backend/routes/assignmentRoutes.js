@@ -7,7 +7,7 @@ const Authentication = require("../authentication");
 const router = express.Router();
 const multer = require('multer');
 const path = require("path");
-const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
+const upload = multer({ dest: path.join('uploads')});
 const fs = require("fs");
 
 // Add assignment
@@ -105,7 +105,7 @@ router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, re
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         res.setHeader('Content-Type', submission.file.mimetype);
-        return res.sendFile(path.join(submission.file.path));
+        return res.sendFile(path.join(__dirname, "..", submission.file.path));
     });
 });
 
