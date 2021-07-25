@@ -39,6 +39,7 @@ router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
           { userId: userId, type: "personal" },
           { groupId: result === null ? null : result._id, type: "group" },
           { type: "general" },
+          { type: "assignment" }
         ],
       },
       (err, events) => {

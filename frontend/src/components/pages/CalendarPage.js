@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const PERSONAL_COLOR = '#54e0ff';
 const GROUP_COLOR = '#80eb34';
 const GENERAL_COLOR = '#ff5454';
+const ASSIGNMENT_COLOR = '#f5c542';
 
 const placeholderData = {
   title: 'Personal Meeting',
@@ -156,6 +157,8 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
     typeColor = PERSONAL_COLOR
   } else if (eventData.type === 'general') {
     typeColor = GENERAL_COLOR
+  } else if (eventData.type === 'assignment') {
+    typeColor = ASSIGNMENT_COLOR
   }
 
   const deleteEvent = async () => {
@@ -241,6 +244,7 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
     if (data.type === 'personal') eventColor = PERSONAL_COLOR
     else if (data.type === 'group') eventColor = GROUP_COLOR
     else if (data.type === 'general') eventColor = GENERAL_COLOR
+    else if (data.type === 'assignment') eventColor = ASSIGNMENT_COLOR
     return {...data, color: eventColor}
   }
 
