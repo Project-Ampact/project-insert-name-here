@@ -19,11 +19,15 @@ const deliverableSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    totalMarks: {
+        type: Number,
+        required: true
+    },
     dueDate: {
         type: Date,
         default: null
     },
-    date: {
+    datePosted: {
         type: Date,
         default: Date.now(),
     }
