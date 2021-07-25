@@ -7,8 +7,8 @@ const Authentication = require("../authentication");
 const router = express.Router();
 const multer = require('multer');
 const path = require("path");
+const upload = multer({ dest: path.join('uploads')});
 const fs = require("fs");
-const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
 
 // Add assignment
 router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, async(req, res, next) => {
@@ -17,7 +17,7 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
     let dueDate = req.body.dueDate;
     let fileTypes = req.body.fileTypes;
     let totalMarks = req.body.totalMarks;
-    if (totalMarks <= 0) return res.status(401).send({success: false, message: "Assignment must be out of 1 or more marks"});
+    if (!totalMarks || totalMarks <= 0) return res.status(401).send({success: false, message: "Assignment must be out of 1 or more marks"});
     let newAssignment = new Deliverable({
         title: title,
         description: description,
@@ -79,19 +79,20 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
 router.get("/", Authentication.isAuthenticated, async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
+    if (req.query.title) query.title = {$regex: req.query.title, $options: "i"};
     if (req,query.instructor) query.instructor = req.query.instructor;
     Deliverable.find(query, (err, assignments) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         return res.json(assignments);
-    });
+    }).sort({datePosted: -1});
 });
 
 //Get metadata for submissions
 router.get("/submission/metadata", Authentication.isAuthenticated, async(req, res) => {
     let query = {};
-    if (!req.query.assignment) return res.status(401).send({success: false, message: "Can only get submissions for one assignment"});
-    query.assignment = req.query.assignment;
+    if (req.query.assignment) query.assignment = req.query.assignment;
     if (req.query.id) query._id = req.query.id;
+    if (query == {}) res.status(401).send({success: false, message: "Can only one submission or submissions from one file"});
     Submission.find(query, (err, submissions) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         return res.json(submissions);
@@ -104,7 +105,7 @@ router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, re
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         res.setHeader('Content-Type', submission.file.mimetype);
-        return res.sendFile(path.join(submission.file.path));
+        return res.sendFile(path.join(__dirname, "..", submission.file.path));
     });
 });
 
