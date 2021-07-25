@@ -14,43 +14,43 @@ const mock_data = [
     type: 'recieve'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'recieve'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
   {
-    message: 'big bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bobbig bob',
+    message: 'test test test test test test test test test test test test test test test test test test test test ',
     type: 'self'
   },
 ]
