@@ -35,27 +35,38 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
 });
 
 // Add submission for a given assignment
-router.post("/submission", Authentication.isAuthenticated, upload.single('file') , (req, res) => {
+router.put("/submission", Authentication.isAuthenticated, upload.single('file') , (req, res) => {
     let assignmentId = req.body.assignment;
-    Deliverable.findById(assignmentId, async(err, assignment) => {
+    Deliverable.findById(assignmentId, (err, assignment) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!assignment) return res.status(404).send({success: false, message: "Can not find assignment"});
         let submissionTime = Date.now();
-        if (assignment.dueDate < submissionTime) return res.status(401).send({success: false, message: "Due date has passed"});
+        if (assignment.dueDate && assignment.dueDate < submissionTime) return res.status(401).send({success: false, message: "Due date has passed"});
         let fileEnding = req.file.originalname.split(".").pop();
-        if (!assignment.fileTypes.includes(fileEnding)) return res.status(404).send({success: false, message: "Invalid file type"});
-        let newAssignment = new Submission({
-            user: req.user._id,
-            file: req.file,
-            assignment: assignmentId
+        if (assignment.fileTypes === [] || !assignment.fileTypes.includes(fileEnding)) return res.status(404).send({success: false, message: "Invalid file type"});
+        Submission.findOne({user: req.user._id, assignment: assignmentId}, async(err, submission) => {
+            if (err) return res.status(500).send({success: false, message: err.toString()});
+            console.log(submission);
+            if (submission){
+                Submission.findByIdAndUpdate(submission._id, {file: req.file, submissionTime: submissionTime},(err, sub) => {
+                    if (err) return res.status(500).send({success: false, message: err.toString()});
+                    return res.json(sub);
+                });
+            } else {
+                let newAssignment = new Submission({
+                    user: req.user._id,
+                    file: req.file,
+                    assignment: assignmentId
+                });
+                try{
+                    let savedAssignment = await newAssignment.save();
+                    return res.json({success: true, submissionId: savedAssignment._id});
+                }
+                catch(error){
+                    return res.status(500).send({success: false, message: error.toString()});
+                }
+            }
         });
-        try{
-            let savedAssignment = await newAssignment.save();
-            return res.json({success: true, submissionId: savedAssignment._id});
-        }
-        catch(error){
-            return res.status(500).send({success: false, message: error.toString()});
-        }
     });
     
 });
