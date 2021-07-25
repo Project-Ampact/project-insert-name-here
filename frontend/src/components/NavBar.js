@@ -22,6 +22,7 @@ import {
   FaServer,
   FaRegListAlt,
   FaCalendarAlt,
+  FaFileAlt,
 
 } from "react-icons/fa";
 
@@ -102,6 +103,9 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
+            <MenuItem icon={<FaFileAlt />}>
+                <Link to="/deliverableFeed">Deliverables</Link>
+              </MenuItem>
             <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
             <MenuItem icon={<FaCalendarAlt/>}>
               <Link to="/calendar">Calendar</Link>
