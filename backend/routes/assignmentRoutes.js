@@ -7,8 +7,8 @@ const Authentication = require("../authentication");
 const router = express.Router();
 const multer = require('multer');
 const path = require("path");
-const fs = require("fs");
 const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
+const fs = require("fs");
 
 // Add assignment
 router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, async(req, res, next) => {
