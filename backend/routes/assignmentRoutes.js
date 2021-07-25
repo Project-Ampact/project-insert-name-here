@@ -7,6 +7,7 @@ const Authentication = require("../authentication");
 const router = express.Router();
 const multer = require('multer');
 const path = require("path");
+const fs = require("fs");
 const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
 
 // Add assignment
@@ -50,6 +51,9 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
             if (submission){
                 Submission.findByIdAndUpdate(submission._id, {file: req.file, submissionTime: submissionTime},(err, sub) => {
                     if (err) return res.status(500).send({success: false, message: err.toString()});
+                    fs.unlink(path.join(__dirname, '..', 'uploads', sub.file.filename), (err) => {
+                        if (err) return res.status(500).send({success: false, message: err.toString()});
+                    });
                     return res.json(sub);
                 });
             } else {
