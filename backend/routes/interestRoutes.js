@@ -14,6 +14,27 @@ router.get("/tags", async(req, res) => {
     }
 });
 
+router.get("/user/:userID", async(req, res) => {
+    let userID = req.params.userID;
+    let interests;
+
+    try {
+        interests = await Interest.findById(userID);
+    } catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+
+    if (interests == null) return res.status(404).json({
+        success: false,
+        message: "Request body must contain interests"
+    });
+    
+    return res.json(interests.interests);
+});
+
 router.put("/user/:userID", async(req, res) => {
     let userID = req.params.userID;
     let interests = req.body.interests;
