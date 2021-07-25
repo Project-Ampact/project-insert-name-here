@@ -45,16 +45,16 @@ let mock_data = [
 // let postInfo = mock_data;
 
 function DeliverableFeed() {
-  /*let auth = AuthService();
+  let auth = AuthService();
   const username = document.cookie.split("user=")[1].split("%20")[0];
   const role = document.cookie.split("user=")[1].split("%20")[1];
   console.log("Username: " + username);
   console.log("Role: " + role);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
-  const [loadedPostData, setLoadedPostData] = useState(mock_data);*/
+  const [loadedDeliverableData, setLoadedDeliverableData] = useState(mock_data);
   let emptyError = "";
-  /*useEffect(() => {
+  useEffect(() => {
     fetch("http://localhost:8000/assignment/", {
       credentials: "include",
     })
@@ -63,10 +63,10 @@ function DeliverableFeed() {
       })
       .then((data) => {
         mock_data = data;
-        setLoadedPostData(mock_data);
+        setLoadedDeliverableData(mock_data);
         setIsLoading(false);
       });
-  }, []);*/
+  }, []);
 
   /*useEffect(() => {
     async function fetchData() {
@@ -79,13 +79,13 @@ function DeliverableFeed() {
     });
   }, [username]);*/
 
-  /*if (isLoading) {
+  if (isLoading) {
     return (
       <section>
         <p>Loading...</p>
       </section>
     );
-  }*/
+  }
 
   /*const deleteLocalPost = (postId) => {
     console.log("length is ", mock_data.length);
@@ -97,10 +97,10 @@ function DeliverableFeed() {
   return (
     <PageLayout>
       <h1 className="h1-cus">Assignments</h1>
-      {mock_data.map((mock_data_piece) => {
+      {loadedDeliverableData.map((mock_data_piece) => {
         //remember to change mock_data to loadedDeliverableData once connected to backend
 
-        let date = new Date(mock_data_piece.date);
+        let date = new Date(mock_data_piece.datePosted);
         let month = date.getMonth() + 1;
         let day = date.getDate();
         if (month < 10) {
@@ -128,6 +128,7 @@ function DeliverableFeed() {
             dueDate={dueDate.getFullYear() + "/" + month2 + "/" + day2}
             title={mock_data_piece.title}
             id={mock_data_piece._id}
+            total={mock_data_piece.totalMarks}
           />
         );
       })}
