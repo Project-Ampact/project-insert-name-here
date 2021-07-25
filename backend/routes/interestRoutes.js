@@ -69,4 +69,27 @@ router.put("/user/:userID", async(req, res) => {
     return res.status(200).send();
 });
 
+router.get("/user/:userID/recommendedVideos", async(req, res) => {
+    let userID = req.params.userID;
+    let interests;
+    let videos;
+
+    try {
+        interests = await Interest.findById(userID);
+        videos = await Video.find({
+            "tags": {
+                $in: interests.interests
+            }
+        });
+    } catch(e) {
+        // might want this to return an empty list instead? 
+        return res.status(404).json({
+            success: false,
+            message: "Could not find user's interests"    
+        });
+    }
+
+    return res.status(200).json(videos);
+});
+
 module.exports = router; 
