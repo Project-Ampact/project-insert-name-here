@@ -31,7 +31,7 @@ function CalendarPage() {
   const [loadedEventData, setLoadedEventData] = useState([])
   const [loadedGroupData, setLoadedGroupData] = useState([])
   const username = document.cookie.split('user=')[1].split('%20')[0]
-
+  const role = document.cookie.split('user=')[1].split('%20')[1]
 
   useEffect(() => {
     async function fetchData() {
@@ -210,14 +210,15 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
   useEffect(() => {
     setIsLoading(true);
     fetch(`http://localhost:8000/calendar/${username}`, {
-      credentials: 'include'
+      credentials: 'include',
+      body: JSON.stringify({role: role})
     })
     .then(response => response.json())
     .then(data => {
       setLoadedEventData(data)
       setIsLoading(false)
     })
-  }, [username])
+  }, [username, role])
 
   const closeEventWindow = () => setShowEvent(false);
   const closeAddEventWindow = () => setShowAddEvent(false);
