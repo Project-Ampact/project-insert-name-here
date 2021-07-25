@@ -42,7 +42,7 @@ function Submission(props) {
               <h3 className="card-title2">{props.user}</h3>
               <div className="date-and-grade">
               <h6 className="text-date2 ">Submission date: {props.date}</h6>
-                <p className="text-content2">Grade: {props.grade} / total</p>
+                <p className="text-content2">Grade: {props.grade} / {props.total}</p>
                
               </div>
             </div>

@@ -57,3 +57,15 @@
     text-align: right;
     
 }
+
+.total-marks {
+    font-size: 100%;
+    padding-left: 2%;
+    text-align: right;
+    
+}
+
+.h1-cus {
+    text-align: center;
+    font-size: 550%;
+  }

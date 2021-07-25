@@ -24,9 +24,10 @@ function Deliverable(props) {
         </div>
         <div class="flex-container">
           <h6 className="due-date"> Due: {props.dueDate}</h6>
+          <h6 className="total-marks"> TotalMarks: {props.total}</h6>
         </div>
       </div>
-      <SubmissionSection id={props.id}  user={props.instructor}></SubmissionSection>
+      <SubmissionSection id={props.id} total={props.total} user={props.instructor}></SubmissionSection>
     </div>
   </Container>
   );
