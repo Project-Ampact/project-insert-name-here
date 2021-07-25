@@ -10,7 +10,6 @@ import SubmissionSection from "./SubmissionSection";
 import {toast} from "react-toastify";
 
 function Deliverable(props) {
-  //let postLink = "http://localhost:3000/postFeed/" + props.gid;
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
 
