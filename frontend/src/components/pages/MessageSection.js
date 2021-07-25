@@ -59,7 +59,7 @@ function MessageSection() {
   return (
     <div className="message-page">
       <header className="message-header">
-          <h1>Kevin Didi</h1>
+          <h1>Tom Smith</h1>
       </header>
       <div className="message-log">
         {mock_data.map(x => <ChatBubble msg={x}/>)}

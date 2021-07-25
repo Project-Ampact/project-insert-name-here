@@ -6,6 +6,7 @@
     width: fit-content;
     border-radius: 25px;
     margin-left: 5px;
+    margin-right: 5px;
 }
 
 .recieve {
@@ -17,6 +18,7 @@
     background-color: #007bff;
     color: white;
     align-self: end;
+    margin-left: auto;
 }
 
 
