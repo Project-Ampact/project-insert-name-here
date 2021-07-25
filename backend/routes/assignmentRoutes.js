@@ -89,9 +89,9 @@ router.get("/", Authentication.isAuthenticated, async(req, res) => {
 //Get metadata for submissions
 router.get("/submission/metadata", Authentication.isAuthenticated, async(req, res) => {
     let query = {};
-    if (!req.query.assignment) return res.status(401).send({success: false, message: "Can only get submissions for one assignment"});
-    query.assignment = req.query.assignment;
+    if (req.query.assignment) query.assignment = req.query.assignment;
     if (req.query.id) query._id = req.query.id;
+    if (query == {}) res.status(401).send({success: false, message: "Can only one submission or submissions from one file"});
     Submission.find(query, (err, submissions) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         return res.json(submissions);
