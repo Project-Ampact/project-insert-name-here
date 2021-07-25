@@ -1,7 +1,7 @@
 .message-page {
     max-width: 830px;
     margin: 0 auto;
-    /* background-color: aquamarine; */
+    background-color: white;
     display: flex;
     flex-direction: column;
     height: 90vh;
