@@ -42,14 +42,13 @@ let mock_data = [
   },
 ];
 
-// let postInfo = mock_data;
+
 
 function DeliverableFeed() {
   let auth = AuthService();
   const username = document.cookie.split("user=")[1].split("%20")[0];
   const role = document.cookie.split("user=")[1].split("%20")[1];
-  console.log("Username: " + username);
-  console.log("Role: " + role);
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadedUserData, setLoadedUserData] = useState([]);
   const [loadedDeliverableData, setLoadedDeliverableData] = useState(mock_data);
@@ -87,18 +86,10 @@ function DeliverableFeed() {
     );
   }
 
-  /*const deleteLocalPost = (postId) => {
-    console.log("length is ", mock_data.length);
-    const newData = mock_data.filter((post) => post._id !== postId);
-    console.log("now length is ", mock_data.length);
-    setLoadedPostData(newData);
-  };*/
-
   return (
     <PageLayout>
       <h1 className="h1-cus">Assignments</h1>
       {loadedDeliverableData.map((mock_data_piece) => {
-        //remember to change mock_data to loadedDeliverableData once connected to backend
 
         let date = new Date(mock_data_piece.datePosted);
         let month = date.getMonth() + 1;
@@ -121,7 +112,7 @@ function DeliverableFeed() {
         }
 
         console.log(date.getFullYear() + "/" + month + "/" + day);
-        return (
+        return (// deliverables will all be displayed in order
           <Deliverable
             user={mock_data_piece.instructor}
             date={date.getFullYear() + "/" + month + "/" + day}
