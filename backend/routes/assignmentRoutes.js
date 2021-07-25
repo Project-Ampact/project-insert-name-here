@@ -15,10 +15,13 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
     let description = req.body.description;
     let dueDate = req.body.dueDate;
     let fileTypes = req.body.fileTypes;
+    let totalMarks = req.body.totalMarks;
+    if (totalMarks <= 0) return res.status(401).send({success: false, message: "Assignment must be out of 1 or more marks"});
     let newAssignment = new Deliverable({
         title: title,
         description: description,
-        instructor: req.user._id
+        instructor: req.user._id,
+        totalMarks: totalMarks
     });
     if (dueDate) newAssignment.dueDate = dueDate;
     if (fileTypes) newAssignment.fileTypes = fileTypes;
