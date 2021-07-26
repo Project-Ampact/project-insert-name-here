@@ -95,7 +95,7 @@ function App() {
             <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
             <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
-            <PrivateRoute exact path="/feedback" children={<SingleFeedbackPage/>}/>
+            <PrivateRoute exact path="/submission/" children={<SingleFeedbackPage/>}/>
           </Switch>
         </Router>
       </AuthProvider>      
