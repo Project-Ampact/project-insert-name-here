@@ -6,8 +6,8 @@ import React, { useState, useEffect } from "react";
 import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
-function DlbsSubmit() {
-  let backtoDlbs = "http://localhost:3000/Dlbs";  
+function DlbsSubmit(props) {
+  let backtoDlbs = "../../deliverableFeed";  
 
 
   return (
@@ -23,7 +23,7 @@ function DlbsSubmit() {
                     <Form.Label>Assignment Title: </Form.Label>
                     <Form.Control
                       type="title"
-                      defaultValue="Sample Assignment #1" readOnly />
+                      defaultValue={props.title} readOnly />
                     <Form.Text className="text-muted">
                       This is the name of your assignment you are currently submiting.
                     </Form.Text>
@@ -34,8 +34,7 @@ function DlbsSubmit() {
 
                   <Form.Group controlId="details">
                     <Form.Control type="details" as="textarea" 
-                    defaultValue="This is the first sample assignment. You will respected to ...
-                    etc..."
+                    defaultValue={props.description}
                     rows={2} plaintext readOnly />
                   </Form.Group>
 
@@ -43,7 +42,7 @@ function DlbsSubmit() {
                     <Form.Label>Assignment Deadline: </Form.Label>
                     <Form.Control
                       type="deadline"
-                      defaultValue="07/11/2021" readOnly />
+                      defaultValue={props.dueDate} readOnly />
                   </Form.Group>
                   <Form.Group controlId="inputfile">
                     <Form.Label>Select the file to upload:</Form.Label>

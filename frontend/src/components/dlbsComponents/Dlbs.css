@@ -103,6 +103,12 @@
     padding: 20px;
 }
 
+.floatCenter {
+    float: center;
+    padding: 20px;
+}
+
+
 .h1-cus {
     text-align: center;
     font-size: 400%;
