@@ -25,7 +25,7 @@ let mock_data2 = [
 let feedbackInfo ;
 let assignmentInfo;
 
-function SingleFeedbackPage() {
+function SingleUserSubmissionPage() {
   let { sid } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideoData, setLoadedVideoData] = useState([]);
@@ -100,7 +100,6 @@ function SingleFeedbackPage() {
         submissionId={feedbackInfo._id}
         currentFeedback={feedbackInfo.feedback}
         />
-        <FeedbackForm  totalGrade={assignmentInfo.totalMarks}/>
         </div>
         </div>
       
@@ -109,4 +108,4 @@ function SingleFeedbackPage() {
   );
 }
 
-export default SingleFeedbackPage;
+export default SingleUserSubmissionPage;

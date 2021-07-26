@@ -84,7 +84,7 @@ function SubmissionSection(props) {
           id={mock_data_piece._id}
           aid={mock_data_piece.assignment}
           total={total2}
-          link={"http://localhost:3000/submission/" + mock_data_piece._id}
+          link={"http://localhost:3000/user/submission/" + mock_data_piece._id}
         />
       );
     });
