@@ -130,7 +130,27 @@ const APIAccess = {
             throw err;
         }
     },
-
+    addUserInterests(uid, interests){
+        try{
+            return fetch(`http://localhost:8000/interests/user/${uid}`, {
+                method: 'PUT',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({interests: interests}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if (!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    let jsonRes = await response.json();
+                  
+                    return jsonRes;
+                }
+            });
+        }catch(err){
+            throw err;
+        }
+    },
     addMember(group, member) {
         try{
             return fetch('http://localhost:8000/group/add/' + group, {
