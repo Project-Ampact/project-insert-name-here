@@ -1,30 +1,25 @@
 import "./feedback.css";
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import APIAccess from "../../controller.js";
-import { Form, Container, Button } from "react-bootstrap";
-import FormControl from "react-bootstrap/FormControl";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import {
-  FaArrowLeft,
-  FaArrowRight,
-
-} from "react-icons/fa";
-
-import { 
-  RiZoomOutLine,
-  RiZoomInLine
-
-} from "react-icons/ri";
-
-import { Document, Page, pdfjs } from "react-pdf";
-import FeedbackPdf from "./feedbackPdf";
+import {pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function Feedback(props) {
   let gradePrecentage = ((props.grade / props.totalGrade) * 100).toFixed(2);
 
 
+  let date = new Date(props.dueDate);
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  if (month < 10) {
+    month = "0" + month;
+  }
+  if (day < 10) {
+    day = "0" + day;
+  }
+
+    console.log("DUE DATE: " + date.getFullYear() + "/" + month + "/" + day);
   const update = async (e) => {
     e.preventDefault();
     try {
@@ -54,6 +49,9 @@ function Feedback(props) {
     }
   };
 
+
+
+
   return (
     <div id="feedback-wrapper">
 
@@ -61,8 +59,10 @@ function Feedback(props) {
         <div class="card-body rounded" id="feedback-body">
           <div class="flex-container">
             <h1 class="card-title" id="feedback-title">
-              {props.title}
+             <span>Title:</span> {props.title}
             </h1>
+            <div id="spacer"></div>
+            <h5 id="submission-date">{date.getFullYear() + "/" + month + "/" + day}</h5>
           </div>
        
             <h5 class="card-title" id="feedback-user">

@@ -89,16 +89,20 @@ function SingleUserSubmissionPage() {
 
   return (
     <PageLayout>
+        <h1 id="user-submission-assignment-title">Assignment: {assignmentInfo.title}</h1>
       <div id="single-feedback-page-wrapper">
+          
       <FeedbackPdf file={`http://localhost:8000/assignment/submission/file/${feedbackInfo._id}`}/>
+ 
       <div id="submission-info-wrapper">
-        <Feedback 
+        <Feedback  
         title={assignmentInfo.title}
         user={feedbackInfo.user}
         grade={feedbackInfo.grade}
         totalGrade={assignmentInfo.totalMarks}
         submissionId={feedbackInfo._id}
         currentFeedback={feedbackInfo.feedback}
+        dueDate={feedbackInfo.submissionTime}
         />
         </div>
         </div>
