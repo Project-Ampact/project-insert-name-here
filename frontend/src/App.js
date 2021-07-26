@@ -100,6 +100,7 @@ function App() {
             <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
             <PrivateRoute exact path="/submission/:sid" children={<SingleFeedbackPage/>}/>
+            <PrivateRoute exact path="/user/submission/:sid" children={<SingleFeedbackPage/>}/>
           </Switch>
         </Router>
       </AuthProvider>      

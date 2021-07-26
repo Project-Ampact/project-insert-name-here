@@ -7,7 +7,7 @@ import APIAccess from "../../controller.js";
 import PageLayout from "./DefaultPage";
 
 import "react-pro-sidebar/dist/css/styles.css";
-import Deliverable from "../submissionComponents/Deliverable.js";
+import UserDeliverable from "../submissionComponents/UserDeliverable.js";
 import { AuthService } from "../../util/authService";
 let mock_data = [
   {
@@ -113,7 +113,7 @@ function AssignmentFeed() {
 
         console.log(date.getFullYear() + "/" + month + "/" + day);
         return (// deliverables will all be displayed in order
-          <Deliverable
+          <UserDeliverable
             user={mock_data_piece.instructor}
             date={date.getFullYear() + "/" + month + "/" + day}
             dueDate={dueDate.getFullYear() + "/" + month2 + "/" + day2}

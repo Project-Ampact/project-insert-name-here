@@ -92,6 +92,7 @@ router.get("/submission/metadata", async(req, res) => {
     let query = {};
     if (req.query.assignment) query.assignment = req.query.assignment;
     if (req.query.id) query._id = req.query.id;
+    if (req.query.user) query.user = req.query.user;
     if (query == {}) res.status(401).send({success: false, message: "Can only one submission or submissions from one file"});
     Submission.find(query, (err, submissions) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
