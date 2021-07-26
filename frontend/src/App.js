@@ -29,6 +29,7 @@ import SingleVideoPage from './components/pages/SingleVideoPage';
 import SingleVideoAdd from './components/pages/SingleVideoAdd';
 import PostFeed from './components/pages/PostFeed';
 import DeliverableFeed from './components/pages/DeliverableFeed';
+import AssignmentFeed from './components/pages/AssignmentFeed';
 import PostFeedAnnouncements from './components/pages/PostFeedAnnouncements';
 import CalendarPage from './components/pages/CalendarPage';
 import SingleFeedbackPage from './components/pages/SingleFeedbackPage';
@@ -83,6 +84,7 @@ function App() {
             <Route path="/browse" component={Browse}/>
             <Route path="/postFeed" component={PostFeed}/>
             <Route path="/deliverableFeed" component={DeliverableFeed}/>
+            <Route path="/assignmentsFeed" component={AssignmentFeed}/>
             <Route path="/postFeedAnnouncements" component={PostFeedAnnouncements}/>
             <Route path="/profile/search" component={SearchUserProfiles}/>
             <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
