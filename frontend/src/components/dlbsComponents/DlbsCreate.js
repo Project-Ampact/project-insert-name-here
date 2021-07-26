@@ -8,13 +8,28 @@ import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
 function DlbsCreate() {
   let backtoDlbs = "../../deliverableFeed";  
+/*
+  const addDlbs = async (e) => {
+    e.preventDefault();
+    try {
+      let _id = document.getElementById("_id").value;
+      console.log(_id);
+      let result = await APIAccess.addMember(props.gid, _id);
+      if (result.success)
+        toast.success("Added deliverable to the list.", {});
+      else
+        toast.error(result.message, {});
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-
+*/
   return (
     <PageLayout>
       <div className="body-cus">
         <div className="form-section">
-          <h1 className="h1-cus"> New Assignment</h1>
+          <h1 className="h1-cus"> Create Assignment</h1>
           <Container fluid className="form-section-inner">
             <Row>
               <Col>
@@ -30,15 +45,9 @@ function DlbsCreate() {
                   </Form.Group>
 
 
-                  <Form.Group className="deadline" controlId="dlbsddl">
+                  <Form.Group className="dead-line" controlId="dlbsddl">
                     <Form.Label>Assignment Deadline: </Form.Label>
                     <Form.Control type="datetime-local" id="deadline" />
-                    
-
-                  </Form.Group>
-                  <Form.Group controlId="inputfile">
-                    <Form.Label>Select the file to upload:</Form.Label>
-                    <Form.File id="inputfile" label="(optional)" />
                   </Form.Group>
 
                   <Form.Group controlId="details">
@@ -52,8 +61,8 @@ function DlbsCreate() {
                 <div className="register del-button"> 
                   <Col sm={3}><Button type="submit" variant="secondary" href={backtoDlbs}>
                   Cancel</Button></Col>
-                  <Col sm={3}><Button type="submit" variant="primary" href={backtoDlbs}>
-                  Submit </Button></Col>
+                  <Col sm={3}><Button type="submit" variant="primary"  href={backtoDlbs}>
+                  Submit </Button></Col> 
                 </div>
               </Col>
             </Row>

@@ -114,6 +114,11 @@
     font-size: 400%;
   }
 
+.mid-width {
+    width: 80%;
+    margin: 20px;
+}
+
 .deadline {
     color: red;
     font-weight: bold;
