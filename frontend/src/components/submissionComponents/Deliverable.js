@@ -22,7 +22,7 @@ function Deliverable(props) {
           <h6 className="deliverable-date"> Date Created: {props.date}</h6>
         </div>
         <div class="flex-container">
-          <h6 className="deadline"> Due: {props.dueDate}</h6>
+          <h6 className="due-date"> Due: {props.dueDate}</h6>
           <h6 className="total-marks"> TotalMarks: {props.total}</h6>
         </div>
       </div>
