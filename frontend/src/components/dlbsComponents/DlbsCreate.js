@@ -7,7 +7,7 @@ import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
 function DlbsCreate() {
-  let backtoDlbs = "http://localhost:3000/Dlbs";  
+  let backtoDlbs = "../../deliverableFeed";  
 
 
   return (
@@ -49,16 +49,11 @@ function DlbsCreate() {
                   </Form.Group>
 
                 </Form>
-                <div className="register del-button">
-                  <Button
-                    type="submit"
-                    //onClick={}
-                    className="submitbutton"
-                    variant="primary"
-                    href={backtoDlbs}
-                    >
-                    Submit
-                  </Button>
+                <div className="register del-button"> 
+                  <Col sm={3}><Button type="submit" variant="secondary" href={backtoDlbs}>
+                  Cancel</Button></Col>
+                  <Col sm={3}><Button type="submit" variant="primary" href={backtoDlbs}>
+                  Submit </Button></Col>
                 </div>
               </Col>
             </Row>

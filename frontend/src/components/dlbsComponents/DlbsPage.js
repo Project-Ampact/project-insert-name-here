@@ -5,10 +5,14 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Form, Button, Container } from "react-bootstrap";
+import { propTypes } from "react-bootstrap/esm/Image";
 
-function DlbsPage() {
-  let backtoDlbs = "http://localhost:3000/Dlbs";  
-  let submitDlbs = "http://localhost:3000/Dlbs/submit";  
+
+function DlbsPage(props) {
+  let { dlbsid } = useParams();
+
+  let backtoDlbs = "../deliverableFeed";  
+  let submitDlbs = "../Dlbs/"+ props.id +"/submit";  
 
 
   return (
@@ -19,17 +23,16 @@ function DlbsPage() {
           <Container fluid className="form-section-inner">
             <Row>
               <Col>
-                <h2 className="h2-cus">Sample Assignment #1</h2>
-                <h4 className="h4-cus">Instructor: abc</h4>
+                <h2 className="h2-cus"> {props.title} </h2>
+                <h4 className="h4-cus">Instructor: {props.instructor}</h4>
                 </Col></Row>
                 <Row><Col>
                 <p id="details">
-                This is the first sample assignment. You will respected to ... 
-                etc...
+                {props.description}
                 </p>
 
               <h4 className="deadline" controlId="dlbsddl">
-                Assignment Deadline: 07/11/2021</h4>
+                Assignment Deadline: {props.dueDate}</h4>
 
               </Col></Row>
               <Row><Col>
