@@ -104,7 +104,10 @@ const Nav2 = (props) => {
               </MenuItem>
             </SubMenu>
             <MenuItem icon={<FaFileAlt />}>
-                <Link to="/deliverableFeed">Deliverables</Link>
+                <Link to="/deliverableFeed">Assignment Grading</Link> {/* TODO: Only instructors can see this page */}
+              </MenuItem>
+              <MenuItem icon={<FaFileAlt />}>
+                <Link to="/assignmentsFeed">Assignments</Link> {/* Only entrepreneurs and instructors can see this page */}
               </MenuItem>
             <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
             <MenuItem icon={<FaCalendarAlt/>}>
