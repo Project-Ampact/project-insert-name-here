@@ -12,31 +12,45 @@ import PageLayout from "./DefaultPage";
 
 import "react-pro-sidebar/dist/css/styles.css";
 
-let mock_data2 = [];
+let mock_data2 = [""];
 
 function Browse() {
-  //let {gid} = useParams()
+  const username = document.cookie.split("user=")[1].split("%20")[0];
   const [isLoading, setIsLoading] = useState(true);
+  const [loadedRecommendedVideos, setRecommendedVideos] = useState([""]);
+  const [loadedVideoSections, setloadedVideoSections] = useState([]);
 
   useEffect(() => {
-    //setIsLoading(true);
     fetch("http://localhost:8000/video/browse/", 
     {
       credentials: 'include'
     })
       .then((response) => {
-        // console.log( response.json())
+        
         return response.json();
-        //  setLoadedGroupData(response.json());
-        //  setIsLoading(false)
+        
       })
       .then((data) => {
-        mock_data2 = data;
-       // console.log(mock_data2)
-      //  setLoadedGroupData(data);
+       
+        setloadedVideoSections(data);
         setIsLoading(false);
       });
-  });
+  }, []);
+
+  useEffect(() => {
+    
+    fetch(`http://localhost:8000/interests/user/${username}/recommendedVideos`, 
+    {
+      credentials: 'include'
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setRecommendedVideos(data);
+        setIsLoading(false);
+      });
+  }, []);
 
   if (isLoading) {
     return (
@@ -55,7 +69,11 @@ function Browse() {
           </Container>
           <Container fluid className=" col2 profile container-fluid">
             <Row className="adjust-row">
-              {mock_data2.map((mock_data_piece) => {
+              <VideoTagSection 
+                section={"Recommended"}
+                videos={loadedRecommendedVideos}
+              />
+              {loadedVideoSections.map((mock_data_piece) => {
                 return (
                   <VideoTagSection
                     section={mock_data_piece.commonTag}
