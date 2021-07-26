@@ -33,6 +33,7 @@ import AssignmentFeed from './components/pages/AssignmentFeed';
 import PostFeedAnnouncements from './components/pages/PostFeedAnnouncements';
 import CalendarPage from './components/pages/CalendarPage';
 import SingleFeedbackPage from './components/pages/SingleFeedbackPage';
+import SingleUserSubmissionPage from './components/pages/SingleUserSubmissionPage';
 
 
 
@@ -100,7 +101,7 @@ function App() {
             <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
             <PrivateRoute exact path="/submission/:sid" children={<SingleFeedbackPage/>}/>
-            <PrivateRoute exact path="/user/submission/:sid" children={<SingleFeedbackPage/>}/>
+            <PrivateRoute exact path="/user/submission/:sid" children={<SingleUserSubmissionPage/>}/>
           </Switch>
         </Router>
       </AuthProvider>      
