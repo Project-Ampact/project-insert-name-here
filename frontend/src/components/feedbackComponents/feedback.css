@@ -31,7 +31,14 @@ body {
 } /* weird bug, affects posts too */
 
 
+#grade-wrapper {
+    display: flex;
+    margin-bottom: 10px;
+}
 
+#grade-title {
+    margin-right: 6px;
+}
 #feedback-wrapper {
     display: flex;
     margin-top: 20px;
@@ -40,13 +47,32 @@ body {
 
     width: 90%;
     margin-left: 200px;
-    /*padding-bottom: 650px;*/
+    padding-bottom: 50px;
 }
 
 #submission-wrapper {
     margin: 0 20px;
     flex:  1 1 auto;
-    height: 550px;
+    
 
 }
+
+#feedback-form {
+    margin-top: 60px;
+}
+
+#submission-id {
+    display:
+     none;
+}
+
+#current-feedback-wrapper {
+    border: 1px solid lightblue;
+    min-height: 100px;
+}
+
+#current-feedback {
+    padding: 12px;
+}
+
 

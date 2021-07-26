@@ -76,7 +76,7 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
 });
 
 //Get assignments
-router.get("/", Authentication.isAuthenticated, async(req, res) => {
+router.get("/", async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
     if (req.query.title) query.title = {$regex: req.query.title, $options: "i"};
@@ -88,7 +88,7 @@ router.get("/", Authentication.isAuthenticated, async(req, res) => {
 });
 
 //Get metadata for submissions
-router.get("/submission/metadata", Authentication.isAuthenticated, async(req, res) => {
+router.get("/submission/metadata", async(req, res) => {
     let query = {};
     if (req.query.assignment) query.assignment = req.query.assignment;
     if (req.query.id) query._id = req.query.id;
@@ -100,7 +100,7 @@ router.get("/submission/metadata", Authentication.isAuthenticated, async(req, re
 });
 
 //Get file by id
-router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, res) => {
+router.get("/submission/file/:id", async(req, res) => {
     if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
