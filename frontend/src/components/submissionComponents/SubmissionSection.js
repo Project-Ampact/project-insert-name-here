@@ -105,7 +105,7 @@ function SubmissionSection(props) {
           user={mock_data_piece.user}
           grade={mock_data_piece.grade}
           date={date.getFullYear() + "/" + month + "/" + day}
-          sid={mock_data_piece._id}
+          id={mock_data_piece._id}
           aid={mock_data_piece.assignment}
           total={total2}
         />

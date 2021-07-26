@@ -31,11 +31,12 @@ function Submission(props) {
       </section>
     );
   }
-  
+  let submissionLink = "http://localhost:3000/submission/" + props.id;
   return (
     <Container>
       <Row className="cus2-row">
         <Card className="comment-wrapper rounded">
+        <a className="links" style={{ cursor: "pointer" }} href={submissionLink}>
           <Card.Body className="comment-body">
             <div className="title-and-date">
               <img id="profile-picture" src={loadedUserData} alt="Profile picture"></img>
@@ -47,6 +48,7 @@ function Submission(props) {
               </div>
             </div>
           </Card.Body>
+          </a>
         </Card>
       </Row>
     </Container>

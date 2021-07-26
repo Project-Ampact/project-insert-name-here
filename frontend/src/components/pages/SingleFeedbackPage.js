@@ -30,13 +30,13 @@ let feedbackInfo ;
 let assignmentInfo;
 
 function SingleFeedbackPage() {
-  let { fid } = useParams();
+  let { sid } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideoData, setLoadedVideoData] = useState([]);
   let assignmentValues;
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/assignment/submission/metadata/?id=60fdd64ec53efa18e0e09572", {
+    fetch(`http://localhost:8000/assignment/submission/metadata/?id=${sid}`, {
       credentials: 'include'
     })
       .then((response) => {
@@ -64,7 +64,7 @@ function SingleFeedbackPage() {
       
       
     
-  }, [fid]);
+  }, []);
 
   {
     mock_data.map((feedback) => {
