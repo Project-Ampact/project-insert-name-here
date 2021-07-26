@@ -76,4 +76,12 @@ body {
     padding: 12px;
 }
 
+#submission-date {
+    align-content: end;
+}
+
+#spacer {
+    flex-grow: 1;
+}
+
 
