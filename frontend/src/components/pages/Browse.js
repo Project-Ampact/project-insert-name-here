@@ -20,6 +20,7 @@ function Browse() {
   const [loadedRecommendedVideos, setRecommendedVideos] = useState([""]);
   const [loadedVideoSections, setloadedVideoSections] = useState([]);
 
+  //Get all the video sections
   useEffect(() => {
     fetch("http://localhost:8000/video/browse/", 
     {
@@ -37,8 +38,8 @@ function Browse() {
       });
   }, []);
 
+  //Gets the recommended videos for a user based on their interests
   useEffect(() => {
-    
     fetch(`http://localhost:8000/interests/user/${username}/recommendedVideos`, 
     {
       credentials: 'include'
