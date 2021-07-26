@@ -76,7 +76,7 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
 });
 
 //Get assignments
-router.get("/", Authentication.isAuthenticated, async(req, res) => {
+router.get("/", async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
     if (req.query.title) query.title = {$regex: req.query.title, $options: "i"};
@@ -88,7 +88,7 @@ router.get("/", Authentication.isAuthenticated, async(req, res) => {
 });
 
 //Get metadata for submissions
-router.get("/submission/metadata", Authentication.isAuthenticated, async(req, res) => {
+router.get("/submission/metadata", async(req, res) => {
     let query = {};
     if (req.query.assignment) query.assignment = req.query.assignment;
     if (req.query.id) query._id = req.query.id;
@@ -100,7 +100,7 @@ router.get("/submission/metadata", Authentication.isAuthenticated, async(req, re
 });
 
 //Get file by id
-router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, res) => {
+router.get("/submission/file/:id", async(req, res) => {
     if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
@@ -112,19 +112,22 @@ router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, re
 //update submission grade
 router.patch("/submission/:id", Authentication.isAuthenticated, Authentication.isInstructor, (req, res) => {
     let updateQuery = {};
-    let grade = req.body.grade;
-    if (grade !== undefined){
-        if (grade < 0 || grade > 100) return res.status(401).send({success: false, message: "Grade must be between 0 and 100"});
-        updateQuery.grade = grade;
-    }
     if (req.body.feedback !== undefined) updateQuery.feedback = req.body.feedback;
     if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!submission) return res.status(404).send({success: false, message: "Can't find submission"});
-        Submission.findByIdAndUpdate(req.params.id, updateQuery, (err, updatedSubmission) => {
+        Deliverable.findById(submission.assignment, (err, deliverable) => {
+            let grade = req.body.grade;
             if (err) return res.status(500).send({success: false, message: err.toString()});
-            return res.json(updatedSubmission);
+            if (grade !== undefined){
+                if (grade < 0 || grade > deliverable.totalMarks) return res.status(401).send({success: false, message: "Grade must be between 0 and 100"});
+                updateQuery.grade = grade;
+            }
+            Submission.findByIdAndUpdate(req.params.id, updateQuery, (err, updatedSubmission) => {
+                if (err) return res.status(500).send({success: false, message: err.toString()});
+                return res.json(updatedSubmission);
+            });
         });
     });
 });
