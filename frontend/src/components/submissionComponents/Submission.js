@@ -31,7 +31,8 @@ function Submission(props) {
       </section>
     );
   }
-  let submissionLink = "http://localhost:3000/submission/" + props.id;
+  let submissionLink = props.link;
+  //"http://localhost:3000/submission/" + props.id;
   return (
     <Container>
       <Row className="cus2-row">
