@@ -9,7 +9,10 @@ import { propTypes } from "react-bootstrap/esm/Image";
 
 
 function Dlbs(props) {
+  let { dlbsid } = useParams();
   let backtoDlbs = "../deliverableFeed";  
+
+  let test = (props.id).localeCompare(dlbsid);
 
   return (
     <Container className="profile container-fluid">
@@ -46,7 +49,7 @@ function Dlbs(props) {
 
           <Row className="container-fluid"><Col>
           <div className="register del-button"> 
-              <Col sm={3}><Button type="submit" variant="secondary" href={backtoDlbs}>
+              <Col sm={3}><Button type="reset" variant="secondary" href={backtoDlbs}>
               Cancel</Button></Col>
               <Col sm={3}><Button type="submit" variant="primary"  href={backtoDlbs}>
               Upload </Button></Col> 
