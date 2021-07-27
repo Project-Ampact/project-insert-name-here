@@ -15,6 +15,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "fs": "*",
     "mongoose": "^5.12.13",
     "multer": "^1.4.2",
     "path": "^0.12.7",
