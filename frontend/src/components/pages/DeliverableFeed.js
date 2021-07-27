@@ -8,7 +8,6 @@ import PageLayout from "./DefaultPage";
 
 import "react-pro-sidebar/dist/css/styles.css";
 import Deliverable from "../submissionComponents/Deliverable.js";
-import DlbsPage from "../dlbsComponents/DlbsPage.js";
 import { AuthService } from "../../util/authService";
 let mock_data = [
   {
