@@ -430,7 +430,34 @@ const APIAccess = {
         } catch (err){
             throw err;
         }
-    }
+    },
+   
+    updateFeedback(grade, feedback, submissionId){
+        try{
+            return fetch('http://localhost:8000/assignment/submission/' + submissionId, {
+                method: 'PATCH',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({grade: grade, feedback: feedback}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+
 };
 
 export default APIAccess;

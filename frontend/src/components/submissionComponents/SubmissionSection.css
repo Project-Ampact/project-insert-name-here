@@ -1,0 +1,28 @@
+.loaded-comments {
+    background-color: #f2f2f2;
+    padding: 15px;
+    margin-bottom: 10px;
+  
+}
+
+.card-title2 {
+    
+    padding: auto 5%;
+    width:75%;
+}
+.sub-btn {
+    margin-left:5%;
+    height: 5%;
+}
+
+.title-and-date {
+    display: flex;
+}
+
+.txt-area {
+    width: 100%;
+}
+
+.cus2-row {
+    width: 100%;
+}
