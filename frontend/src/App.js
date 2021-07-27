@@ -6,7 +6,7 @@ import Landing from './components/pages/Landing'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
-import Dlbs from './components/dlbsComponents/Dlbs';
+import DlbsPage from './components/pages/DlbsPage';
 import DlbsCreate from './components/dlbsComponents/DlbsCreate';
 import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
@@ -93,7 +93,7 @@ function App() {
             <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
             <PrivateRoute exact path="/submission/:sid" children={<SingleFeedbackPage/>}/>
-            <PrivateRoute exact path="/Dlbs/:dlbsid" children={<Dlbs/>}/>
+            <PrivateRoute exact path="/Dlbs/:dlbsid" children={<DlbsPage/>}/>
           </Switch>
         </Router>
       </AuthProvider>      
