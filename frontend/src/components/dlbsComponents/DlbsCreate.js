@@ -6,25 +6,56 @@ import React, { useState, useEffect } from "react";
 import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
+let mock_data;
+
 function DlbsCreate() {
   let backtoDlbs = "../../deliverableFeed";  
-/*
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const [DlbsData, setDlbsData] = useState({});
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch("http://localhost:8000/assignment/", {
+      credentials: 'include'
+    })
+      .then((response) => {
+        //console.log(response.json())
+        return response.json();
+      })
+      .then((data) => {
+        // console.log(data)
+        mock_data = data;
+        setDlbsData(data);
+        setIsLoading(false);
+      });
+  }, []);
+
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   const addDlbs = async (e) => {
     e.preventDefault();
     try {
-      let _id = document.getElementById("_id").value;
-      console.log(_id);
-      let result = await APIAccess.addMember(props.gid, _id);
-      if (result.success)
-        toast.success("Added deliverable to the list.", {});
-      else
-        toast.error(result.message, {});
+      let title = document.getElementById("title").value;
+      let dueDate = document.getElementById("deadline").value;
+      let description = document.getElementById("details").value;
+      window.location.reload();
+      let result = await APIAccess.createNewDlbs(title, dueDate, description);
+      console.log("Made it here");
     } catch (err) {
       console.log(err);
     }
   };
 
-*/
   return (
     <PageLayout>
       <div className="body-cus">
@@ -59,9 +90,9 @@ function DlbsCreate() {
 
                 </Form>
                 <div className="register del-button"> 
-                  <Col sm={3}><Button type="submit" variant="secondary" href={backtoDlbs}>
+                  <Col sm={3}><Button type="reset" variant="secondary" href={backtoDlbs}>
                   Cancel</Button></Col>
-                  <Col sm={3}><Button type="submit" variant="primary"  href={backtoDlbs}>
+                  <Col sm={3}><Button onClick={addDlbs} type="submit" variant="primary"  href={backtoDlbs}>
                   Submit </Button></Col> 
                 </div>
               </Col>
