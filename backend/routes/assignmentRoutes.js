@@ -11,7 +11,7 @@ const upload = multer({ dest: path.join('uploads')});
 const fs = require("fs");
 
 // Add assignment
-router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, async(req, res, next) => {
+router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, upload.single('file'), async(req, res, next) => {
     let title = req.body.title;
     let description = req.body.description;
     let dueDate = req.body.dueDate;
@@ -26,6 +26,7 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
     });
     if (dueDate) newAssignment.dueDate = dueDate;
     if (fileTypes) newAssignment.fileTypes = fileTypes;
+    if (req.file) newAssignment.file = req.file;
     try{
         let savedAssignment = await newAssignment.save();
         return res.json({success: true, assignmentId: savedAssignment._id});
