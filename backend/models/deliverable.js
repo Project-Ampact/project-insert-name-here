@@ -23,6 +23,10 @@ const deliverableSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    file: {
+        type: Object,
+        default: null
+    },
     dueDate: {
         type: Date,
         default: null
