@@ -99,6 +99,7 @@ function SingleFeedbackPage() {
         totalGrade={assignmentInfo.totalMarks}
         submissionId={feedbackInfo._id}
         currentFeedback={feedbackInfo.feedback}
+        dueDate={feedbackInfo.submissionTime}
         />
         <FeedbackForm  totalGrade={assignmentInfo.totalMarks}/>
         </div>
