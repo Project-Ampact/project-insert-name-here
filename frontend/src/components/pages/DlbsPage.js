@@ -84,7 +84,16 @@ function DlbsPage(props) {
   let backtoDlbs = "../deliverableFeed";  
 
   //needs to change "mock_data[1]" and link it to the _id of the url?
-  let mock_data_single = mock_data[1];
+  let mock_data_single =  mock_data[0]; //mock_data.filter(item => (item.id).localeCompare(dlbsid) === 0)[0];
+
+  if (mock_data_single == null) {
+    return (
+      <section>
+        <p>This deliverable do not exist! </p>
+      </section>
+    );
+  } else {
+
 
   return (
     <PageLayout>
@@ -98,6 +107,8 @@ function DlbsPage(props) {
     />
     </PageLayout>
   );
+
+  }
 }
 
 export default DlbsPage;
