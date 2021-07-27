@@ -26,6 +26,14 @@ const router = express.Router();
 
 router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
   const userId = req.params.userId;
+  const role = req.body.role;
+
+  if (role === null) {
+    return res.status(400).json({
+      success: false,
+      message: "Request body must contain role",
+    });
+  }
 
   Group.findOne({ members: userId }, (err, result) => {
     console.log(result);
@@ -33,14 +41,28 @@ router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
       return res.status(500).send({ success: false, message: err.toString() });
     if (!result) groupSearch = null;
 
-    Event.find(
-      {
+    let query;
+
+    if (role === 'entrepreneur' || role === 'instructor') {
+      query = {
         $or: [
           { userId: userId, type: "personal" },
           { groupId: result === null ? null : result._id, type: "group" },
           { type: "general" },
-        ],
-      },
+          { type: "assignment" }
+        ]
+      }
+    } else {
+      query = {
+        $or: [
+          { userId: userId, type: "personal" },
+          { groupId: result === null ? null : result._id, type: "group" },
+          { type: "general" }
+        ]
+      }
+    }
+
+    Event.find(query,
       (err, events) => {
         if (err)
           return res
