@@ -111,6 +111,16 @@ router.get("/submission/file/:id", async(req, res) => {
     });
 });
 
+//Get file by id
+router.get("/file/:id", async(req, res) => {
+    if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
+    Deliverable.findById(req.params.id, (err, submission) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        res.setHeader('Content-Type', submission.file.mimetype);
+        return res.sendFile(path.join(__dirname, "..", submission.file.path));
+    });
+});
+
 //update submission grade
 router.patch("/submission/:id", Authentication.isAuthenticated, Authentication.isInstructor, (req, res) => {
     let updateQuery = {};
