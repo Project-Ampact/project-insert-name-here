@@ -55,7 +55,7 @@ function DlbsPage(props) {
     setIsLoading(true);
 
     // api call to get deliverables
-    fetch("http://localhost:8000/assignment", {
+    fetch("http://localhost:8000/assignment/", {
       credentials: 'include' // <- this is required for all API calls
     })
       .then((response) => {
@@ -84,12 +84,13 @@ function DlbsPage(props) {
   let backtoDlbs = "../deliverableFeed";  
 
   //needs to change "mock_data[1]" and link it to the _id of the url?
-  let mock_data_single =  mock_data[0]; //mock_data.filter(item => (item.id).localeCompare(dlbsid) === 0)[0];
+  let mock_data_single =  mock_data.filter(item => item._id === dlbsid)[0];
 
   if (mock_data_single == null) {
     return (
       <section>
         <p>This deliverable do not exist! </p>
+        <Button href={`../deliverableFeed`}>Back</Button>
       </section>
     );
   } else {

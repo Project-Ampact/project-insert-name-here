@@ -48,8 +48,9 @@ function DlbsCreate() {
       let title = document.getElementById("title").value;
       let dueDate = document.getElementById("deadline").value;
       let description = document.getElementById("details").value;
+      let total = document.getElementById("total").value;
       window.location.reload();
-      let result = await APIAccess.createNewDlbs(title, dueDate, description);
+      let result = await APIAccess.createNewDlbs(title, dueDate, total, description);
       console.log("Made it here");
     } catch (err) {
       console.log(err);
@@ -75,8 +76,17 @@ function DlbsCreate() {
                     </Form.Text>
                   </Form.Group>
 
+                  <Form.Group controlId="totalmark">
+                    <Form.Label>Total Mark: </Form.Label>
+                    <Form.Control
+                      type="total"
+                      defaultValue="" />
+                    <Form.Text className="text-muted">
+                      This is the maximum possible mark that could be obtained.
+                    </Form.Text>
+                  </Form.Group>
 
-                  <Form.Group className="dead-line" controlId="dlbsddl">
+                  <Form.Group className="duedate" controlId="dlbsddl">
                     <Form.Label>Assignment Deadline: </Form.Label>
                     <Form.Control type="datetime-local" id="deadline" />
                   </Form.Group>
