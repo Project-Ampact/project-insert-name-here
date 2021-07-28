@@ -1,6 +1,14 @@
 /* jshint esversion: 10*/
 const express = require('express');
 const app = express();
+const http = require('http');
+const httpServer = http.createServer(app);
+const io = require("socket.io")(httpServer, {
+    cors: {
+        origin: 'http://localhost:3000'
+    }
+});
+
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -153,5 +161,10 @@ app.use('/comment', comment);
 app.use('/calendar', events);
 app.use('/profile', profiles);
 
+// Chat stuff
+io.on('connection', (socket) => {
+    console.log("A user has connected!");
+})
+
 const port = 8000;
-app.listen(port, () => console.log("Server running on localhost:", port));
+httpServer.listen(port, () => console.log("Server running on localhost:", port));

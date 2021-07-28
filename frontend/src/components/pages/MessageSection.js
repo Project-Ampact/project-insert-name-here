@@ -3,6 +3,7 @@ import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
 import './MessageSection.css'
 import ChatBubble from "../messageComponents/ChatBubble";
 import PageLayout from "./DefaultPage";
+import io from 'socket.io-client';
 
 const mock_data = [
   {
@@ -55,6 +56,8 @@ const mock_data = [
   },
 ]
 
+const socket = io('http://localhost:8000');
+
 function MessageSection() {
   const [messageData, setMessageData] = useState(mock_data)
   const [currentMessage, setCurrentMessage] = useState('')
@@ -63,6 +66,12 @@ function MessageSection() {
   useEffect(() => {
     bottom.current.scrollIntoView();
   }, [messageData])
+
+  useEffect(() => {
+    socket.on('connection', () => {
+      console.log("Hello!");
+    })
+  }, [])
 
   const setMessage = (event) => {
     event.preventDefault();
