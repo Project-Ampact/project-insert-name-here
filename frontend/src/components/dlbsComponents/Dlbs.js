@@ -106,7 +106,7 @@ function Dlbs(props) {
           <Card.Title>Submit your work:</Card.Title>
           <Form.Group controlId="inputfile">
             <Form.Label>Select the file to upload:</Form.Label>
-            <Form.File onChange={changeHandler} id="inputfile" />
+            <Form.File onChange={changeHandler} id="inputfile" required/>
             {selectedFile ? (
 				    <div><p>
             <Row><Col>Filetype: {selectedFile.type}</Col>
@@ -123,10 +123,19 @@ function Dlbs(props) {
 
           <Row className="container-fluid"><Col>
           <div className="register del-button"> 
-              <Col sm={3}><Button type="reset" variant="secondary" href={backtoDlbs}>
-              Cancel</Button></Col>
-              <Col sm={3}><Button onClick={newSubmission} type="submit" variant="primary"  href={backtoDlbs}>
-              Upload </Button></Col> 
+          {selectedFile ? (
+            <Row>
+				     <Col sm={5}><Button type="reset" variant="secondary" href={backtoDlbs}>
+             Cancel</Button></Col>
+             <Col sm={5}><Button onClick={newSubmission} type="submit" variant="primary"  href={backtoDlbs}>
+             Upload </Button></Col> 
+				    </Row>) : (
+				    <div>
+            <Col><Button type="reset" variant="secondary" href={backtoDlbs}>
+            Cancel</Button></Col>
+           </div>
+            )}
+             
             </div>
             <div className="wrapper-register"><p id="error-message">Error: please change your information*</p></div>
           </Col>
