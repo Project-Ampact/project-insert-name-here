@@ -81,7 +81,7 @@ const APIAccess = {
         }
     },
 
-    createcreateNewDlbs(title, dueDate, description){
+    createNewDlbs(title, dueDate, description){
         try{
             return fetch('http://localhost:8000/assignment/', {
                 method: 'POST',
