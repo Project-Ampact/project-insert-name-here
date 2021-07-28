@@ -102,7 +102,7 @@ function DlbsPage(props) {
       dueDate={new Date(mock_data_single.dueDate).toLocaleDateString()}
       title={mock_data_single.title}
       id={mock_data_single._id}
-      total={mock_data_single.totalMarks}
+      totalMarks={mock_data_single.totalMarks}
       description={mock_data_single.description}
       instructor={mock_data_single.instructor}
     />
