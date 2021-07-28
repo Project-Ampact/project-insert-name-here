@@ -1,7 +1,7 @@
 import "./Dlbs.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Card, Form, Button, Container } from "react-bootstrap";
@@ -10,12 +10,19 @@ import { propTypes } from "react-bootstrap/esm/Image";
 
 function Dlbs(props) {
   let { dlbsid } = useParams();
+  let history = useHistory(); 
+  const username = document.cookie.split("user=")[1].split("%20")[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
+
   let backtoDlbs = "../deliverableFeed";  
-/*
+  let mock_data;
+
+  
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [DlbsData, setDlbsData] = useState({});
-  const [page, setPage] = useState(1);
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,6 +41,27 @@ function Dlbs(props) {
       });
   }, []);
 
+  const changeHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsFilePicked(true);
+	};
+
+
+  const newSubmission = async (e) => {
+    e.preventDefault();
+    try {
+      let assignment = props.id;
+      const fileData = new FormData();
+		  fileData.append('file', selectedFile);
+      fileData.append('assignment', assignment)
+
+      let result = await APIAccess.createNewSubmission(fileData);
+      console.log("Made it here");
+      history.push("/deliverableFeed");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -43,29 +71,23 @@ function Dlbs(props) {
     );
   }
 
-  const newSubmission = async (e) => {
-    e.preventDefault();
-    try {
-      let title = document.getElementById("title").value;
-      let dueDate = document.getElementById("duedate").value;
-      let description = document.getElementById("description").value;
-      let totalMarks = document.getElementById("totalmark").value;
-      window.location.reload();
-      let result = await APIAccess.createNewDlbs(title, dueDate, totalMarks, description);
-      console.log("Made it here");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-*/
   return (
     <Container className="profile container-fluid">
       <h1 className="h1-cus"> Assignment Detail</h1>
       <div className="mid-width"> 
         <Card><Card.Body>
           <Card.Title> <h2>{props.title}</h2> </Card.Title>
-          <Card.Subtitle><h4>Instructor: {props.instructor}</h4></Card.Subtitle>
+          <Card.Subtitle></Card.Subtitle>
           <Card.Text>
+          <Row>
+            <Col>
+            <h4>Instructor: {props.instructor}</h4>
+            </Col>
+            {role === 'nobody' &&
+            <Col sm={15}> <Button  type="submit" variant="danger" > Delete Task </Button>
+            </Col> 
+            } 
+          </Row> 
           <Row>
             <Col>
             <p id="description">
@@ -83,21 +105,30 @@ function Dlbs(props) {
           <Card><Card.Body>
           <Card.Title>Submit your work:</Card.Title>
           <Form.Group controlId="inputfile">
-                <Form.Label>Select the file to upload:</Form.Label>
-                <Form.File id="inputfile" label="Only pdf files are accepted." />
-              </Form.Group>
-              <Form.Group controlId="note">
-                <Form.Label>Submission Note:</Form.Label>
-                <Form.Control type="note" id="note" as="textarea" rows={3} />
-              </Form.Group>
+            <Form.Label>Select the file to upload:</Form.Label>
+            <Form.File onChange={changeHandler} id="inputfile" />
+            {selectedFile ? (
+				    <div><p>
+            <Row><Col>Filetype: {selectedFile.type}</Col>
+            <Col>Size in bytes: {selectedFile.size}</Col>
+            <Col>
+              lastModifiedDate:{' '}
+              {selectedFile.lastModifiedDate.toLocaleDateString()}
+					  </Col></Row></p>
+				    </div>) : (
+				    <p>Select a file to show details.</p>
+            )}
+          </Form.Group>
+          
 
           <Row className="container-fluid"><Col>
           <div className="register del-button"> 
               <Col sm={3}><Button type="reset" variant="secondary" href={backtoDlbs}>
               Cancel</Button></Col>
-              <Col sm={3}><Button  type="submit" variant="primary"  href={backtoDlbs}>
+              <Col sm={3}><Button onClick={newSubmission} type="submit" variant="primary"  href={backtoDlbs}>
               Upload </Button></Col> 
             </div>
+            <div className="wrapper-register"><p id="error-message">Error: please change your information*</p></div>
           </Col>
         </Row>
         </Card.Body></Card>
@@ -106,5 +137,5 @@ function Dlbs(props) {
     </Container>
   );
 }
-//onClick={newSubmission}
+
 export default Dlbs;

@@ -44,6 +44,8 @@ let mock_data = [
 
 function DlbsPage(props) {
   let { dlbsid } = useParams();
+  
+  
   // initializes the state for loading the data.
   const [isLoading, setIsLoading] = useState(true);
 
@@ -84,7 +86,7 @@ function DlbsPage(props) {
   let backtoDlbs = "../deliverableFeed";  
 
   //needs to change "mock_data[1]" and link it to the _id of the url?
-  let mock_data_single =  mock_data.filter(item => item._id === dlbsid)[0];
+  let mock_data_single = mock_data.filter(item => item._id === dlbsid)[0];
 
   if (mock_data_single == null) {
     return (
@@ -110,6 +112,6 @@ function DlbsPage(props) {
   );
 
   }
-}
 
+}
 export default DlbsPage;

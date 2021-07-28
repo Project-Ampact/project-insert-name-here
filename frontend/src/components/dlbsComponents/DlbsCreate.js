@@ -90,7 +90,7 @@ function DlbsCreate() {
 
                   <Form.Group className="duedate" controlId="dlbsddl">
                     <Form.Label>Assignment Deadline: </Form.Label>
-                    <Form.Control type="datetime-local" id="duedate" defaultValue={Date.now()}/>
+                    <Form.Control type="date" id="duedate" defaultValue={new Date().toISOString().substr(0,10)}/>
                   </Form.Group>
 
                   <Form.Group controlId="description">
@@ -107,7 +107,7 @@ function DlbsCreate() {
                   <Col sm={3}><Button onClick={addDlbs} type="submit" variant="primary"  href={backtoDlbs}>
                   Submit </Button></Col> 
                 </div>
-                <div className="wrapper-register"><p id="error-message">Error please change your information*</p></div>
+                <div className="wrapper-register"><p id="error-message">Error: please change your information*</p></div>
               </Col>
             </Row>
           </Container>
