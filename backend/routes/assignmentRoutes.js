@@ -45,10 +45,9 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
         let submissionTime = Date.now();
         if (assignment.dueDate && assignment.dueDate < submissionTime) return res.status(401).send({success: false, message: "Due date has passed"});
         let fileEnding = req.file.originalname.split(".").pop();
-        if (assignment.fileTypes === [] || !assignment.fileTypes.includes(fileEnding)) return res.status(404).send({success: false, message: "Invalid file type"});
+        if (assignment.fileTypes.length != 0 && !assignment.fileTypes.includes(fileEnding)) return res.status(404).send({success: false, message: "Invalid file type"});
         Submission.findOne({user: req.user._id, assignment: assignmentId}, async(err, submission) => {
             if (err) return res.status(500).send({success: false, message: err.toString()});
-            console.log(submission);
             if (submission){
                 Submission.findByIdAndUpdate(submission._id, {file: req.file, submissionTime: submissionTime},(err, sub) => {
                     if (err) return res.status(500).send({success: false, message: err.toString()});
@@ -73,7 +72,6 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
             }
         });
     });
-    
 });
 
 //Get assignments
