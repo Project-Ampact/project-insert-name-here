@@ -4,6 +4,7 @@ import './MessageSection.css'
 import ChatBubble from "../messageComponents/ChatBubble";
 import PageLayout from "./DefaultPage";
 import io from 'socket.io-client';
+import { useParams } from "react-router";
 
 const mock_data = [
   {
@@ -59,6 +60,7 @@ const mock_data = [
 const socket = io('http://localhost:8000');
 
 function MessageSection() {
+  const {uid} = useParams();
   const [messageData, setMessageData] = useState(mock_data)
   const [currentMessage, setCurrentMessage] = useState('')
   const bottom = useRef(null);
@@ -92,7 +94,7 @@ function MessageSection() {
     <PageLayout>
       <div className="message-page">
         <header className="message-header">
-            <h1>Tom Smith</h1>
+            <h1>{uid}</h1>
         </header>
         <div className="message-log" id="latest-message">
           {messageData && messageData.map(x => <ChatBubble msg={x}/>)}
