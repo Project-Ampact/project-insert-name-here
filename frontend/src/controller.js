@@ -81,12 +81,12 @@ const APIAccess = {
         }
     },
 
-    createNewDlbs(title, dueDate, description){
+    createNewDlbs(title, dueDate, total, description){
         try{
             return fetch('http://localhost:8000/assignment/', {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({title: title, dueDate: dueDate, description: description}),
+                body: JSON.stringify({title: title, dueDate: dueDate, total:total, description: description}),
                 credentials: 'include',
             }).then(async (response) => {
                 let jsonRes = await response.json();
@@ -208,6 +208,7 @@ const APIAccess = {
             throw err;
         }
     },
+    
 
     getUserProfile(uid) {
         try {
