@@ -7,8 +7,8 @@ const Authentication = require("../authentication");
 const router = express.Router();
 const multer = require('multer');
 const path = require("path");
+const upload = multer({ dest: path.join('uploads')});
 const fs = require("fs");
-const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
 
 // Add assignment
 router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, async(req, res, next) => {
@@ -17,7 +17,7 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
     let dueDate = req.body.dueDate;
     let fileTypes = req.body.fileTypes;
     let totalMarks = req.body.totalMarks;
-    if (totalMarks <= 0) return res.status(401).send({success: false, message: "Assignment must be out of 1 or more marks"});
+    if (!totalMarks || totalMarks <= 0) return res.status(401).send({success: false, message: "Assignment must be out of 1 or more marks"});
     let newAssignment = new Deliverable({
         title: title,
         description: description,
@@ -76,22 +76,23 @@ router.put("/submission", Authentication.isAuthenticated, upload.single('file') 
 });
 
 //Get assignments
-router.get("/", Authentication.isAuthenticated, async(req, res) => {
+router.get("/", async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
+    if (req.query.title) query.title = {$regex: req.query.title, $options: "i"};
     if (req,query.instructor) query.instructor = req.query.instructor;
     Deliverable.find(query, (err, assignments) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         return res.json(assignments);
-    });
+    }).sort({datePosted: -1});
 });
 
 //Get metadata for submissions
-router.get("/submission/metadata", Authentication.isAuthenticated, async(req, res) => {
+router.get("/submission/metadata", async(req, res) => {
     let query = {};
-    if (!req.query.assignment) return res.status(401).send({success: false, message: "Can only get submissions for one assignment"});
-    query.assignment = req.query.assignment;
+    if (req.query.assignment) query.assignment = req.query.assignment;
     if (req.query.id) query._id = req.query.id;
+    if (query == {}) res.status(401).send({success: false, message: "Can only one submission or submissions from one file"});
     Submission.find(query, (err, submissions) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         return res.json(submissions);
@@ -99,31 +100,34 @@ router.get("/submission/metadata", Authentication.isAuthenticated, async(req, re
 });
 
 //Get file by id
-router.get("/submission/file/:id", Authentication.isAuthenticated, async(req, res) => {
+router.get("/submission/file/:id", async(req, res) => {
     if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         res.setHeader('Content-Type', submission.file.mimetype);
-        return res.sendFile(path.join(submission.file.path));
+        return res.sendFile(path.join(__dirname, "..", submission.file.path));
     });
 });
 
 //update submission grade
 router.patch("/submission/:id", Authentication.isAuthenticated, Authentication.isInstructor, (req, res) => {
     let updateQuery = {};
-    let grade = req.body.grade;
-    if (grade !== undefined){
-        if (grade < 0 || grade > 100) return res.status(401).send({success: false, message: "Grade must be between 0 and 100"});
-        updateQuery.grade = grade;
-    }
     if (req.body.feedback !== undefined) updateQuery.feedback = req.body.feedback;
     if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
     Submission.findById(req.params.id, (err, submission) => {
         if (err) return res.status(500).send({success: false, message: err.toString()});
         if (!submission) return res.status(404).send({success: false, message: "Can't find submission"});
-        Submission.findByIdAndUpdate(req.params.id, updateQuery, (err, updatedSubmission) => {
+        Deliverable.findById(submission.assignment, (err, deliverable) => {
+            let grade = req.body.grade;
             if (err) return res.status(500).send({success: false, message: err.toString()});
-            return res.json(updatedSubmission);
+            if (grade !== undefined){
+                if (grade < 0 || grade > deliverable.totalMarks) return res.status(401).send({success: false, message: "Grade must be between 0 and 100"});
+                updateQuery.grade = grade;
+            }
+            Submission.findByIdAndUpdate(req.params.id, updateQuery, (err, updatedSubmission) => {
+                if (err) return res.status(500).send({success: false, message: err.toString()});
+                return res.json(updatedSubmission);
+            });
         });
     });
 });

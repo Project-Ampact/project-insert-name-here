@@ -28,7 +28,7 @@ router.get("/", Authentication.isAuthenticated, async (req, res) => {
     return res.json(posts);
 });
 
-router.get("/:postID", Authentication.isAuthenticated, async (req, res) => {
+router.get("/:postID", async (req, res) => {
     let postID = req.params.postID;
     Post.findOne({_id: postID}, (err, post) => {
         if (err && err.name != 'CastError') return res.status(500).send({
