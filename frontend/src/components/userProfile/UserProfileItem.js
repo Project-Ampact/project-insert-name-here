@@ -1,3 +1,4 @@
+import { Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import "./UserProfileList.css"
 
@@ -13,12 +14,13 @@ function UserProfileItem(props) {
 
   return (
     <Card key={props.key}>
-      <a className="links" style={{ cursor: "pointer" }} href={userLink}>
-        <Card.Body>
-          <Card.Title className="big-text">{usernameText}</Card.Title>
-          <Card.Text>{nameText}</Card.Text>
-        </Card.Body>
-      </a>
+    <Card.Body>
+        <a className="links" style={{ cursor: "pointer" }} href={userLink}>
+            <Card.Title className="big-text">{usernameText}</Card.Title>
+            <Card.Text>{nameText}</Card.Text> 
+        </a>
+        <Button className="mt-2" href={`/message/${props.username}`}>Message</Button>
+      </Card.Body>
     </Card>
   );
 }

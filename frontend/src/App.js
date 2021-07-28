@@ -27,6 +27,7 @@ import PostFeed from './components/pages/PostFeed';
 import PostFeedAnnouncements from './components/pages/PostFeedAnnouncements';
 import CalendarPage from './components/pages/CalendarPage';
 import MessageSection from './components/pages/MessageSection';
+import MessagePage from './components/pages/MessagePage';
 
 
 function PrivateRoute({ children, ...rest }) {
@@ -86,7 +87,8 @@ function App() {
             <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
             <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
-            <PrivateRoute exact path="/message" children={<MessageSection/>}/>
+            <PrivateRoute exact path="/message" children={<MessagePage/>}/>
+            <PrivateRoute exact path="/message/:uid" children={<MessageSection/>}/>
           </Switch>
         </Router>
       </AuthProvider>      
