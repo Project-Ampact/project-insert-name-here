@@ -15,46 +15,6 @@ const mock_data = [
     message: 'How are you',
     type: 'recieve'
   },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'recieve'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
-  {
-    message: 'test test test test test test test test test test test test test test test test test test test test ',
-    type: 'self'
-  },
 ]
 
 const socket = io('http://localhost:8000');
@@ -63,6 +23,7 @@ function MessageSection() {
   const {uid} = useParams();
   const [messageData, setMessageData] = useState(mock_data)
   const [currentMessage, setCurrentMessage] = useState('')
+  const [newMessage, setNewMessage] = useState({})
   const bottom = useRef(null);
 
   useEffect(() => {
@@ -75,6 +36,23 @@ function MessageSection() {
     })
   }, [])
 
+  useEffect(() => {
+    socket.on('private message', ({message, from}) => {
+      setNewMessage({
+          message: message,
+          type: 'recieve'
+        })
+    });
+  }, [])
+
+  useEffect(() => {
+    setMessageData(
+      messageData.concat(
+        newMessage
+      )
+    )
+  }, [newMessage])
+
   const setMessage = (event) => {
     event.preventDefault();
     setCurrentMessage(event.target.value)
@@ -84,8 +62,12 @@ function MessageSection() {
     e.preventDefault()
 
     if (currentMessage.trim()) {
-      setMessageData(messageData.concat({message: currentMessage, type: 'self'}))
-      setCurrentMessage('')
+      socket.emit('private message', {
+        message: currentMessage,
+        to: uid
+      });
+      //setMessageData(messageData.concat({message: currentMessage, type: 'self'}))
+      //setCurrentMessage('')
       document.getElementById('textbox').value = ''
     }
   }
