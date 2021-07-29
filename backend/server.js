@@ -165,11 +165,12 @@ app.use('/profile', profiles);
 io.on('connection', (socket) => {
     console.log("A user has connected!");
 
+    socket.join(socket.username);
     socket.on("private message", ({message, to}) => {
         // socket.to(to).emit( ... )
-        io.emit("private message", {
+        socket.to(to).to(socket.username).emit("private message", {
             message,
-            from: socket.id
+            from: socket.username
         });
     })
 })
