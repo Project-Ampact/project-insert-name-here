@@ -29,30 +29,6 @@ let mock_data = [
     user: "raymondma",
     assignment: "60fba065c7805260444f1ae19",
   },
-  {
-    _id: "60e62079cfcf1323cc33bd6ab",
-    grade: 12,
-    feedback: "nice try",
-    submissionTime: "2021-07-25T21:01:41.834Z",
-    user: "lawrencecai",
-    assignment: "60fba065c7805603444f1ae19",
-  },
-  {
-    _id: "60e62079cfcf1323c2c3bd6ab",
-    grade: 45,
-    feedback: "great work",
-    submissionTime: "2021-07-20T21:01:41.834Z",
-    user: "laragomez",
-    assignment: "60fba065c7805602444f1ae19",
-  },
-  {
-    _id: "60e62079cfcf1323cc3bd36ab",
-    grade: 34,
-    feedback: "good attempt",
-    submissionTime: "2021-07-22T21:01:41.834Z",
-    user: "davidtan",
-    assignment: "60fba065c7805604444f1ae19",
-  },
 ];
 
 function Expand({ children, eventKey, callback }) {
@@ -108,39 +84,19 @@ function SubmissionSection(props) {
           id={mock_data_piece._id}
           aid={mock_data_piece.assignment}
           total={total2}
-          link={"http://localhost:3000/submission/" + mock_data_piece._id}
+          link={"http://localhost:3000/user/submission/" + mock_data_piece._id}
         />
       );
     });
   }
 
-  // Updates the query parameter as it is changed realtime
-  const updateQuery = (x) => {
-    console.log("from updateQuery", x.target.value);
-    setQuery(x.target.value);
-  };
-
-  // Sends the query to set loaded deliverable data by the query
-  async function sendQuery(e) {
-    if (e != null) e.preventDefault();
-    console.log("inside sendQuery", query);
-    if (query !== "") {
-      let returnedData = mock_data.filter(submission => {
-        console.log("Query= ",query);
-        return submission.user.toLowerCase().startsWith(query.slice(0, Math.max(submission.user.length - 1, 1)));
-      });
-      setLoadedSubmissionData(returnedData);
-    } else {
-      setLoadedSubmissionData(mock_data);
-    }
-  }
-
+  
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch(
       "http://localhost:8000/assignment/submission/metadata?assignment=" +
-        props.id,
+        props.id + "&user=" + username,
       {
         credentials: "include",
       }
@@ -168,45 +124,9 @@ function SubmissionSection(props) {
       <Card>
         <Card.Header className="d-flex justify-content-between">
           <Expand eventKey="0">Submissions</Expand>
-          <Button href={`http://localhost:3000/Dlbs/${props.id}`}>Details</Button>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
-            <Container>
-              <Row className="cus2-row">
-                <Card className="comment-wrapper rounded">
-                  <Card.Body className="comment-body">
-                    <Form
-                      onSubmit={sendQuery}
-                      className="search-group title-and-date"
-                    >
-                      <InputGroup
-                        size="lg"
-                        onChange={(event) => {
-                          updateQuery(event);
-                        }}
-                        onSubmit={sendQuery}
-                      >
-                        <InputGroup.Prepend>
-                          <InputGroup.Text id="inputGroup-sizing-lg">
-                            Search for user submission
-                          </InputGroup.Text>
-                        </InputGroup.Prepend>
-                        <FormControl
-                          aria-label="Large"
-                          aria-describedby="inputGroup-sizing-sm"
-                        />
-                        <InputGroup.Append>
-                          <Button variant="primary" type="submit">
-                            Search
-                          </Button>
-                        </InputGroup.Append>
-                      </InputGroup>
-                    </Form>
-                  </Card.Body>
-                </Card>
-              </Row>
-            </Container>
             {LoadSubmissions(props.total)}
           </Container>
         </Accordion.Collapse>

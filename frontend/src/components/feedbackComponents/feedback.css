@@ -22,7 +22,7 @@ body {
     background-color: white;
 
 }
-#feedback-wrapper > div > .grid-container {
+#feedbackPdf-wrapper> div > .grid-container {
     width: 100%;
     display: grid;
 
@@ -39,31 +39,32 @@ body {
 #grade-title {
     margin-right: 6px;
 }
-#feedback-wrapper {
-    display: flex;
-    margin-top: 20px;
 
-
-
-    width: 90%;
-    margin-left: 200px;
-    padding-bottom: 50px;
+#feedbackPdf-wrapper {
+    margin-left: 150px;
 }
 
+#feedback-wrapper {
+    padding-bottom: 10px;
+    
+}
+
+
+
+
 #submission-wrapper {
-    margin: 0 20px;
-    flex:  1 1 auto;
+
+    padding-bottom: 50px;
     
 
 }
 
 #feedback-form {
-    margin-top: 60px;
+    padding: 20px;
 }
 
 #submission-id {
-    display:
-     none;
+    display: none;
 }
 
 #current-feedback-wrapper {
@@ -73,6 +74,14 @@ body {
 
 #current-feedback {
     padding: 12px;
+}
+
+#submission-date {
+    align-content: end;
+}
+
+#spacer {
+    flex-grow: 1;
 }
 
 
