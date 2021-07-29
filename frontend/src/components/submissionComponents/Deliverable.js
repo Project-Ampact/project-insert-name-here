@@ -27,6 +27,7 @@ function Deliverable(props) {
         </div>
       </div>
       <SubmissionSection id={props.id} total={props.total} user={props.instructor}></SubmissionSection>
+      
     </div>
   </Container>
   );

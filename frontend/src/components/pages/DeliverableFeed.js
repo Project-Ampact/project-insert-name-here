@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Container, Form, Button } from "react-bootstrap";
+import { Col, Row, Container, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useParams } from "react-router-dom";
@@ -89,6 +89,13 @@ function DeliverableFeed() {
   return (
     <PageLayout>
       <h1 className="h1-cus">Assignments</h1>
+      <Container> <div>
+      {role === 'instructor' &&        
+      <Button  type="submit" className="submitbutton" variant="primary" href={`../Dlbs/create/`}>
+      Create New Assignment</Button>
+      }
+      </div></Container>
+
       {loadedDeliverableData.map((mock_data_piece) => {
 
         let date = new Date(mock_data_piece.datePosted);
@@ -121,8 +128,11 @@ function DeliverableFeed() {
             id={mock_data_piece._id}
             total={mock_data_piece.totalMarks}
           />
+
+
         );
       })}
+
       ;
     </PageLayout>
   );
