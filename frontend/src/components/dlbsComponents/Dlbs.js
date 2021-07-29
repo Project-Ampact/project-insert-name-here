@@ -1,85 +1,149 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Row, Col, Card, Button, Container } from "react-bootstrap";
 import "./Dlbs.css";
-import PageLayout from "../pages/DefaultPage";
+/*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
-
+import { useParams, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import PageLayout from "../pages/DefaultPage";
+import { Col, Row, Card, Form, Button, Container } from "react-bootstrap";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 
 function Dlbs(props) {
+  let { dlbsid } = useParams();
+  let history = useHistory(); 
+  const username = document.cookie.split("user=")[1].split("%20")[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
 
-  let toDlbsPage = "http://localhost:3000/Dlbs/detail/"; //+ props.id;
-  let DlbsCreate = "http://localhost:3000/Dlbs/create/"; 
+  let backtoDlbs = "../deliverableFeed";  
+  let mock_data;
+
+  
+  const [isLoading, setIsLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const [DlbsData, setDlbsData] = useState({});
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch("http://localhost:8000/assignment/", {
+      credentials: 'include'
+    })
+      .then((response) => {
+        //console.log(response.json())
+        return response.json();
+      })
+      .then((data) => {
+        // console.log(data)
+        mock_data = data;
+        setDlbsData(data);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const changeHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsFilePicked(true);
+	};
+
+
+  const newSubmission = async (e) => {
+    e.preventDefault();
+    try {
+      let assignment = props.id;
+      const fileData = new FormData();
+		  fileData.append('file', selectedFile);
+      fileData.append('assignment', assignment)
+
+      let result = await APIAccess.createNewSubmission(fileData);
+      console.log("Made it here");
+      history.push("/deliverableFeed");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  }
 
   return (
-    <PageLayout>
-       <h1 className="h1-cus"> Assignemnts Available</h1>
-    <Container className="mt-3 profile container-fluid">
-      <Row><Col>
-      <div className="register del-button">
-      <Button
-        type="submit"
-        className="submitbutton"
-        variant="primary"
-        href={DlbsCreate}
-        >
-        Create New Assignment
-      </Button>
-    </div>
-      </Col></Row>
-      <Row className="row2 container-fluid">
-        <Col>
-          <Card className="mb-3 groupProfile">
-            <Card.Body>
-              <Card.Title className="cus-title">
-              Sample Assignment#1
-              </Card.Title>
-              <Card.Text>
-              <div className="deadline"> Deadlines: 2021/07/11 </div> </Card.Text>
-              <Button className="floatRight" href={toDlbsPage} variant="primary" type="submit">
-              Details
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+    <Container className="profile container-fluid">
+      <h1 className="h1-cus"> Assignment Detail</h1>
+      <div className="mid-width"> 
+        <Card><Card.Body>
+          <Card.Title> <h2>{props.title}</h2> </Card.Title>
+          <Card.Subtitle></Card.Subtitle>
+          <Card.Text>
+          <Row>
+            <Col>
+            <h4>Instructor: {props.instructor}</h4>
+            </Col>
+            {role === 'nobody' &&
+            <Col sm={15}> <Button  type="submit" variant="danger" > Delete Task </Button>
+            </Col> 
+            } 
+          </Row> 
+          <Row>
+            <Col>
+            <p id="description">
+            {props.description}
+            </p>
 
-      <Row className="row2 container-fluid">
-        <Col>
-          <Card className="mb-3 groupProfile">
-            <Card.Body>
-              <Card.Title className="cus-title">
-              Sample Assignment#2
-              </Card.Title>
-              <Card.Text>
-              <div className="deadline"> Deadlines: 2021/07/18 </div> </Card.Text>
-              <Button className="floatRight" href={toDlbsPage} variant="primary" type="submit">
-              Details
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          <h6 className="dead-line" controlId="dlbsddl">
+            Assignment Deadline: {props.dueDate}</h6>
+            </Col>
+            <Col>Total Marks: {props.totalMarks}</Col>
+          </Row>
+          </Card.Text>
+          </Card.Body></Card></div>
+      <div className="mid-width"> 
+          <Card><Card.Body>
+          <Card.Title>Submit your work:</Card.Title>
+          <Form.Group controlId="inputfile">
+            <Form.Label>Select the file to upload:</Form.Label>
+            <Form.File onChange={changeHandler} id="inputfile" required/>
+            {selectedFile ? (
+				    <div><p>
+            <Row><Col>Filetype: {selectedFile.type}</Col>
+            <Col>Size in bytes: {selectedFile.size}</Col>
+            <Col>
+              Last Modified Date:{' '}
+              {selectedFile.lastModifiedDate.toLocaleDateString()}
+					  </Col></Row></p>
+				    </div>) : (
+				    <p></p>
+            )}
+          </Form.Group>
+          
 
-      <Row className="row2 container-fluid">
-        <Col>
-          <Card className="mb-3 groupProfile">
-            <Card.Body>
-              <Card.Title className="cus-title">
-              Sample Assignment#3
-              </Card.Title>
-              <Card.Text>
-              <div className="deadline"> Deadlines: 2021/07/28 </div> </Card.Text>
-              <Button className="floatRight" href={toDlbsPage} variant="primary" type="submit">
-              Details
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          <Row className="container-fluid"><Col>
+          <div className="register del-button"> 
+          {selectedFile ? (
+            <Row>
+				     <Col sm={5}><Button type="reset" variant="secondary" href={backtoDlbs}>
+             Cancel</Button></Col>
+             <Col sm={5}><Button onClick={newSubmission} type="submit" variant="primary"  href={backtoDlbs}>
+             Upload </Button></Col> 
+				    </Row>) : (
+				    <div>
+            <Col><Button type="reset" variant="secondary" href={backtoDlbs}>
+            Cancel</Button></Col>
+           </div>
+            )}
+             
+            </div>
+            <div className="wrapper-register"><p id="error-message">Error: please change your information*</p></div>
+          </Col>
+        </Row>
+        </Card.Body></Card>
+        
+      </div>
     </Container>
-    </PageLayout>
   );
 }
 
