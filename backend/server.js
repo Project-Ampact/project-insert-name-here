@@ -11,13 +11,14 @@ const cookie = require('cookie');
 const User = require('./models/user');
 const Profile = require('./models/profile');
 const Authentication = require("./authentication");
-
 require('dotenv/config');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.use(express.static('static'));
 
 //prints request out onto the console
 app.use((req, res, next) => {
@@ -139,6 +140,7 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 
 const events = require('./routes/eventRoutes');
 const groups = require('./routes/groupRoutes');
+const assignment = require('./routes/assignmentRoutes');
 const videos = require('./routes/videoRoutes');
 const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
@@ -146,6 +148,7 @@ const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
 
 app.use('/group', groups);
+app.use('/assignment', assignment);
 app.use('/video', videos);
 app.use('/search', search);
 app.use('/post', post);

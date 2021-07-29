@@ -1,0 +1,78 @@
+
+body {    
+    background-color: #f2f2f2 !important;
+}
+
+#grade-input {
+    width: 100px;
+}
+
+#grade-error {
+    color: red;
+}
+
+#page-number {
+    place-self: end;
+    margin-right: 20px;
+    padding-right: 10px;
+
+}
+
+#pdf {
+    background-color: white;
+
+}
+#feedback-wrapper > div > .grid-container {
+    width: 100%;
+    display: grid;
+
+    padding: 5px;
+    grid-template-columns: 75px 75px 40px 75px 75px 1fr  ;
+} /* weird bug, affects posts too */
+
+
+#grade-wrapper {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#grade-title {
+    margin-right: 6px;
+}
+#feedback-wrapper {
+    display: flex;
+    margin-top: 20px;
+
+
+
+    width: 90%;
+    margin-left: 200px;
+    padding-bottom: 50px;
+}
+
+#submission-wrapper {
+    margin: 0 20px;
+    flex:  1 1 auto;
+    
+
+}
+
+#feedback-form {
+    margin-top: 60px;
+}
+
+#submission-id {
+    display:
+     none;
+}
+
+#current-feedback-wrapper {
+    border: 1px solid lightblue;
+    min-height: 100px;
+}
+
+#current-feedback {
+    padding: 12px;
+}
+
+
