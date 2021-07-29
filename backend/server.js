@@ -172,6 +172,9 @@ io.on('connection', (socket) => {
             message,
             from: socket.username
         });
+    });
+    socket.on("disconnect", () => {
+        socket.removeAllListeners();
     })
 })
 
