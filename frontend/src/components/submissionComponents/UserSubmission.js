@@ -80,7 +80,7 @@ function SubmissionSection(props) {
           className="loaded-comment"
           user={mock_data_piece.user}
           grade={mock_data_piece.grade}
-          date={date.getFullYear() + "/" + month + "/" + day}
+          date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
           id={mock_data_piece._id}
           aid={mock_data_piece.assignment}
           total={total2}
