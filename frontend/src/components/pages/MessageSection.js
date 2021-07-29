@@ -6,16 +6,7 @@ import PageLayout from "./DefaultPage";
 import io from 'socket.io-client';
 import { useParams } from "react-router";
 
-const mock_data = [
-  {
-    message: 'Hello good sir',
-    type: 'self'
-  },
-  {
-    message: 'How are you',
-    type: 'recieve'
-  },
-]
+const mock_data = [ ]
 
 const socket = io('http://localhost:8000', {autoConnect: false});
 
@@ -33,7 +24,9 @@ function MessageSection() {
 
   // set username so server knows
   useEffect(() => {
-    socket.auth = {username};
+    socket.auth = {
+      username,
+      recipient: uid};
     socket.connect();
   }, [])
 

@@ -166,12 +166,16 @@ io.on('connection', (socket) => {
     console.log("A user has connected!");
 
     socket.join(socket.username);
+    // emit entire message backlog here 
     socket.on("private message", ({message, to}) => {
         // socket.to(to).emit( ... )
-        socket.to(to).to(socket.username).emit("private message", {
+        const msg = {
             message,
-            from: socket.username
-        });
+            from: socket.username,
+            to
+        };
+        socket.to(to).to(socket.username).emit("private message", msg);
+        // store into backlog here
     });
     socket.on("disconnect", () => {
         socket.removeAllListeners();
@@ -181,6 +185,7 @@ io.on('connection', (socket) => {
 io.use((socket, next) => {
     const username = socket.handshake.auth.username; 
     socket.username = username; 
+    socket.recipient = socket.handshake.auth.recipient
     next(); 
 });
 
