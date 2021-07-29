@@ -222,18 +222,15 @@ Tracking on Jira Total Mark: 24 / 24
     - 1 mark = one member is not present
     - 0 marks = more than one member is not present
   
-  - Working software (max 2 marks)
-  Tuesday: 2 features
-  Wednesday/Thursday: 3 features
-  Friday: 4 features
-  
-    - 8 marks = features presented work flawlessly
-    - 1 mark removed for each error or missing records on Jira
+  Your Mark: 10 /10
 
-  Your Mark: __ / 10
+Features:
+- Integrated UI
+- Posts/Comments, edit, moderate
+- Event schedule, update, deletion
 
 ---
 
 ## Total Mark
 
-76.4 / 89
+86.4 / 89
