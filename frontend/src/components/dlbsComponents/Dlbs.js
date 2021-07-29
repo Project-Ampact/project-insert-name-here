@@ -73,7 +73,7 @@ function Dlbs(props) {
 
   return (
     <Container className="profile container-fluid">
-      <h1 className="h1-cus"> Assignment Detail</h1>
+      <h1 className="h1-cus"> Assignment</h1>
       <div className="mid-width"> 
         <Card><Card.Body>
           <Card.Title> <h2>{props.title}</h2> </Card.Title>
@@ -112,11 +112,11 @@ function Dlbs(props) {
             <Row><Col>Filetype: {selectedFile.type}</Col>
             <Col>Size in bytes: {selectedFile.size}</Col>
             <Col>
-              lastModifiedDate:{' '}
+              Last Modified Date:{' '}
               {selectedFile.lastModifiedDate.toLocaleDateString()}
 					  </Col></Row></p>
 				    </div>) : (
-				    <p>Select a file to show details.</p>
+				    <p></p>
             )}
           </Form.Group>
           
