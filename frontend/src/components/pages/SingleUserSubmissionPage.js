@@ -25,7 +25,7 @@ let mock_data2 = [
 let feedbackInfo ;
 let assignmentInfo;
 
-function SingleFeedbackPage() {
+function SingleUserSubmissionPage() {
   let { sid } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideoData, setLoadedVideoData] = useState([]);
@@ -86,13 +86,16 @@ function SingleFeedbackPage() {
       </section>
     );
   }
-//http://localhost:8000/assignment/file/${assignmentInfo._id}  This is for getting assignment file
+
   return (
     <PageLayout>
+        <h1 id="user-submission-assignment-title">Assignment: {assignmentInfo.title}</h1>
       <div id="single-feedback-page-wrapper">
+          
       <FeedbackPdf file={`http://localhost:8000/assignment/submission/file/${feedbackInfo._id}`}/>
+ 
       <div id="submission-info-wrapper">
-        <Feedback 
+        <Feedback  
         title={assignmentInfo.title}
         user={feedbackInfo.user}
         grade={feedbackInfo.grade}
@@ -101,7 +104,6 @@ function SingleFeedbackPage() {
         currentFeedback={feedbackInfo.feedback}
         dueDate={feedbackInfo.submissionTime}
         />
-        <FeedbackForm  totalGrade={assignmentInfo.totalMarks}/>
         </div>
         </div>
       
@@ -110,4 +112,4 @@ function SingleFeedbackPage() {
   );
 }
 
-export default SingleFeedbackPage;
+export default SingleUserSubmissionPage;
