@@ -122,8 +122,8 @@ function DeliverableFeed() {
         return (// deliverables will all be displayed in order
           <Deliverable
             user={mock_data_piece.instructor}
-            date={date.getFullYear() + "/" + month + "/" + day}
-            dueDate={dueDate.getFullYear() + "/" + month2 + "/" + day2}
+            date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
+            dueDate={dueDate.toLocaleDateString() + ' ' + dueDate.toLocaleTimeString()}
             title={mock_data_piece.title}
             id={mock_data_piece._id}
             total={mock_data_piece.totalMarks}

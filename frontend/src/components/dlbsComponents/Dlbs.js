@@ -73,7 +73,7 @@ function Dlbs(props) {
 
   return (
     <Container className="profile container-fluid">
-      <h1 className="h1-cus"> Assignment</h1>
+      <h1 className="h1-cus"> {props.title}</h1>
       <div className="mid-width"> 
         <Card><Card.Body>
           <Card.Title> <h2>{props.title}</h2> </Card.Title>
@@ -83,6 +83,7 @@ function Dlbs(props) {
             <Col>
             <h4>Instructor: {props.instructor}</h4>
             </Col>
+            <Col>Total Marks: {props.totalMarks}</Col>
             {role === 'nobody' &&
             <Col sm={15}> <Button  type="submit" variant="danger" > Delete Task </Button>
             </Col> 
@@ -95,9 +96,8 @@ function Dlbs(props) {
             </p>
 
           <h6 className="dead-line" controlId="dlbsddl">
-            Assignment Deadline: {props.dueDate}</h6>
+            Assignment Deadline: {props.dueDate.toLocaleDateString() + ' ' + props.dueDate.toLocaleTimeString()}</h6>
             </Col>
-            <Col>Total Marks: {props.totalMarks}</Col>
           </Row>
           </Card.Text>
           </Card.Body></Card></div>

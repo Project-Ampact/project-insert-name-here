@@ -31,14 +31,15 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
     try{
         console.log(typeof dueDate, dueDate)
         let savedAssignment = await newAssignment.save();
-        let startDate = new Date(dueDate)
+        let endDate = new Date(dueDate);
+        let startDate = new Date(dueDate);
         startDate.setHours(startDate.getHours() - 1);
         // add new event to calendar
         let newEvent = new Event({
             title: title,
             description: description,
             start: startDate,
-            end: dueDate,
+            end: endDate,
             type: 'assignment',
             userId: req.user._id
         })
