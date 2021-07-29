@@ -11,7 +11,7 @@ const validator = require('validator');
 const validSubjects = [''];
 
 //Get videos matching the query
-router.get("/", Authentication.isAuthenticated, async(req, res) => {
+router.get("/", async(req, res) => {
     let query = {};
     if (req.query.id) query._id = req.query.id;
     if (req.query.author) query.action = req.query.author;

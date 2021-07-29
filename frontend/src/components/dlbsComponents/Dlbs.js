@@ -73,7 +73,7 @@ function Dlbs(props) {
 
   return (
     <Container className="profile container-fluid">
-      <h1 className="h1-cus"> Assignment Detail</h1>
+      <h1 className="h1-cus"> Assignment</h1>
       <div className="mid-width"> 
         <Card><Card.Body>
           <Card.Title> <h2>{props.title}</h2> </Card.Title>

@@ -24,7 +24,7 @@ const router = express.Router();
 //     })
 // });
 
-router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
+router.get("/:userId", async (req, res) => {
   const userId = req.params.userId;
   const role = req.body.role;
 
@@ -78,7 +78,7 @@ router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
   });
 });
 
-router.post("/", Authentication.isAuthenticated, async (req, res) => {
+router.post("/", async (req, res) => {
 
   let title = req.body.title;
   let description = req.body.description;
