@@ -979,8 +979,6 @@
 - Request `GET /calendar/:userId`
     - params:
         - userId: (String) the user's id to get their events
-    - body: 
-        - role: (String) role of the user
     - example:
     ```
         fetch('localhost:8000/calendar/someguy', {

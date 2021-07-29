@@ -4,6 +4,7 @@ const express = require("express");
 const Event = require("../models/events");
 const Group = require("../models/group");
 const User = require("../models/user");
+const Profile = require('../models/profile');
 
 const Authentication = require('../authentication');
 const router = express.Router();
@@ -26,56 +27,59 @@ const router = express.Router();
 
 router.get("/:userId", async (req, res) => {
   const userId = req.params.userId;
-  const role = req.body.role;
 
-  if (role === null) {
-    return res.status(400).json({
-      success: false,
-      message: "Request body must contain role",
-    });
-  }
-
-  Group.findOne({ members: userId }, (err, result) => {
-    console.log(result);
+  Profile.findById(userId, (err, result) => {
     if (err)
       return res.status(500).send({ success: false, message: err.toString() });
-    if (!result) groupSearch = null;
 
-    let query;
+    if (!result)
+      return res.status(404).send({sucess: false, message: 'User not found'});
 
-    if (role === 'entrepreneur' || role === 'instructor') {
-      query = {
-        $or: [
-          { userId: userId, type: "personal" },
-          { groupId: result === null ? null : result._id, type: "group" },
-          { type: "general" },
-          { type: "assignment" }
-        ]
-      }
-    } else {
-      query = {
-        $or: [
-          { userId: userId, type: "personal" },
-          { groupId: result === null ? null : result._id, type: "group" },
-          { type: "general" }
-        ]
-      }
-    }
+    console.log(result.role)
+    const role = result.role;
 
-    Event.find(query,
-      (err, events) => {
-        if (err)
-          return res
-            .status(500)
-            .send({ success: false, message: err.toString() });
-        if (!events)
-          return res
-            .status(404)
-            .send({ success: false, message: "User's events not found" });
-        return res.json(events);
+    Group.findOne({ members: userId }, (err, result) => {
+      console.log(result);
+      if (err)
+        return res.status(500).send({ success: false, message: err.toString() });
+      if (!result) groupSearch = null;
+  
+      let query;
+  
+      if (role === 'entrepreneur' || role === 'instructor') {
+        query = {
+          $or: [
+            { userId: userId, type: "personal" },
+            { groupId: result === null ? null : result._id, type: "group" },
+            { type: "general" },
+            { type: "assignment" }
+          ]
+        }
+      } else {
+        query = {
+          $or: [
+            { userId: userId, type: "personal" },
+            { groupId: result === null ? null : result._id, type: "group" },
+            { type: "general" }
+          ]
+        }
       }
-    );
-  });
+  
+      Event.find(query,
+        (err, events) => {
+          if (err)
+            return res
+              .status(500)
+              .send({ success: false, message: err.toString() });
+          if (!events)
+            return res
+              .status(404)
+              .send({ success: false, message: "User's events not found" });
+          return res.json(events);
+        }
+      );
+    });
+  })
 });
 
 router.post("/", async (req, res) => {

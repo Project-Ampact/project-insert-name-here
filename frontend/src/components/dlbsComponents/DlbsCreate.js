@@ -80,7 +80,7 @@ function DlbsCreate() {
                   <Form.Group controlId="totalmark">
                     <Form.Label>Total Mark: </Form.Label>
                     <Form.Control
-                      type="totalmark"
+                      type="number"
                       id="totalmark"
                       defaultValue="" required/>
                     <Form.Text className="text-muted">
@@ -90,7 +90,7 @@ function DlbsCreate() {
 
                   <Form.Group className="duedate" controlId="dlbsddl">
                     <Form.Label>Assignment Deadline: </Form.Label>
-                    <Form.Control type="date" id="duedate" defaultValue={new Date().toISOString().substr(0,10)}/>
+                    <Form.Control type="datetime-local" id="duedate" defaultValue={new Date().toISOString().slice(0, -1)}/>
                   </Form.Group>
 
                   <Form.Group controlId="description">
