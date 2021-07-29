@@ -17,7 +17,7 @@ const mock_data = [
   },
 ]
 
-const socket = io('http://localhost:8000');
+const socket = io('http://localhost:8000', {autoConnect: false});
 
 function MessageSection() {
   const {uid} = useParams();
@@ -25,10 +25,16 @@ function MessageSection() {
   const [currentMessage, setCurrentMessage] = useState('')
   const [newMessage, setNewMessage] = useState({})
   const bottom = useRef(null);
+  const username = document.cookie.split("user=")[1].split("%20")[0];
 
   useEffect(() => {
     bottom.current.scrollIntoView();
   }, [messageData])
+
+  useEffect(() => {
+    socket.auth = {username};
+    socket.connect();
+  }, [])
 
   useEffect(() => {
     socket.on('connection', () => {
@@ -38,10 +44,12 @@ function MessageSection() {
 
   useEffect(() => {
     socket.on('private message', ({message, from}) => {
-      setNewMessage({
-          message: message,
-          type: 'recieve'
-        })
+      if (from == uid) {
+        setNewMessage({
+            message: message,
+            type: 'recieve'
+          })
+      }
     });
   }, [])
 
@@ -66,8 +74,8 @@ function MessageSection() {
         message: currentMessage,
         to: uid
       });
-      //setMessageData(messageData.concat({message: currentMessage, type: 'self'}))
-      //setCurrentMessage('')
+      setMessageData(messageData.concat({message: currentMessage, type: 'self'}))
+      setCurrentMessage('')
       document.getElementById('textbox').value = ''
     }
   }
