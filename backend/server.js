@@ -164,7 +164,21 @@ app.use('/profile', profiles);
 // Chat stuff
 io.on('connection', (socket) => {
     console.log("A user has connected!");
+
+    socket.on("private message", ({message, to}) => {
+        // socket.to(to).emit( ... )
+        io.emit("private message", {
+            message,
+            from: socket.id
+        });
+    })
 })
+
+io.use((socket, next) => {
+    const username = socket.handshake.auth.username; 
+    socket.username = username; 
+    next(); 
+});
 
 const port = 8000;
 httpServer.listen(port, () => console.log("Server running on localhost:", port));
