@@ -4,11 +4,12 @@
 const express = require("express"); 
 const Deliverable = require("../models/deliverable");
 const Submission = require("../models/submission");
+const Event = require("../models/events");
 const Authentication = require("../authentication");
 const router = express.Router();
 const multer = require('multer');
 const path = require("path");
-const upload = multer({ dest: path.join('uploads')});
+const upload = multer({ dest: path.join(__dirname, '..', 'uploads')});
 const fs = require("fs");
 
 // Add assignment
@@ -28,8 +29,21 @@ router.post("/", Authentication.isAuthenticated, Authentication.isInstructor, as
     if (dueDate) newAssignment.dueDate = dueDate;
     if (fileTypes) newAssignment.fileTypes = fileTypes;
     try{
+        console.log(typeof dueDate, dueDate)
         let savedAssignment = await newAssignment.save();
-        return res.json({success: true, assignmentId: savedAssignment._id});
+        let startDate = new Date(dueDate)
+        startDate.setHours(startDate.getHours() - 1);
+        // add new event to calendar
+        let newEvent = new Event({
+            title: title,
+            description: description,
+            start: startDate,
+            end: dueDate,
+            type: 'assignment',
+            userId: req.user._id
+        })
+        let savedEvent = await newEvent.save();
+        return res.json({success: true, assignmentId: savedAssignment._id, eventId: savedEvent._id});
     }
     catch(err){
         return res.status(500).send({success: false, message: err.toString()});
@@ -128,6 +142,26 @@ router.patch("/submission/:id", Authentication.isAuthenticated, Authentication.i
                 if (err) return res.status(500).send({success: false, message: err.toString()});
                 return res.json(updatedSubmission);
             });
+        });
+    });
+});
+
+//update submission grade
+router.patch("/submission/:id", Authentication.isAuthenticated, Authentication.isInstructor, (req, res) => {
+    let updateQuery = {};
+    let grade = req.body.grade;
+    if (grade !== undefined){
+        if (grade < 0 || grade > 100) return res.status(401).send({success: false, message: "Grade must be between 0 and 100"});
+        updateQuery.grade = grade;
+    }
+    if (req.body.feedback !== undefined) updateQuery.feedback = req.body.feedback;
+    if (!req.params.id) return res.status(401).send({success: false, message: "Request must contain id parameter"});
+    Submission.findById(req.params.id, (err, submission) => {
+        if (err) return res.status(500).send({success: false, message: err.toString()});
+        if (!submission) return res.status(404).send({success: false, message: "Can't find submission"});
+        Submission.findByIdAndUpdate(req.params.id, updateQuery, (err, updatedSubmission) => {
+            if (err) return res.status(500).send({success: false, message: err.toString()});
+            return res.json(updatedSubmission);
         });
     });
 });
