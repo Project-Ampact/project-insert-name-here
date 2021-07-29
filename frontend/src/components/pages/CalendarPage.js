@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 const PERSONAL_COLOR = '#54e0ff';
 const GROUP_COLOR = '#80eb34';
 const GENERAL_COLOR = '#ff5454';
+const ASSIGNMENT_COLOR = '#f5c542';
 
 const placeholderData = {
   title: 'Personal Meeting',
@@ -30,7 +31,7 @@ function CalendarPage() {
   const [loadedEventData, setLoadedEventData] = useState([])
   const [loadedGroupData, setLoadedGroupData] = useState([])
   const username = document.cookie.split('user=')[1].split('%20')[0]
-
+  const role = document.cookie.split('user=')[1].split('%20')[1]
 
   useEffect(() => {
     async function fetchData() {
@@ -156,6 +157,8 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
     typeColor = PERSONAL_COLOR
   } else if (eventData.type === 'general') {
     typeColor = GENERAL_COLOR
+  } else if (eventData.type === 'assignment') {
+    typeColor = ASSIGNMENT_COLOR
   }
 
   const deleteEvent = async () => {
@@ -207,14 +210,15 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
   useEffect(() => {
     setIsLoading(true);
     fetch(`http://localhost:8000/calendar/${username}`, {
-      credentials: 'include'
+      credentials: 'include',
+      body: JSON.stringify({role: role})
     })
     .then(response => response.json())
     .then(data => {
       setLoadedEventData(data)
       setIsLoading(false)
     })
-  }, [username])
+  }, [username, role])
 
   const closeEventWindow = () => setShowEvent(false);
   const closeAddEventWindow = () => setShowAddEvent(false);
@@ -241,6 +245,7 @@ function EventPopup({show, closeWindow, eventData, deleteLocal}) {
     if (data.type === 'personal') eventColor = PERSONAL_COLOR
     else if (data.type === 'group') eventColor = GROUP_COLOR
     else if (data.type === 'general') eventColor = GENERAL_COLOR
+    else if (data.type === 'assignment') eventColor = ASSIGNMENT_COLOR
     return {...data, color: eventColor}
   }
 

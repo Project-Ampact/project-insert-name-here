@@ -168,6 +168,7 @@ function SubmissionSection(props) {
       <Card>
         <Card.Header className="d-flex justify-content-between">
           <Expand eventKey="0">Submissions</Expand>
+          <Button href={`http://localhost:3000/Dlbs/${props.id}`}>Details</Button>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">
