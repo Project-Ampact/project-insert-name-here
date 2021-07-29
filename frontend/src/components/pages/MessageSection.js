@@ -31,17 +31,20 @@ function MessageSection() {
     bottom.current.scrollIntoView();
   }, [messageData])
 
+  // set username so server knows
   useEffect(() => {
     socket.auth = {username};
     socket.connect();
   }, [])
 
+  // debug log
   useEffect(() => {
     socket.on('connection', () => {
       console.log("Hello!");
     })
   }, [])
 
+  // display message
   useEffect(() => {
     socket.on('private message', ({message, from}) => {
       if (from == uid) {
@@ -53,6 +56,7 @@ function MessageSection() {
     });
   }, [])
 
+  // create new message
   useEffect(() => {
     setMessageData(
       messageData.concat(
