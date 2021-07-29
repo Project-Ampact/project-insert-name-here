@@ -103,10 +103,21 @@
     padding: 20px;
 }
 
+.floatCenter {
+    float: center;
+    padding: 20px;
+}
+
+
 .h1-cus {
     text-align: center;
     font-size: 400%;
   }
+
+.mid-width {
+    width: 80%;
+    margin: 20px;
+}
 
 .deadline {
     color: red;
