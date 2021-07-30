@@ -425,6 +425,19 @@ const APIAccess = {
         } catch (err){
             throw err;
         }
+    },
+    getRecentChats(userID) {
+        try {
+            return fetch(`http://localhost:8000/messages/${userID}`, {
+                method: 'GET',
+                credentials: 'include'
+            }).then( async (response) => {
+                let jsonRes = await response.json();
+                return jsonRes;
+            })
+        } catch (err){
+            throw err;
+        }
     }
 };
 
