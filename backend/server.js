@@ -1,6 +1,14 @@
 /* jshint esversion: 10*/
 const express = require('express');
 const app = express();
+const http = require('http');
+const httpServer = http.createServer(app);
+const io = require("socket.io")(httpServer, {
+    cors: {
+        origin: 'http://localhost:3000'
+    }
+});
+
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -146,7 +154,9 @@ const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
+const message = require('./routes/messageRoutes');
 const interests = require('./routes/interestRoutes');
+const utils = require('./utils');
 
 app.use('/group', groups);
 app.use('/assignment', assignment);
@@ -157,6 +167,36 @@ app.use('/comment', comment);
 app.use('/calendar', events);
 app.use('/profile', profiles);
 app.use('/interests', interests);
+app.use('/messages', message);
+
+// Chat stuff
+io.on('connection', async (socket) => {
+    console.log("A user has connected!");
+
+    socket.join(socket.username);
+    const backlog = await utils.retrieveBacklog(socket.username, socket.recipient)
+    socket.emit('retrieve backlog', backlog);
+    socket.on("private message", ({message, to}) => {
+        // socket.to(to).emit( ... )
+        const msg = {
+            message,
+            from: socket.username,
+            to
+        };
+        socket.to(to).to(socket.username).emit("private message", msg);
+        utils.storeMessage(to, socket.username, msg);
+    });
+    socket.on("disconnect", () => {
+        socket.removeAllListeners();
+    })
+})
+
+io.use((socket, next) => {
+    const username = socket.handshake.auth.username; 
+    socket.username = username; 
+    socket.recipient = socket.handshake.auth.recipient
+    next(); 
+});
 
 const port = 8000;
-app.listen(port, () => console.log("Server running on localhost:", port));
+httpServer.listen(port, () => console.log("Server running on localhost:", port));

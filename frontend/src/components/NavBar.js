@@ -23,8 +23,8 @@ import {
   FaRegListAlt,
   FaCalendarAlt,
   FaFileAlt,
-
 } from "react-icons/fa";
+import {SiGooglemessages} from "react-icons/si"
 
 const AddVideo = (props) => {
   if (props.canAdd) {
@@ -112,6 +112,9 @@ const Nav2 = (props) => {
             <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
             <MenuItem icon={<FaCalendarAlt/>}>
               <Link to="/calendar">Calendar</Link>
+            </MenuItem>
+            <MenuItem icon={<SiGooglemessages/>}>
+              <Link to="/message">Messages</Link>
             </MenuItem>
             <MenuItem icon={<FaTimesCircle />}>
               <Link to="/" onClick={auth.signout}>
