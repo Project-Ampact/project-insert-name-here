@@ -146,6 +146,7 @@ const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
+const interests = require('./routes/interestRoutes');
 
 app.use('/group', groups);
 app.use('/assignment', assignment);
@@ -155,6 +156,7 @@ app.use('/post', post);
 app.use('/comment', comment);
 app.use('/calendar', events);
 app.use('/profile', profiles);
+app.use('/interests', interests);
 
 const port = 8000;
 app.listen(port, () => console.log("Server running on localhost:", port));
