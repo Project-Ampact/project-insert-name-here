@@ -188,14 +188,12 @@ const APIAccess = {
                 body: JSON.stringify({interests: interests}),
                 credentials: 'include',
             }).then(async (response) => {
-                let jsonRes = await response.json();
-                console.log(jsonRes);
-                var error = document.getElementById("error-message");
-                if (!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                if (response.status !== 200) {
                     let jsonRes = await response.json();
-                  
                     return jsonRes;
                 }
+
+                return response.status;
             });
         }catch(err){
             throw err;
