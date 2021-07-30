@@ -6,6 +6,8 @@ import Landing from './components/pages/Landing'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
+import DlbsPage from './components/pages/DlbsPage';
+import DlbsCreate from './components/dlbsComponents/DlbsCreate';
 import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
@@ -24,10 +26,15 @@ import UserProfileEdit from './components/userProfile/UserProfileEdit';
 import SingleVideoPage from './components/pages/SingleVideoPage';
 import SingleVideoAdd from './components/pages/SingleVideoAdd';
 import PostFeed from './components/pages/PostFeed';
+import DeliverableFeed from './components/pages/DeliverableFeed';
+import AssignmentFeed from './components/pages/AssignmentFeed';
 import PostFeedAnnouncements from './components/pages/PostFeedAnnouncements';
 import CalendarPage from './components/pages/CalendarPage';
 import MessageSection from './components/pages/MessageSection';
 import MessagePage from './components/pages/MessagePage';
+import SingleFeedbackPage from './components/pages/SingleFeedbackPage';
+import SingleUserSubmissionPage from './components/pages/SingleUserSubmissionPage';
+
 
 
 function PrivateRoute({ children, ...rest }) {
@@ -77,10 +84,13 @@ function App() {
             <Route path="/register" component={Registration}/>
             <Route path="/browse" component={Browse}/>
             <Route path="/postFeed" component={PostFeed}/>
+            <Route path="/deliverableFeed" component={DeliverableFeed}/>
+            <Route path="/assignmentsFeed" component={AssignmentFeed}/>
             <Route path="/postFeedAnnouncements" component={PostFeedAnnouncements}/>
             <Route path="/profile/search" component={SearchUserProfiles}/>
             <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
             <Route exact path="/video/:vid" children={<SingleVideoPage/>}/>
+            <Route exact path="/Dlbs/create" children={<DlbsCreate/>}/>
             <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
             <PrivateRoute exact path="/profile/:uid/edit" children={<UserProfileEdit/>}/>
             <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
@@ -89,6 +99,9 @@ function App() {
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
             <PrivateRoute exact path="/message" children={<MessagePage/>}/>
             <PrivateRoute exact path="/message/:uid" children={<MessageSection/>}/>
+            <PrivateRoute exact path="/submission/:sid" children={<SingleFeedbackPage/>}/>
+            <PrivateRoute exact path="/user/submission/:sid" children={<SingleUserSubmissionPage/>}/>
+            <PrivateRoute exact path="/Dlbs/:dlbsid" children={<DlbsPage/>}/>
           </Switch>
         </Router>
       </AuthProvider>      
