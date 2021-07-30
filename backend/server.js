@@ -152,6 +152,7 @@ const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
+const message = require('./routes/messageRoutes');
 const utils = require('./utils');
 
 app.use('/group', groups);
@@ -161,6 +162,7 @@ app.use('/post', post);
 app.use('/comment', comment);
 app.use('/calendar', events);
 app.use('/profile', profiles);
+app.use('/messages', message);
 
 // Chat stuff
 io.on('connection', async (socket) => {
