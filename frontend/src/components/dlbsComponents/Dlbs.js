@@ -14,9 +14,12 @@ function Dlbs(props) {
   const username = document.cookie.split("user=")[1].split("%20")[0];
   const role = document.cookie.split('user=')[1].split('%20')[1];
 
-  let backtoDlbs = "../deliverableFeed";  
+  let backtoDlbs = `../assignmentsFeed`;
   let mock_data;
 
+  if (role === 'instructor'){
+    backtoDlbs = `../deliverableFeed`;
+  }
   
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -57,7 +60,7 @@ function Dlbs(props) {
 
       let result = await APIAccess.createNewSubmission(fileData);
       console.log("Made it here");
-      history.push("/deliverableFeed");
+      history.push(backtoDlbs);
     } catch (err) {
       console.log(err);
     }
