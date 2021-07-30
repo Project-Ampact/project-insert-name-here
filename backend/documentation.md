@@ -1503,13 +1503,13 @@
         - body: File associated with the submission
 
 ### Get user interests
-- Description: Get a submissions's file
-- Request `GET /assignment/submission/file`
+- Description: Get a user intersets
+- Request `GET /interests/user/:id`
     - params:
         - id: id of submission
     - example:
     ```
-        fetch('http://localhost:8000/assignment/submission/file/:id', {
+        fetch('http://localhost:8000/interests/user/:idd', {
             method: 'GET',
             credentials: ‘include’
         }
@@ -1521,7 +1521,7 @@
         - body: File associated with the submission
 
 ### Add interests
-- Description: Get a submissions's file
+- Description: Add user interests
 - Request `GET /assignment/submission/file`
     - params:
         - id: id of submission
