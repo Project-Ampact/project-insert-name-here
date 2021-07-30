@@ -1,6 +1,6 @@
 import "./GroupProfileEdit.css";
 /*jshint esversion: 10*/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Container,
@@ -9,32 +9,25 @@ import {
 import "../groupComponents/groupProfile/Group.css";
 import UserProfileList from "../userProfile/UserProfileList.js";
 import PageLayout from "./DefaultPage";
-import './MessagePage.css'
+import './MessagePage.css';
+import APIAccess from "../../controller.js";
 
-let mock_data = [
-  {
-    _id: 'abc',
-    firstName: 'Emily',
-    lastName: 'Gilbert'
-  },
-  {
-    _id: 'ddd',
-    firstName: 'Jennifer',
-    lastName: 'Blodgett'
-  },
-  {
-    _id: 'user123',
-    firstName: 'John',
-    lastName: 'Doe'
-  }
-]
+let mock_data = []
 
 function MessagePage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(mock_data);
   const username = document.cookie.split("user=")[1].split("%20")[0];
 
-  // TODO: add API call to get recent messages (message logs)
+  useEffect(() => {
+    async function fetchData() {
+      let data = await APIAccess.getRecentChats(username);
+      return data;
+    }
+    fetchData().then((x) => {
+      setUserData(x);
+    }).then(setIsLoading(false));
+  }, []);
 
   if (isLoading) {
     return (
