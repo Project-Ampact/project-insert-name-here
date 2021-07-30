@@ -1245,3 +1245,160 @@
         - body: json object
             - message: (String) Error message from backend
             - success: (bool) false
+            
+## Deliverables
+
+### Create assignment
+- Description: Create a new assignmnet
+- Request `POST /assignment/`
+    - body:
+        - message: Text content of the comment
+        - poster: User id of the account posting the comment
+        - pid: Post id to post comment to
+    - example:
+    ```
+        fetch('http://localhost:8000/', {
+            method: 'POST',
+            body: JSON.stringify({}),
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Assignment created successfully
+        - content-type: application/json
+        - body: Comment just created in json 
+    - Status: 400 
+        - indication: Missing required parameters
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in or is not an instructor
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 404 
+        - indication: Could not find post to post comment to
+        - content-type: application/json
+        - body: json object
+            - message: (String) Post with Id pid does not exist
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+      
+### Get assignments
+- Description: Create a new comment
+- Request `GET /assignment/submission/file`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/file/:id', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
+    - Status: 400 
+        - indication: Missing id parameter
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+### Add / Update submission
+
+### Get metadata for submissions
+- Description: Create a new comment
+- Request `GET /assignment/submission/metadata`
+    - query:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/metadata', {
+            method: 'PUT',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: Comment just created in json 
+    - Status: 400 
+        - indication: Missing id or assignment query
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+### Get file for given submission
+- Description: Get a submissions's file
+- Request `GET /assignment/submission/file`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/file/:id', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
+    - Status: 400 
+        - indication: Missing id parameter
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
