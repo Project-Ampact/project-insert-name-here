@@ -1561,3 +1561,35 @@
         - indication: Comment created successfully
         - content-type: application/json
         - body: File associated with the submission
+
+## Messages
+
+### Get recent chats
+- Description: Get most recent chats 
+- Request `GET /messages/:userID`
+    - params:
+        - userID: User id to get messages 
+    - example:
+    ```
+        fetch('http://localhost:8000/mesages/laragomez', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Successfully retrieved recent chats
+        - content-type: application/json
+        - body: Array of profile information associated with recent chats
+
+### Sockets
+`retrieve backlog` 
+- Emits message backlog 
+- Does not receive
+
+`private message`
+- Emits message that was received as {message, from, destination}
+- Receives message of form {message, destination} 
+
+`disconnect`
+- Removes socket listeners
