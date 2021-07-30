@@ -1252,9 +1252,11 @@
 - Description: Create a new assignmnet
 - Request `POST /assignment/`
     - body:
-        - message: Text content of the comment
-        - poster: User id of the account posting the comment
-        - pid: Post id to post comment to
+        - title: (String) assignment title
+        - description: (String) assignment description
+        - totalMarks: (Integer) total marks the assignment is out of
+        - fileTypes: (Array) list of file endings that submissions can have (optional)
+        - dueDate: (Date) due date of assignment (optional)
     - example:
     ```
         fetch('http://localhost:8000/', {
@@ -1267,7 +1269,9 @@
     - Status: 200 
         - indication: Assignment created successfully
         - content-type: application/json
-        - body: Comment just created in json 
+        - body: Json object
+            - success: (bool) true
+            - assignmentId: (String) id of new assignment
     - Status: 400 
         - indication: Missing required parameters
         - content-type: application/json
@@ -1330,16 +1334,61 @@
             - success: (bool) false
 
 ### Add / Update submission
+- Description: Add submission / Update existing submission
+- Request `PUT /assignment/submission`
+    - body:
+        - assignment: (String) assignment title
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/:assignment', {
+            method: 'POST',
+            body: formData,
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200 
+        - indication: Assignment created successfully
+        - content-type: application/json
+        - body: Json object
+            - success: (bool) true
+            - assignmentId: (String) id of new assignment
+    - Status: 400 
+        - indication: Missing required parameters
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in or is not an instructor
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 404 
+        - indication: Could not find post to post comment to
+        - content-type: application/json
+        - body: json object
+            - message: (String) Post with Id pid does not exist
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
 
 ### Get metadata for submissions
-- Description: Create a new comment
+- Description: Search for and get metadata for submissions
 - Request `GET /assignment/submission/metadata`
     - query:
         - id: id of submission
+        - assignment: id of assignment
+        - user: username of user
     - example:
     ```
-        fetch('http://localhost:8000/assignment/submission/metadata', {
-            method: 'PUT',
+        fetch('http://localhost:8000/assignment/submission/metadata/', {
+            method: 'GET',
             credentials: ‘include’
         }
     ```
@@ -1347,9 +1396,149 @@
     - Status: 200
         - indication: Comment created successfully
         - content-type: application/json
-        - body: Comment just created in json 
+        - body: Submission metadata
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+### Get file for given submission
+- Description: Get a submissions's file
+- Request `GET /assignment/submission/file`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/file/:id', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
     - Status: 400 
-        - indication: Missing id or assignment query
+        - indication: Missing id parameter
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+   
+### Submit feedback and grades for submission
+- Description: Submit feedback and grades for a specified submission
+- Request `PATCH /assignment/submission/:id`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/:id', {
+            method: 'PATCH',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Grade and feedback updated successfully
+        - content-type: application/json
+        - body: File associated with the submission
+    - Status: 400 
+        - indication: Missing id parameter
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in or instructor
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+## Interests
+
+### Get tags
+- Description: Get tags
+- Request `GET /interests/tags`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/interests/tags', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
+    - Status: 400 
+        - indication: Missing id parameter
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false\
+
+### Get tags
+- Description: Get a submissions's file
+- Request `GET /assignment/submission/file`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/file/:id', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
+    - Status: 400 
+        - indication: Missing id parameter
         - content-type: application/json
         - body: json object
             - message: (String) Error message from backend
@@ -1367,7 +1556,43 @@
             - message: (String) Error message from backend
             - success: (bool) false
 
-### Get file for given submission
+### Get tags
+- Description: Get a submissions's file
+- Request `GET /assignment/submission/file`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/assignment/submission/file/:id', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
+    - Status: 400 
+        - indication: Missing id parameter
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+    - Status: 401
+        - indication: Attempted access by user who was not logged in
+        - content-type: application/json
+        - body: json object
+            - message: (String) "Unauthorized"
+            - success: (bool) false
+    - Status: 500
+        - indication: Server side error occured when updating post to add comment
+        - content-type: application/json
+        - body: json object
+            - message: (String) Error message from backend
+            - success: (bool) false
+
+### Get tags
 - Description: Get a submissions's file
 - Request `GET /assignment/submission/file`
     - params:
