@@ -4,7 +4,7 @@
 **Participants:** Luoliang Cai, David Tan, Lara Kristine Gomez, Christopher Suh, Raymond Ma, Hui Zhi
 
 ## Sprint Goal
-* Instructors can created deliverables, view submissions, and mark submissions
+* Instructors can create deliverables, view submissions, and mark submissions
 * The user can view assignments and sumbit with a file upload they can also come back later to view the grade of the submission.
 * Users can message people privately or in groups
 * Users can join confernce meetings from the calendar
