@@ -19,7 +19,7 @@ router.get("/:userID", async (req, res) => {
     )
     let response = [];
     for (let i = 0; i < chatrooms.length; i++) {
-        if (chatrooms[i].members._id != userID) {
+        if (chatrooms[i].members[0]._id == userID) {
             response.push(chatrooms[i].members[1]);
         } else {
             response.push(chatrooms[i].members[0])
