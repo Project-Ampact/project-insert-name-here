@@ -35,6 +35,21 @@ function MessageSection() {
     socket.on('connection', () => {
       console.log("Hello!");
     })
+
+    socket.on('retrieve backlog', (backlog) => {
+      console.log(backlog);
+      let type;
+      var message;
+      let msgs = []
+      for (let i = 0; i < backlog.length; i++) {
+        message = {};
+        message.message = backlog[i].message;
+        type = (backlog[i].from == username) ? 'self' : 'recieve';
+        message.type = type;
+        msgs.push(message);
+      }
+      setMessageData(msgs);
+    })
   }, [])
 
   // display message

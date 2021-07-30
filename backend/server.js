@@ -152,6 +152,7 @@ const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
+const utils = require('./utils');
 
 app.use('/group', groups);
 app.use('/video', videos);
@@ -166,7 +167,7 @@ io.on('connection', (socket) => {
     console.log("A user has connected!");
 
     socket.join(socket.username);
-    // emit entire message backlog here 
+    socket.emit('retrieve backlog', utils.retrieveBacklog(socket.username, socket.recipient));
     socket.on("private message", ({message, to}) => {
         // socket.to(to).emit( ... )
         const msg = {
@@ -175,7 +176,7 @@ io.on('connection', (socket) => {
             to
         };
         socket.to(to).to(socket.username).emit("private message", msg);
-        // store into backlog here
+        utils.storeMessage(to, socket.username, msg);
     });
     socket.on("disconnect", () => {
         socket.removeAllListeners();
