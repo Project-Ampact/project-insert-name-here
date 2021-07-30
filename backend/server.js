@@ -163,11 +163,12 @@ app.use('/calendar', events);
 app.use('/profile', profiles);
 
 // Chat stuff
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log("A user has connected!");
 
     socket.join(socket.username);
-    socket.emit('retrieve backlog', utils.retrieveBacklog(socket.username, socket.recipient));
+    const backlog = await utils.retrieveBacklog(socket.username, socket.recipient)
+    socket.emit('retrieve backlog', backlog);
     socket.on("private message", ({message, to}) => {
         // socket.to(to).emit( ... )
         const msg = {
