@@ -30,6 +30,8 @@ import DeliverableFeed from './components/pages/DeliverableFeed';
 import AssignmentFeed from './components/pages/AssignmentFeed';
 import PostFeedAnnouncements from './components/pages/PostFeedAnnouncements';
 import CalendarPage from './components/pages/CalendarPage';
+import MessageSection from './components/pages/MessageSection';
+import MessagePage from './components/pages/MessagePage';
 import SingleFeedbackPage from './components/pages/SingleFeedbackPage';
 import SingleUserSubmissionPage from './components/pages/SingleUserSubmissionPage';
 
@@ -95,6 +97,8 @@ function App() {
             <PrivateRoute exact path="/groupProfile/create" children={<GroupProfileCreate/>}/>
             <PrivateRoute exact path="/groupProfile/:gid" children={<GroupProfile/>}/>
             <PrivateRoute exact path="/calendar" children={<CalendarPage/>}/>
+            <PrivateRoute exact path="/message" children={<MessagePage/>}/>
+            <PrivateRoute exact path="/message/:uid" children={<MessageSection/>}/>
             <PrivateRoute exact path="/submission/:sid" children={<SingleFeedbackPage/>}/>
             <PrivateRoute exact path="/user/submission/:sid" children={<SingleUserSubmissionPage/>}/>
             <PrivateRoute exact path="/Dlbs/:dlbsid" children={<DlbsPage/>}/>

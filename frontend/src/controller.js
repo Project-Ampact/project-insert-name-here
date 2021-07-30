@@ -514,7 +514,19 @@ const APIAccess = {
             throw err;
         }
     },
-   
+    getRecentChats(userID) {
+        try {
+            return fetch(`http://localhost:8000/messages/${userID}`, {
+                method: 'GET',
+                credentials: 'include'
+            }).then( async (response) => {
+                let jsonRes = await response.json();
+                return jsonRes;
+            })
+        } catch (err){
+            throw err;
+        }
+    },
     updateFeedback(grade, feedback, submissionId){
         try{
             return fetch('http://localhost:8000/assignment/submission/' + submissionId, {
@@ -540,7 +552,6 @@ const APIAccess = {
             throw err;
         }
     },
-
 };
 
 export default APIAccess;
