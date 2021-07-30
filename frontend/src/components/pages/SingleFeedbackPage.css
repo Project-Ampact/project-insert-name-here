@@ -1,0 +1,16 @@
+#single-feedback-page-wrapper {
+    display: flex;
+    padding-top: 10px;
+    margin-bottom: 50px;
+}
+
+#submission-info-wrapper {
+    margin-left: 20px;
+    flex-grow: 1;
+}
+
+#user-submission-assignment-title {
+    padding-top: 10px;
+    font-size: 50px;
+    text-align: center;
+}

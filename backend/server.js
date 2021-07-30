@@ -19,13 +19,14 @@ const cookie = require('cookie');
 const User = require('./models/user');
 const Profile = require('./models/profile');
 const Authentication = require("./authentication");
-
 require('dotenv/config');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+app.use(express.static('static'));
 
 //prints request out onto the console
 app.use((req, res, next) => {
@@ -80,7 +81,7 @@ const checkRegistrationInfo = async(req, res, next) => {
 };
 
 //register user into database
-app.post('/signup', Authentication.isNotAuthenticated, checkRegistrationInfo, async(req, res, next) => {
+app.post('/signup',  checkRegistrationInfo, async(req, res, next) => {
     let username = req.body.username;
     let password = req.body.password;
     let role = req.body.role;
@@ -113,7 +114,7 @@ app.post('/signup', Authentication.isNotAuthenticated, checkRegistrationInfo, as
 });
 
 //signin
-app.post('/signin', Authentication.isNotAuthenticated, (req, res) => {
+app.post('/signin',  (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     User.findById(username, (err, user) => {
@@ -147,21 +148,25 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useFindAndModify: f
 
 const events = require('./routes/eventRoutes');
 const groups = require('./routes/groupRoutes');
+const assignment = require('./routes/assignmentRoutes');
 const videos = require('./routes/videoRoutes');
 const search = require('./routes/searchRoutes');
 const profiles = require('./routes/profileRoutes');
 const comment = require('./routes/commentRoutes');
 const post = require('./routes/postRoutes');
 const message = require('./routes/messageRoutes');
+const interests = require('./routes/interestRoutes');
 const utils = require('./utils');
 
 app.use('/group', groups);
+app.use('/assignment', assignment);
 app.use('/video', videos);
 app.use('/search', search);
 app.use('/post', post);
 app.use('/comment', comment);
 app.use('/calendar', events);
 app.use('/profile', profiles);
+app.use('/interests', interests);
 app.use('/messages', message);
 
 // Chat stuff
