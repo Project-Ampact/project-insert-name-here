@@ -7,7 +7,7 @@ function ChatBubble({msg}) {
       <div className={`chat-bubble ${msg.type}`}>
           <p>{msg.message}</p>
       </div>
-      <div className="chat-meta">{msg.type === 'recieve' && <p>Tom Smith</p>}</div>
+      <div className="chat-meta">{msg.type === 'recieve'}</div>
     </div>
   )
 }
