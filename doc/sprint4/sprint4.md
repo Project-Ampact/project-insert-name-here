@@ -7,7 +7,7 @@
 * Instructors can create deliverables, view submissions, and mark submissions
 * The user can view assignments and sumbit with a file upload they can also come back later to view the grade of the submission.
 * Users can message people privately or in groups
-* Users can join confernce meetings from the calendar
+* Users can join conference meetings from the calendar
 
 ## Spikes
 * Implementing the messaging features will require using a new technology such as socket.io. 
