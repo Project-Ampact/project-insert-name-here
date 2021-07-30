@@ -1501,27 +1501,27 @@
         - indication: Comment created successfully
         - content-type: application/json
         - body: File associated with the submission
-    - Status: 400 
-        - indication: Missing id parameter
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false
-    - Status: 401
-        - indication: Attempted access by user who was not logged in
-        - content-type: application/json
-        - body: json object
-            - message: (String) "Unauthorized"
-            - success: (bool) false
-    - Status: 500
-        - indication: Server side error occured when updating post to add comment
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false\
 
-### Get tags
-- Description: Get a submissions's file
+### Get user interests
+- Description: Get a user intersets
+- Request `GET /interests/user/:id`
+    - params:
+        - id: id of submission
+    - example:
+    ```
+        fetch('http://localhost:8000/interests/user/:idd', {
+            method: 'GET',
+            credentials: ‘include’
+        }
+    ```
+- Responses:
+    - Status: 200
+        - indication: Comment created successfully
+        - content-type: application/json
+        - body: File associated with the submission
+
+### Add interests
+- Description: Add user interests
 - Request `GET /assignment/submission/file`
     - params:
         - id: id of submission
@@ -1543,21 +1543,9 @@
         - body: json object
             - message: (String) Error message from backend
             - success: (bool) false
-    - Status: 401
-        - indication: Attempted access by user who was not logged in
-        - content-type: application/json
-        - body: json object
-            - message: (String) "Unauthorized"
-            - success: (bool) false
-    - Status: 500
-        - indication: Server side error occured when updating post to add comment
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false
 
-### Get tags
-- Description: Get a submissions's file
+### Get Recommended videos
+- Description: Get Recommended videos
 - Request `GET /assignment/submission/file`
     - params:
         - id: id of submission
@@ -1573,57 +1561,3 @@
         - indication: Comment created successfully
         - content-type: application/json
         - body: File associated with the submission
-    - Status: 400 
-        - indication: Missing id parameter
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false
-    - Status: 401
-        - indication: Attempted access by user who was not logged in
-        - content-type: application/json
-        - body: json object
-            - message: (String) "Unauthorized"
-            - success: (bool) false
-    - Status: 500
-        - indication: Server side error occured when updating post to add comment
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false
-
-### Get tags
-- Description: Get a submissions's file
-- Request `GET /assignment/submission/file`
-    - params:
-        - id: id of submission
-    - example:
-    ```
-        fetch('http://localhost:8000/assignment/submission/file/:id', {
-            method: 'GET',
-            credentials: ‘include’
-        }
-    ```
-- Responses:
-    - Status: 200
-        - indication: Comment created successfully
-        - content-type: application/json
-        - body: File associated with the submission
-    - Status: 400 
-        - indication: Missing id parameter
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false
-    - Status: 401
-        - indication: Attempted access by user who was not logged in
-        - content-type: application/json
-        - body: json object
-            - message: (String) "Unauthorized"
-            - success: (bool) false
-    - Status: 500
-        - indication: Server side error occured when updating post to add comment
-        - content-type: application/json
-        - body: json object
-            - message: (String) Error message from backend
-            - success: (bool) false
