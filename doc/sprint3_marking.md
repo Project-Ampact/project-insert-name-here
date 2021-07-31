@@ -1,9 +1,9 @@
 # Sprint 2-4 Marking Scheme
 
-**Team Name:** Insert Name Here
-**Github:** https://github.com/UTSCCSCC01/project-insert-name-here
+**Team Name:** Insert Name Here   
+**Github:** https://github.com/UTSCCSCC01/project-insert-name-here  
 
-*(Convention: N=sprint number, ex: sprintN.md means sprint2.md for sprint 2, and SR(N-1)md means SR1.md for sprint 2, that is Sprint Retrospective for sprint 1, to be hold during planning meeting at the beginning of Sprint 2)*
+*(Convention: N=sprint number, ex: sprintN.md means sprint2.md for sprint 2, and SR(N-1)md means SR1.md for sprint 2, that is Sprint Retrospective for Sprint 1, to be hold during planning meeting at the beginning of Sprint 2)*
 
 ---
 ## Planning Meetings (SR(N-1).md, sprintN.md) (max 2 marks)
@@ -19,7 +19,7 @@
     - 2 marks = Meeting and sprint goal is documented, all spikes clearly identified, team capacity recorded, participants are recorded, everyone has participated, decisions about user stories to be completed this sprint are clear, tasks breakdown is done.
     - 1 mark  = Meeting and sprint goal is documented, some spikes not clearly identified, one or more members of team's capacity not recorded, participants are not recorded or the majority has not participated, decisions are unclear,
     there is no clear evidence which user story will be completed or task breakdown is unclear or incomplete
-    - 0 marks = No meeting document submitted or the submitted document contains no relevant information to the sprint 2
+    - 0 marks = No meeting document submitted or the submitted document contains no relevant information to the sprint 1
 
     Your Mark: 2 
 
@@ -36,11 +36,12 @@
       3. When do you think you'll be done?
       4. Do you have any blockers?
       ```
-  - Each person is required to post  a minimum of 3 standups per sprint (Max 10 marks, 2 marks per daily standup)
+  - Each person is required to post a minimum of 3 standups per sprint (Max 10 marks; 3 marks per daily standup, 1 mark for 3 days completed)
   - Standup updates answers the necessary questions and is good quality
-    - 2 marks = All teams members have sent their updates in the channel and are well written/good quality
-    - 1 mark  = At least 1 group member has not sent their update or is low-quality
-    - 0 marks = At least 2 group members or more have not sent their updates or is low-quality
+    - 3 marks = All teams members have sent their updates in the channel and are well written/good quality
+    - 2 marks = At least 1 group member has not sent their update or is low-quality
+    - 1 mark  = At least 2 group members or more have not sent their updates or is low-quality
+    - 0 marks = At least 3 group members or more have not sent their updates or is low-quality
 
   Daily Stand-ups Total Mark: 10 / 10
 
@@ -54,9 +55,9 @@
     Your Mark: 2
 
   - Broken down into tasks/subtasks (max 2 marks)
-    - 2 marks = all sprint 2 stories estimated, broken into tasks/subtasks, tasks assigned to all team members
-    - 1 mark = one or more sprint 2 stories are not recorded Jira, or not estimated, or nor broken into tasks, or at least one task not assigned, or at least one team member unassigned a task
-    - 0 marks = the majority of sprint 2 stories not recorded in Jira or not estimated, or nor broken into tasks, or tasks not assigned, or team members unassigned a task
+    - 2 marks = all Sprint 1 stories estimated, broken into tasks/subtasks, tasks assigned to all team members
+    - 1 mark = one or more Sprint 1 stories are not recorded Jira, or not estimated, or nor broken into tasks, or at least one task not assigned, or at least one team member unassigned a task
+    - 0 marks = the majority of Sprint 1 stories not recorded in Jira or not estimated, or nor broken into tasks, or tasks not assigned, or team members unassigned a task
 
     Your Mark: 2 
 
@@ -72,18 +73,17 @@
     - 1 mark  = two or more stories in Jira Backlog not are prioritized in the order which matches the priority of their associated milestones]
     - 0 marks = the majority of stories in Jira Backlog appear to be not prioritized in the order which matches the priority of their associated milestones
 
-    Your Mark: 0 
+    Your Mark: 2 
 
   - Clearly Defined Acceptance Criteria (max 2 marks)
-    - 2 marks = all sprint 2 stories have clearly defined and testable acceptance criteria
-    - 1 mark  = one or more sprint 2 stories do not have clearly defined or testable acceptance criteria
-    - 0 marks = the majority of the sprint 2 stories do not have clearly defined or testable acceptance criteria
+    - 2 marks = all Sprint 1 stories have clearly defined and testable acceptance criteria
+    - 1 mark  = one or more Sprint 1 stories do not have clearly defined or testable acceptance criteria
+    - 0 marks = the majority of the Sprint1 stories do not have clearly defined or testable acceptance criteria
 
     Your Mark: 2 
 
-  User Stories Total Mark: 8 / 10
+  User Stories Total Mark: 10 / 10
 
-Comment: No prioritization showed in the Jira story
 ---
 ## Tracking on Jira  (max 24 marks) 
   - Are all your stories and tasks being worked in this sprint tracked on Active Sprint Board? (max 2 marks)
@@ -91,9 +91,9 @@ Comment: No prioritization showed in the Jira story
     - 1 = part of the stories missing
     - 0 = no stories on Active Sprint Board
 
-    Your Mark: _2 
+    Your Mark: 2 
   
-  - Did you start all stories for sprint two? (max 2 marks)
+  - Did you start all stories for sprint one? (max 2 marks)
     - 2 marks = all stories started or some stories not started, but logical explanation provided as a story comment
     - 1 mark  = part of the stories not started and explanation why not is not provided
     - 0 marks = no story started
@@ -112,7 +112,7 @@ Comment: No prioritization showed in the Jira story
     - 1 mark  = two or more tasks were not completed as assigned
     - 0 marks = no task was completed by anyone
 
-    Your Mark: _2
+    Your Mark: 2 
 
   - Is each pull request made from a separate branch for each individual task? (max 5 marks)
     - 5 marks = pull request for each task made from own separate branch
@@ -170,7 +170,8 @@ Tracking on Jira Total Mark: 24 / 24
   - Started stories that are incomplete will be counted
   - Mark Breakdown: [x = Percentage of story points completed * 20]
 
-  Your Mark: 20 / 20
+  Your Mark: 17.4 / 20
+  Feedback: IN-7 incomplete
 
 ---
 ## System Design (PDF or MD file or another suitable format) (max 10 marks) 
@@ -201,7 +202,7 @@ Tracking on Jira Total Mark: 24 / 24
     There is no web link or other reference lending support to the presented diagram.
     - 0 marks = No diagram present or the presented document does not look like a software architecture diagram
 
-    Your Mark: _
+    Your Mark: 4
 
   System Design Total: 10 / 10  
 
@@ -216,27 +217,20 @@ Tracking on Jira Total Mark: 24 / 24
 ---
 
 ## Sprint Demo (Max 10 marks) 
-- Attendance (max 2 marks) 2
-  - 2 marks = full team is present
-  - 1 mark = one member is not present
-  - 0 marks = more than one member is not present
-- Working software (max 2 marks)
-- **Tues:** 2 features
-- **Wed/Thurs:** 3 features
-- **Fri:** 4 features
-  - 8 marks = features work flawlessly
-  - 1 mark removed for each error or incomplete records on Jira
+  - Attendance (max 2 marks)
+    - 2 marks = full team is present
+    - 1 mark = one member is not present
+    - 0 marks = more than one member is not present
+  
+  Your Mark: 10 /10
 
-Your Mark: 10 /10
-
-- edit profile
-- Youtube Video link
-- Search
-- UI improvement (is this a feature?)
+Features:
+- Integrated UI
+- Posts/Comments, edit, moderate
+- Event schedule, update, deletion
 
 ---
 
 ## Total Mark
 
-89 / 89
-
+86.4 / 89
