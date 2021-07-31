@@ -22,8 +22,9 @@ import {
   FaServer,
   FaRegListAlt,
   FaCalendarAlt,
-
+  FaFileAlt,
 } from "react-icons/fa";
+import {SiGooglemessages} from "react-icons/si"
 
 const AddVideo = (props) => {
   if (props.canAdd) {
@@ -45,7 +46,7 @@ const Nav2 = (props) => {
   const role = document.cookie.split('user=')[1].split('%20')[1]
 
   useEffect(() => {
-    fetch(`http://localhost:8000/group/member/${username}`, {})
+    fetch(`http://localhost:8000/group/member/${username}`, {credentials: 'include'})
       .then((response) => {
         return response.json();
       })
@@ -102,9 +103,18 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
+            <MenuItem icon={<FaFileAlt />}>
+                <Link to="/deliverableFeed">Assignment Grading</Link> {/* TODO: Only instructors can see this page */}
+              </MenuItem>
+              <MenuItem icon={<FaFileAlt />}>
+                <Link to="/assignmentsFeed">Assignments</Link> {/* Only entrepreneurs and instructors can see this page */}
+              </MenuItem>
             <AddVideo canAdd={role.toLowerCase() === "instructor"}/>
             <MenuItem icon={<FaCalendarAlt/>}>
               <Link to="/calendar">Calendar</Link>
+            </MenuItem>
+            <MenuItem icon={<SiGooglemessages/>}>
+              <Link to="/message">Messages</Link>
             </MenuItem>
             <MenuItem icon={<FaTimesCircle />}>
               <Link to="/" onClick={auth.signout}>

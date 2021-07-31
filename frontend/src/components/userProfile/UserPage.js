@@ -17,6 +17,7 @@ function CanEditProfile(props) {
 
 function UserPage(props) {
   const banner = "https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+  const username = document.cookie.split("user=")[1].split("%20")[0];
 
   let name
   if (props.lastName === "" && props.firstName === "") {
@@ -41,6 +42,7 @@ function UserPage(props) {
               <Card.Text>
                 {props.role}
               </Card.Text>
+              {username !== props._id && <Button href={`/message/${props._id}`}>Message</Button>}
               <CanEditProfile canEdit={props.canEdit} username={props._id}/>
             </Col>
             </Row></Container>

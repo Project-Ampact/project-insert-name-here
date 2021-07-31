@@ -80,6 +80,56 @@ const APIAccess = {
             throw err;
         }
     },
+
+    createNewDlbs(title, dueDate, totalMarks, description){
+        try{
+            return fetch('http://localhost:8000/assignment/', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({title: title, dueDate: dueDate, totalMarks:totalMarks, description: description}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
+    createNewSubmission(fileData){
+        try{
+            return fetch('http://localhost:8000/assignment/submission', {
+                method: 'PUT',
+                body: fileData,
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
     uploadNewVideo(title, videoLink, picture, tag, description, poster){
         try{
             return fetch('http://localhost:8000/video/', {
@@ -130,7 +180,25 @@ const APIAccess = {
             throw err;
         }
     },
+    addUserInterests(uid, interests){
+        try{
+            return fetch(`http://localhost:8000/interests/user/${uid}`, {
+                method: 'PUT',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({interests: interests}),
+                credentials: 'include',
+            }).then(async (response) => {
+                if (response.status !== 200) {
+                    let jsonRes = await response.json();
+                    return jsonRes;
+                }
 
+                return response.status;
+            });
+        }catch(err){
+            throw err;
+        }
+    },
     addMember(group, member) {
         try{
             return fetch('http://localhost:8000/group/add/' + group, {
@@ -182,6 +250,21 @@ const APIAccess = {
             throw err;
         }
     },
+        
+    getDlbsInfo(dlbsid) {
+        try {
+            return fetch("http://localhost:8000/assignment/" + dlbsid, {
+                method: 'GET',
+                credentials: 'include',
+            })
+            .then(async (response) => {
+                let jsonRes = await response.json()
+                return jsonRes
+            })
+        } catch(err) {
+            throw err;
+        }
+    },
 
     getUserProfile(uid) {
         try {
@@ -200,7 +283,8 @@ const APIAccess = {
     searchGroup(query, page) {
         try {
             return fetch(`http://localhost:8000/search/group?searchString=${query}&page=${page}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
@@ -214,7 +298,8 @@ const APIAccess = {
     searchUserProfile(query, page) {
         try {
             return fetch(`http://localhost:8000/search/profile?searchString=${query}&page=${page}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json()
@@ -247,7 +332,7 @@ const APIAccess = {
     },
     getVideoSections() {
         try{
-            fetch("http://localhost:8000/video/browse/")
+            fetch("http://localhost:8000/video/browse/", {credentials: "include"})
                 .then(async (response) => {
                    return  await response.json();
                 })
@@ -264,7 +349,8 @@ const APIAccess = {
     deleteEvent(eventId){
         try{
             return fetch('http://localhost:8000/calendar/' + eventId, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             })
             .then(async (response) => {
                 let jsonRes = await response.json();
@@ -279,6 +365,7 @@ const APIAccess = {
         try {
             return fetch('http://localhost:8000/calendar/', {
             method: 'POST',
+            credentials: 'include',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 title: title,
@@ -288,7 +375,8 @@ const APIAccess = {
                 end: end,
                 type: type,
                 groupId: groupId,
-                userId: userId})}).then(async (response) => {
+                userId: userId}),
+            credentials: "include"}).then(async (response) => {
             const jsonRes = await response.json();
             console.log(jsonRes)
             return jsonRes;
@@ -324,7 +412,8 @@ const APIAccess = {
     deletePost(id) {
         try {
             return fetch(`http://localhost:8000/post/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then(async (result) => {
                 let jsonRes = await result.json();
                 console.log(result)
@@ -375,7 +464,8 @@ const APIAccess = {
     deleteComment(commentId, postId) {
         try {
             return fetch(`http://localhost:8000/comment/delete/${commentId}/${postId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes)
@@ -391,7 +481,7 @@ const APIAccess = {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({poster: user, message: msg, cid: cid}),
-                credentials: 'include',
+                credentials: 'include'
             }).then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -413,7 +503,8 @@ const APIAccess = {
     deleteReply(replyId, commentId) {
         try {
             return fetch(`http://localhost:8000/comment/delete/reply/${replyId}/${commentId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include'
             }).then( async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
@@ -422,7 +513,45 @@ const APIAccess = {
         } catch (err){
             throw err;
         }
-    }
+    },
+    getRecentChats(userID) {
+        try {
+            return fetch(`http://localhost:8000/messages/${userID}`, {
+                method: 'GET',
+                credentials: 'include'
+            }).then( async (response) => {
+                let jsonRes = await response.json();
+                return jsonRes;
+            })
+        } catch (err){
+            throw err;
+        }
+    },
+    updateFeedback(grade, feedback, submissionId){
+        try{
+            return fetch('http://localhost:8000/assignment/submission/' + submissionId, {
+                method: 'PATCH',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({grade: grade, feedback: feedback}),
+                credentials: 'include',
+            }).then(async (response) => {
+                let jsonRes = await response.json();
+                console.log(jsonRes);
+                var error = document.getElementById("error-message");
+                if(!jsonRes.success) {  // Display error message based off jsonRes message if register fails
+                    error.style.visibility = "visible";
+                    console.log(jsonRes.message);
+                    error.innerHTML = jsonRes.message + '*';
+                    throw jsonRes.message;
+                }
+                
+                error.style.visibility = "hidden";
+                return {user: jsonRes.name, role: jsonRes.about};
+            });
+        } catch(err){
+            throw err;
+        }
+    },
 };
 
 export default APIAccess;

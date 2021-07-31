@@ -15,7 +15,11 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "fs": "*",
     "mongoose": "^5.12.13",
+    "socket.io": "^4.1.3",
+    "multer": "^1.4.2",
+    "path": "^0.12.7",
     "validator": "^13.6.0"
   },
   "devDependencies": {

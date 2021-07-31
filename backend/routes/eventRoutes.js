@@ -4,6 +4,7 @@ const express = require("express");
 const Event = require("../models/events");
 const Group = require("../models/group");
 const User = require("../models/user");
+const Profile = require('../models/profile');
 
 const Authentication = require('../authentication');
 const router = express.Router();
@@ -24,39 +25,64 @@ const router = express.Router();
 //     })
 // });
 
-router.get("/:userId", Authentication.isAuthenticated, async (req, res) => {
+router.get("/:userId", async (req, res) => {
   const userId = req.params.userId;
 
-  Group.findOne({ members: userId }, (err, result) => {
-    console.log(result);
+  Profile.findById(userId, (err, result) => {
     if (err)
       return res.status(500).send({ success: false, message: err.toString() });
-    if (!result) groupSearch = null;
 
-    Event.find(
-      {
-        $or: [
-          { userId: userId, type: "personal" },
-          { groupId: result === null ? null : result._id, type: "group" },
-          { type: "general" },
-        ],
-      },
-      (err, events) => {
-        if (err)
-          return res
-            .status(500)
-            .send({ success: false, message: err.toString() });
-        if (!events)
-          return res
-            .status(404)
-            .send({ success: false, message: "User's events not found" });
-        return res.json(events);
+    if (!result)
+      return res.status(404).send({sucess: false, message: 'User not found'});
+
+    console.log(result.role)
+    const role = result.role;
+
+    Group.findOne({ members: userId }, (err, result) => {
+      console.log(result);
+      if (err)
+        return res.status(500).send({ success: false, message: err.toString() });
+      if (!result) groupSearch = null;
+  
+      let query;
+  
+      if (role === 'entrepreneur' || role === 'instructor') {
+        query = {
+          $or: [
+            { userId: userId, type: "personal" },
+            { groupId: result === null ? null : result._id, type: "group" },
+            { type: "general" },
+            { type: "assignment" }
+          ]
+        }
+      } else {
+        query = {
+          $or: [
+            { userId: userId, type: "personal" },
+            { groupId: result === null ? null : result._id, type: "group" },
+            { type: "general" }
+          ]
+        }
       }
-    );
-  });
+  
+      Event.find(query,
+        (err, events) => {
+          if (err)
+            return res
+              .status(500)
+              .send({ success: false, message: err.toString() });
+          if (!events)
+            return res
+              .status(404)
+              .send({ success: false, message: "User's events not found" });
+          return res.json(events);
+        }
+      );
+    });
+  })
 });
 
-router.post("/", Authentication.isAuthenticated, async (req, res) => {
+router.post("/", async (req, res) => {
 
   let title = req.body.title;
   let description = req.body.description;
