@@ -39,6 +39,17 @@ const AddVideo = (props) => {
   return null
 }
 
+const GradeAssignments = (props) => {
+  if (props.canGrade) {
+    return (
+      <MenuItem icon={<FaFileAlt />}>
+        <Link to="/deliverableFeed">Assignment Grading</Link>
+     </MenuItem>
+    )
+  }
+  return null
+}
+
 const Nav2 = (props) => {
   const [group, setGroup] = useState('')
   let auth = AuthService();
@@ -103,9 +114,7 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
-            <MenuItem icon={<FaFileAlt />}>
-                <Link to="/deliverableFeed">Assignment Grading</Link> {/* TODO: Only instructors can see this page */}
-              </MenuItem>
+              <GradeAssignments canGrade={role.toLowerCase() === "instructor"}/>
               <MenuItem icon={<FaFileAlt />}>
                 <Link to="/assignmentsFeed">Assignments</Link> {/* Only entrepreneurs and instructors can see this page */}
               </MenuItem>
