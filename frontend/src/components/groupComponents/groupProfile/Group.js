@@ -6,21 +6,16 @@ import "../groups/Groups.css";
 import APIAccess from "../../../controller.js";
 import { toast } from "react-toastify";
 
-/*function GroupProfileContent() {
-    return (
-     
-    )
-  }*/
-
 function Group(props) {
-  //let {gid} = useParams()
   const removeMember = async (e) => {
     e.preventDefault();
     try {
       let _id = document.getElementById("_id").value;
-      console.log(_id);
-      await APIAccess.removeMember(props.gid, _id);
-      console.log("Made it here");
+      let result = await APIAccess.removeMember(props.gid, _id);
+      if (result.success)
+        window.location.reload();
+      else
+        toast.error(result.message)
     } catch (err) {
       console.log(err);
     }
@@ -31,16 +26,16 @@ function Group(props) {
       let _id = document.getElementById("_id").value;
       console.log(_id);
       let result = await APIAccess.addMember(props.gid, _id);
-      if (result.success)
-        toast.success("Added user to group", {});
-      else
+      if (result.success) {
+        window.location.reload();
+      } else
         toast.error(result.message, {});
     } catch (err) {
       console.log(err);
     }
   };
 
-  let editGroupProfile = "http://localhost:3000/groupProfile/edit/" + props.gid;
+  let editGroupProfile = "/groupProfile/edit/" + props.gid;
 
   return (
     <Container className="mt-3 profile container-fluid">
@@ -73,15 +68,9 @@ function Group(props) {
                     >
                       Remove Member
                     </Button>
-                    <Button
-                      type="submit"
-                      onClick={editGroupProfile}
-                      href={editGroupProfile}
-                      className="gbutton"
-                      variant="primary"
-                    >
+                    {props.canEdit && (<Button type="submit" onClick={editGroupProfile} href={editGroupProfile} className="gbutton" variant="primary">
                       Edit
-                    </Button>
+                    </Button>)}
                   </div>
                 </fieldset>
               </form>
