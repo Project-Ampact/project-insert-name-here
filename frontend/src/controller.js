@@ -221,14 +221,14 @@ const APIAccess = {
 
     removeMember(group, member){
         try{
-            fetch('http://localhost:8000/group/delete/' + group + '/' + member, {
+            return fetch('http://localhost:8000/group/delete/' + group + '/' + member, {
                 method: 'DELETE',
                 credentials: 'include',
             })
             .then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
-                return "Success";
+                return jsonRes;
             });
         } catch(err) {
             throw err;

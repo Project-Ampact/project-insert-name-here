@@ -52,6 +52,7 @@ let mock_data = [
 
 function GroupProfile() {
   let { gid } = useParams();
+  const username = document.cookie.split("user=")[1].split("%20")[0];
   const [isLoading, setIsLoading] = useState(true);
   const [loadedGroupData, setLoadedGroupData] = useState([]);
 
@@ -86,7 +87,7 @@ function GroupProfile() {
     <PageLayout>
       <div>
         <Container className="profile container-fluid">
-          <Group gid={gid} groupData={loadedGroupData} />
+          <Group gid={gid} groupData={loadedGroupData} canEdit={loadedGroupData.members.includes(username)}/>
           <GroupMemberList members={mock_data} />
         </Container>
       </div>
