@@ -89,9 +89,9 @@ function DeliverableFeed() {
   return (
     <PageLayout>
       <h1 className="h1-cus">Assignments</h1>
-      <Container> <div>
+      <Container> <div className="floatCenter">
       {role === 'instructor' &&        
-      <Button  type="submit" className="submitbutton" variant="primary" href={`../Dlbs/create/`}>
+      <Button  type="submit" className="submitbutton" variant="primary" href={`../deliverable/create/`}>
       Create New Assignment</Button>
       }
       </div></Container>

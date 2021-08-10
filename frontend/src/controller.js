@@ -81,7 +81,7 @@ const APIAccess = {
         }
     },
 
-    createNewDlbs(title, dueDate, totalMarks, description){
+    createNewDeliverable(title, dueDate, totalMarks, description){
         try{
             return fetch('http://localhost:8000/assignment/', {
                 method: 'POST',
@@ -251,20 +251,6 @@ const APIAccess = {
         }
     },
         
-    getDlbsInfo(dlbsid) {
-        try {
-            return fetch("http://localhost:8000/assignment/" + dlbsid, {
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(async (response) => {
-                let jsonRes = await response.json()
-                return jsonRes
-            })
-        } catch(err) {
-            throw err;
-        }
-    },
 
     getUserProfile(uid) {
         try {
