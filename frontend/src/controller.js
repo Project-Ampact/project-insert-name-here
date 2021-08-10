@@ -552,6 +552,17 @@ const APIAccess = {
             throw err;
         }
     },
+    getGroup(groupId) {
+        try {
+            return fetch('http://localhost:8000/group/' + groupId, {credentials: 'include'})
+            .then((response) => {
+                let jsonRes = response.json();
+                return jsonRes;
+            })
+        } catch(err) {
+            throw err;
+        }
+    }
 };
 
 export default APIAccess;
