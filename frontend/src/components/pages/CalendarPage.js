@@ -7,7 +7,7 @@ import './CalendarPage.css'
 import { Button, Modal } from "react-bootstrap";
 import APIAccess from "../../controller";
 import { toast } from "react-toastify";
-import AddEventPopup from "./calendarComponents/AddEventPopup";
+import AddEventPopup from "../calendarComponents/AddEventPopup";
 
 const PERSONAL_COLOR = '#54e0ff';
 const GROUP_COLOR = '#80eb34';
