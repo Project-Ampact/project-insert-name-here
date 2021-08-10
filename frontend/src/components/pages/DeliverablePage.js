@@ -1,4 +1,4 @@
-import "../dlbsComponents/Dlbs.css";
+import "../deliverableComponents/Deliverable.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
 import { useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import PageLayout from "../pages/DefaultPage";
 import { Col, Row, Card, Form, Button, Container } from "react-bootstrap";
 import { propTypes } from "react-bootstrap/esm/Image";
 
-import Dlbs from "../dlbsComponents/Dlbs.js";
+import Deliverable from "../deliverableComponents/Deliverable.js";
 
 let mock_data = [
   {
@@ -42,8 +42,8 @@ let mock_data = [
   },
 ];
 
-function DlbsPage(props) {
-  let { dlbsid } = useParams();
+function DeliverablePage(props) {
+  let { did } = useParams();
   
   
   // initializes the state for loading the data.
@@ -83,10 +83,10 @@ function DlbsPage(props) {
   }
 
 
-  let backtoDlbs = "../deliverableFeed";  
+  let backtoDeliverable = "../deliverableFeed";  
 
   //needs to change "mock_data[1]" and link it to the _id of the url?
-  let mock_data_single = mock_data.filter(item => item._id === dlbsid)[0];
+  let mock_data_single = mock_data.filter(item => item._id === did)[0];
 
   if (mock_data_single == null) {
     return (
@@ -100,7 +100,7 @@ function DlbsPage(props) {
 
   return (
     <PageLayout>
-    <Dlbs
+    <Deliverable
       dueDate={new Date(mock_data_single.dueDate)}
       title={mock_data_single.title}
       id={mock_data_single._id}
@@ -114,4 +114,4 @@ function DlbsPage(props) {
   }
 
 }
-export default DlbsPage;
+export default DeliverablePage;

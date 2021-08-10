@@ -1,4 +1,4 @@
-import "./Dlbs.css";
+import "./Deliverable.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
 import { useParams, useHistory } from "react-router-dom";
@@ -8,22 +8,22 @@ import { Col, Row, Card, Form, Button, Container } from "react-bootstrap";
 import { propTypes } from "react-bootstrap/esm/Image";
 
 
-function Dlbs(props) {
-  let { dlbsid } = useParams();
+function Deliverable(props) {
+  let { did } = useParams();
   let history = useHistory(); 
   const username = document.cookie.split("user=")[1].split("%20")[0];
   const role = document.cookie.split('user=')[1].split('%20')[1];
 
-  let backtoDlbs = `../assignmentsFeed`;
+  let backtoDeliverable = `../assignmentsFeed`;
   let mock_data;
 
   if (role === 'instructor'){
-    backtoDlbs = `../deliverableFeed`;
+    backtoDeliverable = `../deliverableFeed`;
   }
   
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [DlbsData, setDlbsData] = useState({});
+  const [DeliverableData, setDeliverableData] = useState({});
   const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -39,7 +39,7 @@ function Dlbs(props) {
       .then((data) => {
         // console.log(data)
         mock_data = data;
-        setDlbsData(data);
+        setDeliverableData(data);
         setIsLoading(false);
       });
   }, []);
@@ -60,7 +60,7 @@ function Dlbs(props) {
 
       let result = await APIAccess.createNewSubmission(fileData);
       console.log("Made it here");
-      history.push(backtoDlbs);
+      history.push(backtoDeliverable);
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +98,7 @@ function Dlbs(props) {
             {props.description}
             </p>
 
-          <h6 className="dead-line" controlId="dlbsddl">
+          <h6 className="dead-line" controlId="deliverableddl">
             Assignment Deadline: {props.dueDate.toLocaleDateString() + ' ' + props.dueDate.toLocaleTimeString()}</h6>
             </Col>
           </Row>
@@ -128,13 +128,13 @@ function Dlbs(props) {
           <div className="register del-button"> 
           {selectedFile ? (
             <Row>
-				     <Col sm={5}><Button type="reset" variant="secondary" href={backtoDlbs}>
+				     <Col sm={5}><Button type="reset" variant="secondary" href={backtoDeliverable}>
              Cancel</Button></Col>
-             <Col sm={5}><Button onClick={newSubmission} type="submit" variant="primary"  href={backtoDlbs}>
+             <Col sm={5}><Button onClick={newSubmission} type="submit" variant="primary"  href={backtoDeliverable}>
              Upload </Button></Col> 
 				    </Row>) : (
 				    <div>
-            <Col><Button type="reset" variant="secondary" href={backtoDlbs}>
+            <Col><Button type="reset" variant="secondary" href={backtoDeliverable}>
             Cancel</Button></Col>
            </div>
             )}
@@ -150,4 +150,4 @@ function Dlbs(props) {
   );
 }
 
-export default Dlbs;
+export default Deliverable;
