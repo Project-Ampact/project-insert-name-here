@@ -6,6 +6,7 @@ import GroupMemberList from "../groupComponents/group_members/GroupMemberList.js
 import "../groupComponents/groupProfile/Group.css";
 import { useParams } from "react-router-dom";
 import PageLayout from "./DefaultPage";
+import APIAccess from "../../controller.js";
 
 let mock_data = [
   {
@@ -52,26 +53,22 @@ let mock_data = [
 
 function GroupProfile() {
   let { gid } = useParams();
+  const username = document.cookie.split("user=")[1].split("%20")[0];
   const [isLoading, setIsLoading] = useState(true);
   const [loadedGroupData, setLoadedGroupData] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:8000/group/" + gid, 
-    {
-      credentials: 'include'
+    async function getGroup() {
+      let data = await APIAccess.getGroup(gid);
+      return data;
+    }
+
+    getGroup().then((result) => {
+      mock_data = result.members;
+      setLoadedGroupData(result)
+      setIsLoading(false)
     })
-      .then((response) => {
-        // console.log( response.json())
-        return response.json();
-        //  setLoadedGroupData(response.json());
-        //  setIsLoading(false)
-      })
-      .then((data) => {
-        mock_data = data.members;
-        setLoadedGroupData(data);
-        setIsLoading(false);
-      });
   }, [gid]);
 
   if (isLoading) {
@@ -84,9 +81,9 @@ function GroupProfile() {
 
   return (
     <PageLayout>
-      <div>
+      <div className="calendar-page">
         <Container className="profile container-fluid">
-          <Group gid={gid} groupData={loadedGroupData} />
+          <Group gid={gid} groupData={loadedGroupData} canEdit={loadedGroupData.members.includes(username)}/>
           <GroupMemberList members={mock_data} />
         </Container>
       </div>

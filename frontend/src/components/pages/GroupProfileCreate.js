@@ -105,7 +105,7 @@ function GroupProfileCreate() {
     <PageLayout>
       <div className="body-cus">
         <div className="form-section">
-          <h1 className="h1-cus"> Create New Group</h1>
+          <h1 style={{fontSize: '300%', textAlign: 'center'}} > Create New Group</h1>
           <Container fluid className="form-section-inner">
             <Row>
               <Col>
