@@ -81,7 +81,7 @@ function GroupProfile() {
 
   return (
     <PageLayout>
-      <div>
+      <div className="calendar-page">
         <Container className="profile container-fluid">
           <Group gid={gid} groupData={loadedGroupData} canEdit={loadedGroupData.members.includes(username)}/>
           <GroupMemberList members={mock_data} />
