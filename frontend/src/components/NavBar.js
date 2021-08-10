@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from "react";
 import { withRouter } from "react-router";
+import { Container, Button } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { AuthService } from "../util/authService";
@@ -23,6 +24,7 @@ import {
   FaRegListAlt,
   FaCalendarAlt,
   FaFileAlt,
+  FaBars
 } from "react-icons/fa";
 import {SiGooglemessages} from "react-icons/si"
 
@@ -53,8 +55,9 @@ const GradeAssignments = (props) => {
 const Nav2 = (props) => {
   const [group, setGroup] = useState('')
   let auth = AuthService();
-  const username = document.cookie.split('user=')[1].split('%20')[0]
-  const role = document.cookie.split('user=')[1].split('%20')[1]
+  const username = document.cookie.split('user=')[1].split('%20')[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
+  const [toggled, setToggled] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:8000/group/member/${username}`, {credentials: 'include'})
@@ -73,9 +76,21 @@ const Nav2 = (props) => {
     </Link>
   </MenuItem>) : null;
 
+const handleToggleSidebar = (value) => {
+  setToggled(value);
+  
+};
+
   return (
-    <>
-      <ProSidebar style={{position: 'fixed'}}>
+    <div>
+    <Button className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
+        <FaBars />
+      </Button>
+      <ProSidebar style={{position: 'fixed'}}
+        toggled={toggled}
+        breakPoint="xl"
+        onToggle={handleToggleSidebar}
+      >
         <SidebarHeader>
           {
             <div>
@@ -133,7 +148,7 @@ const Nav2 = (props) => {
           </Menu>
         </SidebarContent>
       </ProSidebar>
-    </>
+    </div>
   );
 };
 

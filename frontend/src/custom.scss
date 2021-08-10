@@ -10,6 +10,26 @@ $info: #555;
 $warning: yellow;
 $danger: red;*/
 
+
 $carousel-control-color: black;
 @import '~react-pro-sidebar/dist/scss/styles.scss';
 @import "~bootstrap/scss/bootstrap.scss";
+
+$sidebar-collapsed-width: 80px !default;
+
+$breakpoint-xs: 480px !default;
+$breakpoint-sm: 576px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 1500px !default;
+$breakpoint-xl: 1900px !default;
+
+.btn-toggle {
+    display: none;
+  }
+
+
+  @media (max-width: $breakpoint-xl) {
+    .btn-toggle {
+      display: flex;
+    }
+  }
