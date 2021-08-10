@@ -8,7 +8,6 @@ import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
 import DlbsPage from './components/pages/DlbsPage';
 import DlbsCreate from './components/dlbsComponents/DlbsCreate';
-import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
 import { ToastContainer } from 'react-toastify';
