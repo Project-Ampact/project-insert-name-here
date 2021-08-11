@@ -4,11 +4,9 @@ const express = require("express");
 const Video = require("../models/video");
 const router = express.Router();
 const Authentication = require("../authentication");
-const { query } = require("express");
 
 //insert valid subjects here
 const validator = require('validator');
-const validSubjects = [''];
 
 //Get videos matching the query
 router.get("/", async(req, res) => {
@@ -34,10 +32,6 @@ const checkVideo = (req, res, next) => {
     if(validator.isEmpty(title) || validator.isEmpty(url) || validator.isEmpty(tag)){
         return res.status(422).send({success: false, message: "Title, url and tag parameters must be non-empty strings"});
     }
-  /*  if(!(subject in validSubjects)){
-        return res.status(422).send({success: false, message: "Invalid subject"});
-    }*/
-    //function to check url tbi later
     next();
 };
 // Add video 
