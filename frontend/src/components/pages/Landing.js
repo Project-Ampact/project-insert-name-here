@@ -4,6 +4,10 @@ import logo from '../../assets/logo.png'
 import browse from '../../assets/browse.png'
 import group from '../../assets/group.jpg'
 import home from '../../assets/home.jpg'
+import event from '../../assets/events.jpg'
+import talk from '../../assets/talk.jpg'
+import discussion from '../../assets/discussion.jpg'
+import submission from '../../assets/submission.jpg'
 import { Nav, Navbar, Carousel} from 'react-bootstrap'
 import './Landing.css'
 
@@ -67,6 +71,75 @@ function ControlledCarousel() {
           </div>
         </Carousel.Caption>
       </Carousel.Item>
+      <Carousel.Item>
+        <img 
+          className="d-block w-100 landing-blur"
+          src={event}
+          alt="Fourth slide"
+        />
+
+        <Carousel.Caption>
+        <div className="caption">
+          <h3>Calendar Events</h3>
+          <p>
+            Schedule and view due dates, events and meetings with an interactive calandar 
+          </p>
+          </div>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <img 
+          className="d-block w-100 landing-blur"
+          src={talk}
+          alt="Fifth slide"
+        />
+
+        <Carousel.Caption>
+        <div className="caption">
+          <h3>Private Messaging</h3>
+          <p>
+            Communicate with your peers, insturctors or partners directly one on one
+          </p>
+          </div>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <img 
+          className="d-block w-100 landing-blur"
+          src={discussion}
+          alt="Sixth slide"
+        />
+
+        <Carousel.Caption>
+        <div className="caption">
+          <h3>Discussion and Annoucement Board</h3>
+          <p>
+            Have open discussions with others, along with easily keeping up to date with your learning
+          </p>
+          </div>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <img 
+          className="d-block w-100 landing-blur"
+          src={submission}
+          alt="Seventh slide"
+        />
+
+        <Carousel.Caption>
+        <div className="caption">
+          <h3>Submission and Feedback</h3>
+          <p>
+            Submit work and recieve direct feedback from instructors to accelerate learning
+          </p>
+          </div>
+        </Carousel.Caption>
+      </Carousel.Item>
+
+      
     </Carousel>
   );
 }

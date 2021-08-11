@@ -81,7 +81,7 @@ const APIAccess = {
         }
     },
 
-    createNewDlbs(title, dueDate, totalMarks, description){
+    createNewDeliverable(title, dueDate, totalMarks, description){
         try{
             return fetch('http://localhost:8000/assignment/', {
                 method: 'POST',
@@ -221,14 +221,14 @@ const APIAccess = {
 
     removeMember(group, member){
         try{
-            fetch('http://localhost:8000/group/delete/' + group + '/' + member, {
+            return fetch('http://localhost:8000/group/delete/' + group + '/' + member, {
                 method: 'DELETE',
                 credentials: 'include',
             })
             .then(async (response) => {
                 let jsonRes = await response.json();
                 console.log(jsonRes);
-                return "Success";
+                return jsonRes;
             });
         } catch(err) {
             throw err;
@@ -251,20 +251,6 @@ const APIAccess = {
         }
     },
         
-    getDlbsInfo(dlbsid) {
-        try {
-            return fetch("http://localhost:8000/assignment/" + dlbsid, {
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(async (response) => {
-                let jsonRes = await response.json()
-                return jsonRes
-            })
-        } catch(err) {
-            throw err;
-        }
-    },
 
     getUserProfile(uid) {
         try {
@@ -552,6 +538,17 @@ const APIAccess = {
             throw err;
         }
     },
+    getGroup(groupId) {
+        try {
+            return fetch('http://localhost:8000/group/' + groupId, {credentials: 'include'})
+            .then((response) => {
+                let jsonRes = response.json();
+                return jsonRes;
+            })
+        } catch(err) {
+            throw err;
+        }
+    }
 };
 
 export default APIAccess;

@@ -1,4 +1,5 @@
 import {React, useEffect, useState} from "react";
+import { useMediaQuery } from 'react-responsive';
 import { withRouter } from "react-router";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -22,7 +23,7 @@ import {
   FaServer,
   FaRegListAlt,
   FaCalendarAlt,
-  FaFileAlt,
+  FaFileAlt
 } from "react-icons/fa";
 import {SiGooglemessages} from "react-icons/si"
 
@@ -39,11 +40,23 @@ const AddVideo = (props) => {
   return null
 }
 
+const GradeAssignments = (props) => {
+  if (props.canGrade) {
+    return (
+      <MenuItem icon={<FaFileAlt />}>
+        <Link to="/deliverableFeed">Assignment Grading</Link>
+     </MenuItem>
+    )
+  }
+  return null
+}
+
 const Nav2 = (props) => {
   const [group, setGroup] = useState('')
   let auth = AuthService();
-  const username = document.cookie.split('user=')[1].split('%20')[0]
-  const role = document.cookie.split('user=')[1].split('%20')[1]
+  const username = document.cookie.split('user=')[1].split('%20')[0];
+  const role = document.cookie.split('user=')[1].split('%20')[1];
+  const smallWidth = useMediaQuery({query: '(max-width: 1000px)'})
 
   useEffect(() => {
     fetch(`http://localhost:8000/group/member/${username}`, {credentials: 'include'})
@@ -62,14 +75,17 @@ const Nav2 = (props) => {
     </Link>
   </MenuItem>) : null;
 
+
   return (
-    <>
-      <ProSidebar style={{position: 'fixed'}}>
+    <div>
+      <ProSidebar style={{position: 'fixed'}}
+        collapsed={smallWidth}
+      >
         <SidebarHeader>
           {
             <div>
               <img alt="alt text" src={logo} width="100" height="80" />
-              <h1 className="sidebar-h1"> Ampact</h1>
+              {!smallWidth && <h1 className="sidebar-h1"> Ampact</h1>}
             </div>
           }
         </SidebarHeader>
@@ -103,9 +119,7 @@ const Nav2 = (props) => {
                 <Link to="/groupProfile/create">Group List</Link>
               </MenuItem>
             </SubMenu>
-            <MenuItem icon={<FaFileAlt />}>
-                <Link to="/deliverableFeed">Assignment Grading</Link> {/* TODO: Only instructors can see this page */}
-              </MenuItem>
+              <GradeAssignments canGrade={role.toLowerCase() === "instructor"}/>
               <MenuItem icon={<FaFileAlt />}>
                 <Link to="/assignmentsFeed">Assignments</Link> {/* Only entrepreneurs and instructors can see this page */}
               </MenuItem>
@@ -124,7 +138,7 @@ const Nav2 = (props) => {
           </Menu>
         </SidebarContent>
       </ProSidebar>
-    </>
+    </div>
   );
 };
 

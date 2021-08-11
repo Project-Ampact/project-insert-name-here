@@ -28,31 +28,7 @@ let mock_data = [
     submissionTime: "2021-07-24T21:01:41.834Z",
     user: "raymondma",
     assignment: "60fba065c7805260444f1ae19",
-  },
-  {
-    _id: "60e62079cfcf1323cc33bd6ab",
-    grade: 12,
-    feedback: "nice try",
-    submissionTime: "2021-07-25T21:01:41.834Z",
-    user: "lawrencecai",
-    assignment: "60fba065c7805603444f1ae19",
-  },
-  {
-    _id: "60e62079cfcf1323c2c3bd6ab",
-    grade: 45,
-    feedback: "great work",
-    submissionTime: "2021-07-20T21:01:41.834Z",
-    user: "laragomez",
-    assignment: "60fba065c7805602444f1ae19",
-  },
-  {
-    _id: "60e62079cfcf1323cc3bd36ab",
-    grade: 34,
-    feedback: "good attempt",
-    submissionTime: "2021-07-22T21:01:41.834Z",
-    user: "davidtan",
-    assignment: "60fba065c7805604444f1ae19",
-  },
+  }
 ];
 
 function Expand({ children, eventKey, callback }) {
@@ -84,10 +60,11 @@ function SubmissionSection(props) {
   const role = document.cookie.split("user=")[1].split("%20")[1];
   let formid = `message:${props.pid}`;
   const [loadedSubmissionData, setLoadedSubmissionData] = useState(mock_data);
+  const [displayedSubmissionData, setDisplayedSubmissionData] = useState(mock_data);
   const [query, setQuery] = useState("");
 
   function LoadSubmissions(total2) {
-    return loadedSubmissionData.map((mock_data_piece) => {
+    return displayedSubmissionData.map((mock_data_piece) => {
       let date = new Date(mock_data_piece.submissionTime);
       let month = date.getMonth() + 1;
       let day = date.getDate();
@@ -125,13 +102,13 @@ function SubmissionSection(props) {
     if (e != null) e.preventDefault();
     console.log("inside sendQuery", query);
     if (query !== "") {
-      let returnedData = mock_data.filter(submission => {
+      let returnedData = loadedSubmissionData.filter(submission => {
         console.log("Query= ",query);
         return submission.user.toLowerCase().startsWith(query.slice(0, Math.max(submission.user.length - 1, 1)));
       });
-      setLoadedSubmissionData(returnedData);
+      setDisplayedSubmissionData(returnedData);
     } else {
-      setLoadedSubmissionData(mock_data);
+      setDisplayedSubmissionData(loadedSubmissionData);
     }
   }
 
@@ -150,7 +127,8 @@ function SubmissionSection(props) {
       })
       .then((data) => {
         mock_data = data;
-        setLoadedSubmissionData(mock_data);
+        setLoadedSubmissionData(data);
+        setDisplayedSubmissionData(data);
         setIsLoading(false);
       });
   }, [props.id]);
@@ -168,7 +146,7 @@ function SubmissionSection(props) {
       <Card>
         <Card.Header className="d-flex justify-content-between">
           <Expand eventKey="0">Submissions</Expand>
-          <Button href={`http://localhost:3000/Dlbs/${props.id}`}>Details</Button>
+          <Button href={`http://localhost:3000/deliverable/${props.id}`}>Details</Button>
         </Card.Header>
         <Accordion.Collapse eventKey="0">
           <Container className="loaded-comments">

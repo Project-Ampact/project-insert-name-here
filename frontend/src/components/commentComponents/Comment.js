@@ -28,9 +28,7 @@ function Comment(props) {
     console.log('delete comment', commentId, postId)
     let result = await APIAccess.deleteComment(commentId, postId)
     if (result.success) {
-      // props.delete(commentId)
       window.location.reload()
-      // toast.success('Comment has been deleted')
     } else {
       toast.error(result.message)
     }

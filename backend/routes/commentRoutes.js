@@ -2,10 +2,8 @@
 const express = require("express");
 const Comment = require("../models/comment");
 const Post = require("../models/post");
-const User = require("../models/user");
 const router = express.Router();
 const Authentication = require('../authentication');
-const COMMENTS_PER_PAGE = 10;
 // General note: Both replies and comments are one in the same. The difference lies in relative perspective;
 //               a commment made on a comment is considered a reply, however that reply is also a comment.
 

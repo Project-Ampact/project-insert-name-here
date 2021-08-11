@@ -1,4 +1,4 @@
-import "./Dlbs.css";
+import "./Deliverable.css";
 /*jshint esversion: 10*/
 import APIAccess from "../../controller.js";
 import { useParams, useHistory } from "react-router-dom";
@@ -8,13 +8,13 @@ import { Col, Row, Form, Button, Container } from "react-bootstrap";
 
 let mock_data;
 
-function DlbsCreate() {
-  let backtoDlbs = "../../deliverableFeed"; 
+function DeliverableCreate() {
+  let backtoDeliverable = "../../deliverableFeed"; 
   let history = useHistory(); 
 
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [DlbsData, setDlbsData] = useState({});
+  const [DeliverableData, setDeliverableData] = useState({});
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,7 +28,7 @@ function DlbsCreate() {
       .then((data) => {
         // console.log(data)
         mock_data = data;
-        setDlbsData(data);
+        setDeliverableData(data);
         setIsLoading(false);
       });
   }, []);
@@ -42,14 +42,14 @@ function DlbsCreate() {
     );
   }
 
-  const addDlbs = async (e) => {
+  const addDeliverable = async (e) => {
     e.preventDefault();
     try {
       let title = document.getElementById("title").value;
       let dueDate = document.getElementById("duedate").value;
       let description = document.getElementById("description").value;
       let totalMarks = document.getElementById("totalmark").value;
-      let result = await APIAccess.createNewDlbs(title, dueDate, totalMarks, description);
+      let result = await APIAccess.createNewDeliverable(title, dueDate, totalMarks, description);
       console.log("Made it here");
       history.push("/deliverableFeed");
     } catch (err) {
@@ -88,9 +88,9 @@ function DlbsCreate() {
                     </Form.Text>
                   </Form.Group>
 
-                  <Form.Group className="duedate" controlId="dlbsddl">
+                  <Form.Group className="duedate" controlId="deliverableddl">
                     <Form.Label>Assignment Deadline: </Form.Label>
-                    <Form.Control type="datetime-local" id="duedate" defaultValue={new Date().toISOString().slice(0, -1)}/>
+                    <Form.Control type="datetime-local" id="duedate" min={new Date().toISOString().substring(0,16)}/>
                   </Form.Group>
 
                   <Form.Group controlId="description">
@@ -102,9 +102,9 @@ function DlbsCreate() {
 
                 </Form>
                 <div className="register del-button"> 
-                  <Col sm={3}><Button type="reset" variant="secondary" href={backtoDlbs}>
+                  <Col sm={3}><Button type="reset" variant="secondary" href={backtoDeliverable}>
                   Cancel</Button></Col>
-                  <Col sm={3}><Button onClick={addDlbs} type="submit" variant="primary"  href={backtoDlbs}>
+                  <Col sm={3}><Button onClick={addDeliverable} type="submit" variant="primary"  href={backtoDeliverable}>
                   Submit </Button></Col> 
                 </div>
                 <div className="wrapper-register"><p id="error-message">Error: please change your information*</p></div>
@@ -117,4 +117,4 @@ function DlbsCreate() {
   );
 }
 
-export default DlbsCreate;
+export default DeliverableCreate;

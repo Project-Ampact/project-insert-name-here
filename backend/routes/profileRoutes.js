@@ -1,7 +1,6 @@
 /*jshint esversion: 10*/
 
 const express = require("express"); 
-const User = require("../models/user");
 const Profile = require('../models/profile');
 const Authentication = require("../authentication");
 const router = express.Router();

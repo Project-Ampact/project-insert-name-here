@@ -6,8 +6,8 @@ import Landing from './components/pages/Landing'
 import GroupProfile from './components/pages/GroupProfile'
 import GroupProfileEdit from './components/pages/GroupProfileEdit';
 import GroupProfileCreate from './components/pages/GroupProfileCreate';
-import DlbsPage from './components/pages/DlbsPage';
-import DlbsCreate from './components/dlbsComponents/DlbsCreate';
+import DeliverablePage from './components/pages/DeliverablePage';
+import DeliverableCreate from './components/deliverableComponents/DeliverableCreate';
 import PageLayout from "./components/pages/DefaultPage";
 import Browse from './components/pages/Browse';
 import {AuthService, AuthProvider} from './util/authService'
@@ -90,7 +90,7 @@ function App() {
             <Route path="/profile/search" component={SearchUserProfiles}/>
             <Route exact path="/video/upload/" children={<SingleVideoAdd/>}/>
             <Route exact path="/video/:vid" children={<SingleVideoPage/>}/>
-            <Route exact path="/Dlbs/create" children={<DlbsCreate/>}/>
+            <Route exact path="/deliverable/create" children={<DeliverableCreate/>}/>
             <PrivateRoute exact path="/profile/:uid" children={<UserProfile/>}/>
             <PrivateRoute exact path="/profile/:uid/edit" children={<UserProfileEdit/>}/>
             <PrivateRoute exact path="/groupProfile/edit/:gid" children={<GroupProfileEdit/>}/>
@@ -101,7 +101,7 @@ function App() {
             <PrivateRoute exact path="/message/:uid" children={<MessageSection/>}/>
             <PrivateRoute exact path="/submission/:sid" children={<SingleFeedbackPage/>}/>
             <PrivateRoute exact path="/user/submission/:sid" children={<SingleUserSubmissionPage/>}/>
-            <PrivateRoute exact path="/Dlbs/:dlbsid" children={<DlbsPage/>}/>
+            <PrivateRoute exact path="/deliverable/:did" children={<DeliverablePage/>}/>
           </Switch>
         </Router>
       </AuthProvider>      
