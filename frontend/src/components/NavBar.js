@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from "react";
+import { useMediaQuery } from 'react-responsive';
 import { withRouter } from "react-router";
-import { Container, Button } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import { AuthService } from "../util/authService";
@@ -23,8 +23,7 @@ import {
   FaServer,
   FaRegListAlt,
   FaCalendarAlt,
-  FaFileAlt,
-  FaBars
+  FaFileAlt
 } from "react-icons/fa";
 import {SiGooglemessages} from "react-icons/si"
 
@@ -57,7 +56,7 @@ const Nav2 = (props) => {
   let auth = AuthService();
   const username = document.cookie.split('user=')[1].split('%20')[0];
   const role = document.cookie.split('user=')[1].split('%20')[1];
-  const [toggled, setToggled] = useState(false);
+  const smallWidth = useMediaQuery({query: '(max-width: 1000px)'})
 
   useEffect(() => {
     fetch(`http://localhost:8000/group/member/${username}`, {credentials: 'include'})
@@ -76,26 +75,17 @@ const Nav2 = (props) => {
     </Link>
   </MenuItem>) : null;
 
-const handleToggleSidebar = (value) => {
-  setToggled(value);
-  
-};
 
   return (
     <div>
-    <Button className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
-        <FaBars />
-      </Button>
       <ProSidebar style={{position: 'fixed'}}
-        toggled={toggled}
-        breakPoint="xl"
-        onToggle={handleToggleSidebar}
+        collapsed={smallWidth}
       >
         <SidebarHeader>
           {
             <div>
               <img alt="alt text" src={logo} width="100" height="80" />
-              <h1 className="sidebar-h1"> Ampact</h1>
+              {!smallWidth && <h1 className="sidebar-h1"> Ampact</h1>}
             </div>
           }
         </SidebarHeader>
