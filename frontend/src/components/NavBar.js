@@ -56,7 +56,7 @@ const Nav2 = (props) => {
   let auth = AuthService();
   const username = document.cookie.split('user=')[1].split('%20')[0];
   const role = document.cookie.split('user=')[1].split('%20')[1];
-  const smallWidth = useMediaQuery({query: '(max-width: 800px)'})
+  const smallWidth = useMediaQuery({query: '(max-width: 1000px)'})
 
   useEffect(() => {
     fetch(`http://localhost:8000/group/member/${username}`, {credentials: 'include'})
