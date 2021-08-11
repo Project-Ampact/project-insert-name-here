@@ -32,10 +32,6 @@ const checkVideo = (req, res, next) => {
     if(validator.isEmpty(title) || validator.isEmpty(url) || validator.isEmpty(tag)){
         return res.status(422).send({success: false, message: "Title, url and tag parameters must be non-empty strings"});
     }
-  /*  if(!(subject in validSubjects)){
-        return res.status(422).send({success: false, message: "Invalid subject"});
-    }*/
-    //function to check url tbi later
     next();
 };
 // Add video 
