@@ -4,11 +4,9 @@ const express = require("express");
 const Video = require("../models/video");
 const router = express.Router();
 const Authentication = require("../authentication");
-const { query } = require("express");
 
 //insert valid subjects here
 const validator = require('validator');
-const validSubjects = [''];
 
 //Get videos matching the query
 router.get("/", async(req, res) => {
