@@ -20,4 +20,4 @@ Ampact is a combined e-learning and community platform being created for the [Af
 * There will be a deploy branch for deploying the tested features
 * For reporting a bug, open an issue using GitHub Issues
 * Branch off main and create a pull request if you want to add any additional features
-* Code should adhere to the [Javascript](https://google.github.io/styleguide/jsguide.html) and [HTML/CSS Google](https://google.github.io/styleguide/htmlcssguide.html) style guides. 
+* Code should adhere to the [Javascript](https://google.github.io/styleguide/jsguide.html) and [HTML/CSS Google](https://google.github.io/styleguide/htmlcssguide.html) style guides
